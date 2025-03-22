@@ -5,8 +5,12 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:8.8.0"
+    classpath "com.android.tools.build:gradle:8.9.0"
   }
+
+  // Track here:
+  // https://github.com/readium/kotlin-toolkit/releases
+  ext.readium_version = '3.0.4'
 }
 
 def reactNativeArchitectures() {
@@ -20,6 +24,7 @@ def isNewArchitectureEnabled() {
 
 apply plugin: "com.android.library"
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-parcelize'
 apply from: '../nitrogen/generated/android/NitroReadium+autolinking.gradle'
 
 if (isNewArchitectureEnabled()) {
@@ -93,6 +98,7 @@ android {
   buildFeatures {
     buildConfig true
     prefab true
+    viewBinding true
   }
 
   buildTypes {
@@ -122,6 +128,18 @@ android {
   }
 }
 
+rootProject.allprojects { Project subproject ->
+  subproject.repositories {
+    maven {
+      url = uri("https://maven.pkg.github.com/shovel-kun/kotlin-toolkit")
+      credentials {
+        username = project.findProperty("gpr.user") ?: System.getenv("GH_USERNAME")
+        password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
+      }
+    }
+  }
+}
+
 repositories {
   mavenCentral()
   google()
@@ -133,6 +151,15 @@ dependencies {
   // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
   //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
+
+  implementation "org.shovel-kun.kotlin-toolkit:readium-shared:$readium_version"
+  implementation "org.shovel-kun.kotlin-toolkit:readium-streamer:$readium_version"
+  implementation "org.shovel-kun.kotlin-toolkit:readium-navigator:$readium_version"
+  implementation "org.shovel-kun.kotlin-toolkit:readium-opds:$readium_version"
+  implementation "org.shovel-kun.kotlin-toolkit:readium-lcp:$readium_version"
+  implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3'
+  implementation 'androidx.fragment:fragment-ktx:1.8.6'
+  implementation 'androidx.compose.ui:ui-android:1.7.8'
 
   // Add a dependency on NitroModules
   implementation project(":react-native-nitro-modules")

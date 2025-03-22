@@ -1,24 +1,23 @@
 {
   "$schema": "https://nitro.margelo.com/nitro.schema.json",
-  "cxxNamespace": [
-    "nitroreadium"
-  ],
+  "cxxNamespace": ["nitroreadium"],
   "ios": {
     "iosModuleName": "NitroReadium"
   },
   "android": {
-    "androidNamespace": [
-      "nitroreadium"
-    ],
+    "androidNamespace": ["nitroreadium"],
     "androidCxxLibName": "NitroReadium"
   },
   "autolinking": {
     "NitroReadium": {
       "swift": "HybridNitroReadium",
       "kotlin": "HybridNitroReadium"
+    },
+    "ReadiumModule": {
+      "swift": "HybridReadiumModule",
+      "kotlin": "HybridReadiumModule"
     }
   },
-  "ignorePaths": [
-    "**/node_modules"
-  ]
+  "ignorePaths": ["**/node_modules"]
 }
+
