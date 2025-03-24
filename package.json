@@ -39,11 +39,11 @@
   "workspaces": [
     "example"
   ],
-  "repository": "https://github.com/ebisuzawakurumi/react-native-nitro-readium.git",
+  "repository": "https://github.com/shovel-kun/react-native-nitro-readium.git",
   "author": "Ebisuzawa Kurumi",
   "license": "MIT",
-  "bugs": "https://github.com/ebisuzawakurumi/react-native-nitro-readium/issues",
-  "homepage": "https://github.com/ebisuzawakurumi/react-native-nitro-readium#readme",
+  "bugs": "https://github.com/shovel-kun/react-native-nitro-readium/issues",
+  "homepage": "https://github.com/shovel-kun/react-native-nitro-readium#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
