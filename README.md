@@ -15,6 +15,7 @@ bun add react-native-nitro-readium react-native-nitro-modules
 
 - Bootstrapped with [create-nitro-module](https://github.com/patrickkabwe/create-nitro-module).
 - Android: <https://github.com/readium/kotlin-toolkit>
+  - <https://github.com/smoores-dev/storyteller>: for inspiration
 - iOS: <https://github.com/readium/swift-toolkit>
 
 ## Contributing
