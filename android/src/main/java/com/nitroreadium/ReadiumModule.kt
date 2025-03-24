@@ -10,12 +10,12 @@ import com.margelo.nitro.nitroreadium.HybridReadiumModuleSpec
 import org.readium.r2.shared.util.AbsoluteUrl
 import org.readium.r2.shared.util.getOrElse
 
+@Suppress("unused")
 @Keep
 @DoNotStrip
 class HybridReadiumModule: HybridReadiumModuleSpec() {
 
     val bookService = BookService.getInstance(NitroModules.applicationContext as Context)
-    val context = NitroModules.applicationContext as Context
 
     override fun add(a: Double, b: Double): Double {
         return a + b

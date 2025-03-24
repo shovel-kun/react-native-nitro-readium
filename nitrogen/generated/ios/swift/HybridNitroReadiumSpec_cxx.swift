@@ -195,6 +195,52 @@ public class HybridNitroReadiumSpec_cxx {
     }
   }
   
+  public final var injectedJavascript: bridge.std__optional_std__string_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__string_ in
+        if let __unwrappedValue = self.__implementation.injectedJavascript {
+          return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.injectedJavascript = { () -> String? in
+        if let __unwrapped = newValue.value {
+          return String(__unwrapped)
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
+  public final var injectedJavascriptTarget: bridge.std__optional_std__string_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__string_ in
+        if let __unwrappedValue = self.__implementation.injectedJavascriptTarget {
+          return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.injectedJavascriptTarget = { () -> String? in
+        if let __unwrapped = newValue.value {
+          return String(__unwrapped)
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var onLocatorChanged: bridge.std__optional_std__function_void_const_Locator_____locator______ {
     @inline(__always)
     get {
@@ -417,6 +463,37 @@ public class HybridNitroReadiumSpec_cxx {
       }()
     }
   }
+  
+  public final var onMessage: bridge.std__optional_std__function_void_const_std__string_____message______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____message______ in
+        if let __unwrappedValue = self.__implementation.onMessage {
+          return bridge.create_std__optional_std__function_void_const_std__string_____message______({ () -> bridge.Func_void_std__string in
+            let __closureWrapper = Func_void_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onMessage = { () -> ((_ message: String) -> Void)? in
+        if let __unwrapped = newValue.value {
+          return { () -> (String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string(__unwrapped)
+            return { (__message: String) -> Void in
+              __wrappedFunction.call(std.string(__message))
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
 
   // Methods
   @inline(__always)
@@ -441,6 +518,17 @@ public class HybridNitroReadiumSpec_cxx {
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
       return bridge.create_Result_std__shared_ptr_Promise_std__optional_std__string____(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func injectJavascript(script: std.string) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.injectJavascript(script: String(script))
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
     }
   }
   

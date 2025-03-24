@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.facebook.react.uimanager.BackgroundStyleApplicator
 import com.facebook.react.uimanager.PixelUtil.pxToDp
 import com.facebook.react.uimanager.ThemedReactContext
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,8 +42,8 @@ import com.margelo.nitro.nitroreadium.TapEvent as NitroTapEvent
 data class CustomFont(val uri: String, val name: String, val type: String)
 
 @SuppressLint("ViewConstructor", "ResourceType")
-class EpubView(context: ThemedReactContext) : FrameLayout(context),
-    EpubNavigatorFragment.Listener, DecorableNavigator.Listener, EpubNavigatorFragment.PaginationListener {
+class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
+    EpubNavigatorFragment.Listener, DecorableNavigator.Listener, EpubNavigatorFragment.PaginationListener, EpubNavigatorFragment.MessageListener {
 
     var appContext = context
     var bookService: BookService? = null
@@ -54,6 +55,10 @@ class EpubView(context: ThemedReactContext) : FrameLayout(context),
     var highlights: List<NitroDecoration> = listOf()
     var bookmarks: List<Locator> = listOf()
     var readaloudColor = 0xffffff00.toInt()
+    var injectedJavascript: String? = null
+        set(value) {
+            field = "(function() {\n$value\nreturn true;\n})();"
+        }
     @OptIn(ExperimentalReadiumApi::class)
     var preferences: EpubPreferences = EpubPreferences(
         fontFamily = FontFamily("Literata"),
@@ -76,11 +81,11 @@ class EpubView(context: ThemedReactContext) : FrameLayout(context),
     var onDecorationActivated: (NitroDecorationActivatedEvent) -> Unit = {}
     var onPageChanged: ((page: Double, totalPages: Double, locator: NitroLocator) -> Unit)? = null
     var onPageLoaded: (() -> Unit)? = null
+    var onMessage: ((String) -> Unit)? = null
 
     val onBookmarksActivate: (Map<String, Any>) -> Unit = {}
 
     suspend fun initializeNavigator() {
-        // Ensure the rest of the function runs on the main thread
         withContext(Dispatchers.Main) {
             Log.d("HybridNitroReadium", "absoluteUrl: $absoluteUrl")
             val publication = absoluteUrl?.let {
@@ -221,7 +226,25 @@ class EpubView(context: ThemedReactContext) : FrameLayout(context),
     }
 
     suspend fun evaluateJavascript(script: String): String? {
-        return navigator?.evaluateJavascript(script)
+        val result = navigator?.evaluateJavascript(script)
+
+        if (result == null) {
+            throw Exception("Failed to evaluate. Either webview has not been initialized yet, or the resource is not reflowable")
+        } else {
+            return result
+        }
+    }
+
+    fun injectJavascript(script: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val result = navigator?.evaluateJavascript(script.trimIndent())
+
+            if (result == null) {
+                throw Exception("Failed to inject. Either webview has not been initialized yet, or the resource is not reflowable")
+            } else {
+                Log.d("EpubView", result)
+            }
+        }
     }
 
     @OptIn(InternalReadiumApi::class)
@@ -401,6 +424,15 @@ class EpubView(context: ThemedReactContext) : FrameLayout(context),
 
     override fun onPageLoaded() {
         onPageLoaded?.invoke()
+//        injectedJavascript?.let { injectJavascript(it) }
+    }
+
+    override fun onResourceLoaded(): String? {
+        return injectedJavascript
+    }
+
+    override fun onMessage(message: String) {
+        onMessage?.invoke(message)
     }
 
     fun clearSelection() {

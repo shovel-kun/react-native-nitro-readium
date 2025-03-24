@@ -22,6 +22,10 @@ namespace margelo::nitro::nitroreadium {
       prototype.registerHybridSetter("preferences", &HybridNitroReadiumSpec::setPreferences);
       prototype.registerHybridGetter("decorations", &HybridNitroReadiumSpec::getDecorations);
       prototype.registerHybridSetter("decorations", &HybridNitroReadiumSpec::setDecorations);
+      prototype.registerHybridGetter("injectedJavascript", &HybridNitroReadiumSpec::getInjectedJavascript);
+      prototype.registerHybridSetter("injectedJavascript", &HybridNitroReadiumSpec::setInjectedJavascript);
+      prototype.registerHybridGetter("injectedJavascriptTarget", &HybridNitroReadiumSpec::getInjectedJavascriptTarget);
+      prototype.registerHybridSetter("injectedJavascriptTarget", &HybridNitroReadiumSpec::setInjectedJavascriptTarget);
       prototype.registerHybridGetter("onLocatorChanged", &HybridNitroReadiumSpec::getOnLocatorChanged);
       prototype.registerHybridSetter("onLocatorChanged", &HybridNitroReadiumSpec::setOnLocatorChanged);
       prototype.registerHybridGetter("onSelection", &HybridNitroReadiumSpec::getOnSelection);
@@ -36,7 +40,10 @@ namespace margelo::nitro::nitroreadium {
       prototype.registerHybridSetter("onPageChanged", &HybridNitroReadiumSpec::setOnPageChanged);
       prototype.registerHybridGetter("onPageLoaded", &HybridNitroReadiumSpec::getOnPageLoaded);
       prototype.registerHybridSetter("onPageLoaded", &HybridNitroReadiumSpec::setOnPageLoaded);
+      prototype.registerHybridGetter("onMessage", &HybridNitroReadiumSpec::getOnMessage);
+      prototype.registerHybridSetter("onMessage", &HybridNitroReadiumSpec::setOnMessage);
       prototype.registerHybridMethod("evaluateJavascript", &HybridNitroReadiumSpec::evaluateJavascript);
+      prototype.registerHybridMethod("injectJavascript", &HybridNitroReadiumSpec::injectJavascript);
       prototype.registerHybridMethod("go", &HybridNitroReadiumSpec::go);
       prototype.registerHybridMethod("clearSelection", &HybridNitroReadiumSpec::clearSelection);
     });

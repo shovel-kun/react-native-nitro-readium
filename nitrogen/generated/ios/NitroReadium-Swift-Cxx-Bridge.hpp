@@ -585,6 +585,15 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     return std::optional<std::function<void()>>(value);
   }
   
+  // pragma MARK: std::optional<std::function<void(const std::string& /* message */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(const std::string& / * message * /)>>`.
+   */
+  using std__optional_std__function_void_const_std__string_____message______ = std::optional<std::function<void(const std::string& /* message */)>>;
+  inline std::optional<std::function<void(const std::string& /* message */)>> create_std__optional_std__function_void_const_std__string_____message______(const std::function<void(const std::string& /* message */)>& value) {
+    return std::optional<std::function<void(const std::string& /* message */)>>(value);
+  }
+  
   // pragma MARK: std::shared_ptr<Promise<std::optional<std::string>>>
   /**
    * Specialized version of `std::shared_ptr<Promise<std::optional<std::string>>>`.

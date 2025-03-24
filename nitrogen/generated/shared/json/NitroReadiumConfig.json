@@ -8,6 +8,8 @@
     "locator": true,
     "preferences": true,
     "decorations": true,
+    "injectedJavascript": true,
+    "injectedJavascriptTarget": true,
     "onLocatorChanged": true,
     "onSelection": true,
     "onDecorationActivated": true,
@@ -15,6 +17,7 @@
     "onDrag": true,
     "onPageChanged": true,
     "onPageLoaded": true,
+    "onMessage": true,
     "hybridRef": true
   }
 }

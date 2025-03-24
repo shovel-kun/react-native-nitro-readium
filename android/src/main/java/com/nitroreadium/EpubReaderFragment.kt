@@ -100,6 +100,7 @@ class EpubReaderFragment(
             initialPreferences = listener.preferences,
             listener = listener,
             paginationListener = listener,
+            messageListener = listener,
 //            paginationListener = object : EpubNavigatorFragment.PaginationListener {
 //                override fun onPageChanged(pageIndex: Int, totalPages: Int, locator: Locator) {
 //                    Log.i("onPageChanged", "$pageIndex, $totalPages, $locator")

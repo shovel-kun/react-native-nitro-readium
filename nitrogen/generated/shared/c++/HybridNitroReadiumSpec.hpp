@@ -76,6 +76,10 @@ namespace margelo::nitro::nitroreadium {
       virtual void setPreferences(const std::optional<EpubPreferences>& preferences) = 0;
       virtual std::optional<std::vector<Decoration>> getDecorations() = 0;
       virtual void setDecorations(const std::optional<std::vector<Decoration>>& decorations) = 0;
+      virtual std::optional<std::string> getInjectedJavascript() = 0;
+      virtual void setInjectedJavascript(const std::optional<std::string>& injectedJavascript) = 0;
+      virtual std::optional<std::string> getInjectedJavascriptTarget() = 0;
+      virtual void setInjectedJavascriptTarget(const std::optional<std::string>& injectedJavascriptTarget) = 0;
       virtual std::optional<std::function<void(const Locator& /* locator */)>> getOnLocatorChanged() = 0;
       virtual void setOnLocatorChanged(const std::optional<std::function<void(const Locator& /* locator */)>>& onLocatorChanged) = 0;
       virtual std::optional<std::function<void(const std::optional<Selection>& /* selection */)>> getOnSelection() = 0;
@@ -90,10 +94,13 @@ namespace margelo::nitro::nitroreadium {
       virtual void setOnPageChanged(const std::optional<std::function<void(double /* page */, double /* totalPages */, const Locator& /* locator */)>>& onPageChanged) = 0;
       virtual std::optional<std::function<void()>> getOnPageLoaded() = 0;
       virtual void setOnPageLoaded(const std::optional<std::function<void()>>& onPageLoaded) = 0;
+      virtual std::optional<std::function<void(const std::string& /* message */)>> getOnMessage() = 0;
+      virtual void setOnMessage(const std::optional<std::function<void(const std::string& /* message */)>>& onMessage) = 0;
 
     public:
       // Methods
       virtual std::shared_ptr<Promise<std::optional<std::string>>> evaluateJavascript(const std::string& script) = 0;
+      virtual void injectJavascript(const std::string& script) = 0;
       virtual void go(const Locator& locator) = 0;
       virtual void clearSelection() = 0;
 

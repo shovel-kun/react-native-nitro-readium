@@ -65,6 +65,26 @@ namespace margelo::nitro::nitroreadium::views {
         throw std::runtime_error(std::string("NitroReadium.decorations: ") + exc.what());
       }
     }()),
+    injectedJavascript([&]() -> CachedProp<std::optional<std::string>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("injectedJavascript", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.injectedJavascript;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.injectedJavascript);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroReadium.injectedJavascript: ") + exc.what());
+      }
+    }()),
+    injectedJavascriptTarget([&]() -> CachedProp<std::optional<std::string>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("injectedJavascriptTarget", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.injectedJavascriptTarget;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.injectedJavascriptTarget);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroReadium.injectedJavascriptTarget: ") + exc.what());
+      }
+    }()),
     onLocatorChanged([&]() -> CachedProp<std::optional<std::function<void(const Locator& /* locator */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onLocatorChanged", nullptr, nullptr);
@@ -135,6 +155,16 @@ namespace margelo::nitro::nitroreadium::views {
         throw std::runtime_error(std::string("NitroReadium.onPageLoaded: ") + exc.what());
       }
     }()),
+    onMessage([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* message */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onMessage", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onMessage;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(const std::string& /* message */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onMessage);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroReadium.onMessage: ") + exc.what());
+      }
+    }()),
     hybridRef([&]() -> CachedProp<std::optional<std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridNitroReadiumSpec>& /* ref */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("hybridRef", nullptr, nullptr);
@@ -152,6 +182,8 @@ namespace margelo::nitro::nitroreadium::views {
     locator(other.locator),
     preferences(other.preferences),
     decorations(other.decorations),
+    injectedJavascript(other.injectedJavascript),
+    injectedJavascriptTarget(other.injectedJavascriptTarget),
     onLocatorChanged(other.onLocatorChanged),
     onSelection(other.onSelection),
     onDecorationActivated(other.onDecorationActivated),
@@ -159,6 +191,7 @@ namespace margelo::nitro::nitroreadium::views {
     onDrag(other.onDrag),
     onPageChanged(other.onPageChanged),
     onPageLoaded(other.onPageLoaded),
+    onMessage(other.onMessage),
     hybridRef(other.hybridRef) { }
 
   bool HybridNitroReadiumProps::filterObjectKeys(const std::string& propName) {
@@ -167,6 +200,8 @@ namespace margelo::nitro::nitroreadium::views {
       case hashString("locator"): return true;
       case hashString("preferences"): return true;
       case hashString("decorations"): return true;
+      case hashString("injectedJavascript"): return true;
+      case hashString("injectedJavascriptTarget"): return true;
       case hashString("onLocatorChanged"): return true;
       case hashString("onSelection"): return true;
       case hashString("onDecorationActivated"): return true;
@@ -174,6 +209,7 @@ namespace margelo::nitro::nitroreadium::views {
       case hashString("onDrag"): return true;
       case hashString("onPageChanged"): return true;
       case hashString("onPageLoaded"): return true;
+      case hashString("onMessage"): return true;
       case hashString("hybridRef"): return true;
       default: return false;
     }

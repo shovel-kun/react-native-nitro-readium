@@ -17,7 +17,7 @@ import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
 
 @Keep
 @DoNotStrip
-class HybridNitroReadium(val context: ThemedReactContext): HybridNitroReadiumSpec() {
+class HybridNitroReadium(context: ThemedReactContext): HybridNitroReadiumSpec() {
     val bookService = BookService.getInstance(context)
 
     // View
@@ -61,6 +61,20 @@ class HybridNitroReadium(val context: ThemedReactContext): HybridNitroReadiumSpe
             field = value
             view.highlights = value.toList()
             view.decorateHighlights()
+        }
+
+    override var injectedJavascript: String? = null
+        set(value) {
+            if (value == null || field == value) return
+            field = value
+            view.injectedJavascript = value
+        }
+
+    override var injectedJavascriptTarget: String? = null
+        set(value) {
+            if (value == null || field == value) return
+            field = value
+//            view.injectedJavascript = value
         }
 
     // Callbacks
@@ -117,11 +131,23 @@ class HybridNitroReadium(val context: ThemedReactContext): HybridNitroReadiumSpe
             view.onPageLoaded = { this.onPageLoaded?.invoke() }
         }
 
+    override var onMessage: ((String) -> Unit)? = null
+        set(value) {
+            if (value == null || field == value) return
+            field = value
+            view.onMessage = { this.onMessage?.invoke(it) }
+        }
+
+
     // Methods
     override fun evaluateJavascript(script: String): Promise<String?> {
         return Promise.async {
             view.evaluateJavascript(script)
         }
+    }
+
+    override fun injectJavascript(script: String) {
+        view.injectJavascript(script)
     }
 
     override fun go(locator: Locator) {

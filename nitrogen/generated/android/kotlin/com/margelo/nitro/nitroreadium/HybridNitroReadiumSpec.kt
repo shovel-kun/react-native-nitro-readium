@@ -62,6 +62,18 @@ abstract class HybridNitroReadiumSpec: HybridView() {
   @set:Keep
   abstract var decorations: Array<Decoration>?
   
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var injectedJavascript: String?
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var injectedJavascriptTarget: String?
+  
   abstract var onLocatorChanged: ((locator: Locator) -> Unit)?
   
   private var onLocatorChanged_cxx: Func_void_Locator?
@@ -159,11 +171,29 @@ abstract class HybridNitroReadiumSpec: HybridView() {
     set(value) {
       onPageLoaded = value?.let { it }
     }
+  
+  abstract var onMessage: ((message: String) -> Unit)?
+  
+  private var onMessage_cxx: Func_void_std__string?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onMessage?.let { Func_void_std__string_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onMessage = value?.let { it }
+    }
 
   // Methods
   @DoNotStrip
   @Keep
   abstract fun evaluateJavascript(script: String): Promise<String?>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun injectJavascript(script: String): Unit
   
   @DoNotStrip
   @Keep

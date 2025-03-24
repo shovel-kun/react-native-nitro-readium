@@ -142,6 +142,20 @@ namespace margelo::nitro::nitroreadium {
     inline void setDecorations(const std::optional<std::vector<Decoration>>& decorations) noexcept override {
       _swiftPart.setDecorations(decorations);
     }
+    inline std::optional<std::string> getInjectedJavascript() noexcept override {
+      auto __result = _swiftPart.getInjectedJavascript();
+      return __result;
+    }
+    inline void setInjectedJavascript(const std::optional<std::string>& injectedJavascript) noexcept override {
+      _swiftPart.setInjectedJavascript(injectedJavascript);
+    }
+    inline std::optional<std::string> getInjectedJavascriptTarget() noexcept override {
+      auto __result = _swiftPart.getInjectedJavascriptTarget();
+      return __result;
+    }
+    inline void setInjectedJavascriptTarget(const std::optional<std::string>& injectedJavascriptTarget) noexcept override {
+      _swiftPart.setInjectedJavascriptTarget(injectedJavascriptTarget);
+    }
     inline std::optional<std::function<void(const Locator& /* locator */)>> getOnLocatorChanged() noexcept override {
       auto __result = _swiftPart.getOnLocatorChanged();
       return __result;
@@ -191,6 +205,13 @@ namespace margelo::nitro::nitroreadium {
     inline void setOnPageLoaded(const std::optional<std::function<void()>>& onPageLoaded) noexcept override {
       _swiftPart.setOnPageLoaded(onPageLoaded);
     }
+    inline std::optional<std::function<void(const std::string& /* message */)>> getOnMessage() noexcept override {
+      auto __result = _swiftPart.getOnMessage();
+      return __result;
+    }
+    inline void setOnMessage(const std::optional<std::function<void(const std::string& /* message */)>>& onMessage) noexcept override {
+      _swiftPart.setOnMessage(onMessage);
+    }
 
   public:
     // Methods
@@ -201,6 +222,12 @@ namespace margelo::nitro::nitroreadium {
       }
       auto __value = std::move(__result.value());
       return __value;
+    }
+    inline void injectJavascript(const std::string& script) override {
+      auto __result = _swiftPart.injectJavascript(script);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void go(const Locator& locator) override {
       auto __result = _swiftPart.go(locator);

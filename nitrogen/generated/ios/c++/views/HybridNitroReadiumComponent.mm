@@ -91,6 +91,16 @@ using namespace margelo::nitro::nitroreadium::views;
     swiftPart.setDecorations(newViewProps.decorations.value);
     newViewProps.decorations.isDirty = false;
   }
+  // injectedJavascript: optional
+  if (newViewProps.injectedJavascript.isDirty) {
+    swiftPart.setInjectedJavascript(newViewProps.injectedJavascript.value);
+    newViewProps.injectedJavascript.isDirty = false;
+  }
+  // injectedJavascriptTarget: optional
+  if (newViewProps.injectedJavascriptTarget.isDirty) {
+    swiftPart.setInjectedJavascriptTarget(newViewProps.injectedJavascriptTarget.value);
+    newViewProps.injectedJavascriptTarget.isDirty = false;
+  }
   // onLocatorChanged: optional
   if (newViewProps.onLocatorChanged.isDirty) {
     swiftPart.setOnLocatorChanged(newViewProps.onLocatorChanged.value);
@@ -125,6 +135,11 @@ using namespace margelo::nitro::nitroreadium::views;
   if (newViewProps.onPageLoaded.isDirty) {
     swiftPart.setOnPageLoaded(newViewProps.onPageLoaded.value);
     newViewProps.onPageLoaded.isDirty = false;
+  }
+  // onMessage: optional
+  if (newViewProps.onMessage.isDirty) {
+    swiftPart.setOnMessage(newViewProps.onMessage.value);
+    newViewProps.onMessage.isDirty = false;
   }
 
   swiftPart.afterUpdate();

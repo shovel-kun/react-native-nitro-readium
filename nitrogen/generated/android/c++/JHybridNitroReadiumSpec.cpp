@@ -99,6 +99,7 @@ namespace margelo::nitro::nitroreadium { enum class DragEventType; }
 #include "JDragEventType.hpp"
 #include "JFunc_void_double_double_Locator.hpp"
 #include "JFunc_void.hpp"
+#include "JFunc_void_std__string.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/JPromise.hpp>
 
@@ -172,6 +173,24 @@ namespace margelo::nitro::nitroreadium {
       }
       return __array;
     }() : nullptr);
+  }
+  std::optional<std::string> JHybridNitroReadiumSpec::getInjectedJavascript() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getInjectedJavascript");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toStdString()) : std::nullopt;
+  }
+  void JHybridNitroReadiumSpec::setInjectedJavascript(const std::optional<std::string>& injectedJavascript) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* injectedJavascript */)>("setInjectedJavascript");
+    method(_javaPart, injectedJavascript.has_value() ? jni::make_jstring(injectedJavascript.value()) : nullptr);
+  }
+  std::optional<std::string> JHybridNitroReadiumSpec::getInjectedJavascriptTarget() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getInjectedJavascriptTarget");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(__result->toStdString()) : std::nullopt;
+  }
+  void JHybridNitroReadiumSpec::setInjectedJavascriptTarget(const std::optional<std::string>& injectedJavascriptTarget) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* injectedJavascriptTarget */)>("setInjectedJavascriptTarget");
+    method(_javaPart, injectedJavascriptTarget.has_value() ? jni::make_jstring(injectedJavascriptTarget.value()) : nullptr);
   }
   std::optional<std::function<void(const Locator& /* locator */)>> JHybridNitroReadiumSpec::getOnLocatorChanged() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_Locator::javaobject>()>("getOnLocatorChanged_cxx");
@@ -299,6 +318,24 @@ namespace margelo::nitro::nitroreadium {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void::javaobject> /* onPageLoaded */)>("setOnPageLoaded_cxx");
     method(_javaPart, onPageLoaded.has_value() ? JFunc_void_cxx::fromCpp(onPageLoaded.value()) : nullptr);
   }
+  std::optional<std::function<void(const std::string& /* message */)>> JHybridNitroReadiumSpec::getOnMessage() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__string::javaobject>()>("getOnMessage_cxx");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void(const std::string& /* message */)> {
+      if (__result->isInstanceOf(JFunc_void_std__string_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_std__string_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        return [__result](std::string message) -> void {
+          return __result->invoke(message);
+        };
+      }
+    }()) : std::nullopt;
+  }
+  void JHybridNitroReadiumSpec::setOnMessage(const std::optional<std::function<void(const std::string& /* message */)>>& onMessage) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string::javaobject> /* onMessage */)>("setOnMessage_cxx");
+    method(_javaPart, onMessage.has_value() ? JFunc_void_std__string_cxx::fromCpp(onMessage.value()) : nullptr);
+  }
 
   // Methods
   std::shared_ptr<Promise<std::optional<std::string>>> JHybridNitroReadiumSpec::evaluateJavascript(const std::string& script) {
@@ -316,6 +353,10 @@ namespace margelo::nitro::nitroreadium {
       });
       return __promise;
     }();
+  }
+  void JHybridNitroReadiumSpec::injectJavascript(const std::string& script) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* script */)>("injectJavascript");
+    method(_javaPart, jni::make_jstring(script));
   }
   void JHybridNitroReadiumSpec::go(const Locator& locator) {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JLocator> /* locator */)>("go");

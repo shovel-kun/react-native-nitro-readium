@@ -26,6 +26,10 @@
 #include <vector>
 #include "Decoration.hpp"
 #include <optional>
+#include <string>
+#include <optional>
+#include <string>
+#include <optional>
 #include <functional>
 #include "Locator.hpp"
 #include <optional>
@@ -46,6 +50,9 @@
 #include "Locator.hpp"
 #include <optional>
 #include <functional>
+#include <optional>
+#include <functional>
+#include <string>
 #include <optional>
 #include <functional>
 #include <memory>
@@ -76,6 +83,8 @@ namespace margelo::nitro::nitroreadium::views {
     CachedProp<std::optional<Locator>> locator;
     CachedProp<std::optional<EpubPreferences>> preferences;
     CachedProp<std::optional<std::vector<Decoration>>> decorations;
+    CachedProp<std::optional<std::string>> injectedJavascript;
+    CachedProp<std::optional<std::string>> injectedJavascriptTarget;
     CachedProp<std::optional<std::function<void(const Locator& /* locator */)>>> onLocatorChanged;
     CachedProp<std::optional<std::function<void(const std::optional<Selection>& /* selection */)>>> onSelection;
     CachedProp<std::optional<std::function<void(const DecorationActivatedEvent& /* event */)>>> onDecorationActivated;
@@ -83,6 +92,7 @@ namespace margelo::nitro::nitroreadium::views {
     CachedProp<std::optional<std::function<void(const DragEvent& /* event */)>>> onDrag;
     CachedProp<std::optional<std::function<void(double /* page */, double /* totalPages */, const Locator& /* locator */)>>> onPageChanged;
     CachedProp<std::optional<std::function<void()>>> onPageLoaded;
+    CachedProp<std::optional<std::function<void(const std::string& /* message */)>>> onMessage;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridNitroReadiumSpec>& /* ref */)>>> hybridRef;
 
   private:
