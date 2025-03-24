@@ -15,7 +15,7 @@ import {
   Decoration,
   DecorationType,
   ActivatedDecoration,
-  ReadiumNitroRef,
+  ReadiumRef,
   getManifest,
 } from 'react-native-nitro-readium';
 import {SelectionMenu} from './SelectionMenu';
@@ -30,7 +30,7 @@ function App(): React.JSX.Element {
   const [activatedDecoration, setActivatedDecoration] =
     useState<ActivatedDecoration | null>(null);
   const [viewDimensions, setViewDimensions] = useState({width: 0, height: 0});
-  const readiumRef = useRef<ReadiumNitroRef>(null);
+  const readiumRef = useRef<ReadiumRef>(null);
 
   const handleAddDecoration = useCallback(
     (type: DecorationType) => {
@@ -107,7 +107,7 @@ function App(): React.JSX.Element {
     [],
   );
 
-  const onHybridRefChanged = useCallback((ref: ReadiumNitroRef | null) => {
+  const onHybridRefChanged = useCallback((ref: ReadiumRef | null) => {
     readiumRef.current = ref;
   }, []);
 
@@ -125,6 +125,10 @@ function App(): React.JSX.Element {
   //   console.log(viewDimensions);
   // }, [viewDimensions]);
   //
+  //
+
+  const injectedJavascript: string = require('./script.raw.js');
+  // console.log(injectedJavascript.substring(0, 100));
 
   console.log('RERENDER!!!!!');
 
@@ -155,29 +159,27 @@ function App(): React.JSX.Element {
           <Readium
             style={styles.view}
             absolutePath={absolutePath}
-            onLocatorChanged={{f: onLocatorChanged}}
+            onLocatorChanged={onLocatorChanged}
             decorations={decorations}
-            onSelection={{f: onSelectionChanged}}
-            onDecorationActivated={{f: onDecorationActivatedChanged}}
+            onSelection={onSelectionChanged}
+            onDecorationActivated={onDecorationActivatedChanged}
+            injectedJavascript={injectedJavascript}
             // onTap={{f: ({x, y}) => handleTap(x, y)}}
-            // onTap={{
-            //   f: ({x, y}) => {
-            //     console.log('Tap detected');
-            //     console.log(`x: ${x}, y: ${y}`);
-            //     console.log(
-            //       `width: ${viewDimensions.width}, height: ${viewDimensions.height}`,
-            //     );
-            //     console.log('Locator:', locator);
-            //   },
-            // }}
+            // onTap={({x, y}) => {
+            // console.log('Tap detected');
+            // console.log(`x: ${x}, y: ${y}`);
+            // console.log(
+            //   `width: ${viewDimensions.width}, height: ${viewDimensions.height}`,
+            // );
+            // console.log('Locator:', locator);
+            //}}
             onTouchStart={(e: GestureResponderEvent) => {
               console.log('Touch start detected');
               console.log(e);
             }}
-            onDrag={{
-              f: () => {
-                setActivatedDecoration(null);
-              },
+            onMessage={console.log}
+            onDrag={() => {
+              setActivatedDecoration(null);
             }}
             onLayout={onLayout}
             preferences={{
