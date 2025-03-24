@@ -1,4 +1,5 @@
 # react-native-nitro-readium
+[![npm version](https://badge.fury.io/js/react-native-nitro-readium.svg)](https://badge.fury.io/js/react-native-nitro-readium)
 
 ## Requirements
 
