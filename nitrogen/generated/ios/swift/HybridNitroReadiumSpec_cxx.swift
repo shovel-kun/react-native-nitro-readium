@@ -195,11 +195,11 @@ public class HybridNitroReadiumSpec_cxx {
     }
   }
   
-  public final var injectedJavascript: bridge.std__optional_std__string_ {
+  public final var injectedJavascriptOnResourcesLoad: bridge.std__optional_std__string_ {
     @inline(__always)
     get {
       return { () -> bridge.std__optional_std__string_ in
-        if let __unwrappedValue = self.__implementation.injectedJavascript {
+        if let __unwrappedValue = self.__implementation.injectedJavascriptOnResourcesLoad {
           return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
         } else {
           return .init()
@@ -208,7 +208,7 @@ public class HybridNitroReadiumSpec_cxx {
     }
     @inline(__always)
     set {
-      self.__implementation.injectedJavascript = { () -> String? in
+      self.__implementation.injectedJavascriptOnResourcesLoad = { () -> String? in
         if let __unwrapped = newValue.value {
           return String(__unwrapped)
         } else {
@@ -218,11 +218,11 @@ public class HybridNitroReadiumSpec_cxx {
     }
   }
   
-  public final var injectedJavascriptTarget: bridge.std__optional_std__string_ {
+  public final var injectedJavascriptOnPageLoad: bridge.std__optional_std__string_ {
     @inline(__always)
     get {
       return { () -> bridge.std__optional_std__string_ in
-        if let __unwrappedValue = self.__implementation.injectedJavascriptTarget {
+        if let __unwrappedValue = self.__implementation.injectedJavascriptOnPageLoad {
           return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
         } else {
           return .init()
@@ -231,7 +231,7 @@ public class HybridNitroReadiumSpec_cxx {
     }
     @inline(__always)
     set {
-      self.__implementation.injectedJavascriptTarget = { () -> String? in
+      self.__implementation.injectedJavascriptOnPageLoad = { () -> String? in
         if let __unwrapped = newValue.value {
           return String(__unwrapped)
         } else {

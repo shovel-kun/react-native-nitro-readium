@@ -76,10 +76,10 @@ namespace margelo::nitro::nitroreadium {
       virtual void setPreferences(const std::optional<EpubPreferences>& preferences) = 0;
       virtual std::optional<std::vector<Decoration>> getDecorations() = 0;
       virtual void setDecorations(const std::optional<std::vector<Decoration>>& decorations) = 0;
-      virtual std::optional<std::string> getInjectedJavascript() = 0;
-      virtual void setInjectedJavascript(const std::optional<std::string>& injectedJavascript) = 0;
-      virtual std::optional<std::string> getInjectedJavascriptTarget() = 0;
-      virtual void setInjectedJavascriptTarget(const std::optional<std::string>& injectedJavascriptTarget) = 0;
+      virtual std::optional<std::string> getInjectedJavascriptOnResourcesLoad() = 0;
+      virtual void setInjectedJavascriptOnResourcesLoad(const std::optional<std::string>& injectedJavascriptOnResourcesLoad) = 0;
+      virtual std::optional<std::string> getInjectedJavascriptOnPageLoad() = 0;
+      virtual void setInjectedJavascriptOnPageLoad(const std::optional<std::string>& injectedJavascriptOnPageLoad) = 0;
       virtual std::optional<std::function<void(const Locator& /* locator */)>> getOnLocatorChanged() = 0;
       virtual void setOnLocatorChanged(const std::optional<std::function<void(const Locator& /* locator */)>>& onLocatorChanged) = 0;
       virtual std::optional<std::function<void(const std::optional<Selection>& /* selection */)>> getOnSelection() = 0;

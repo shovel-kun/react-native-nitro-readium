@@ -63,18 +63,18 @@ class HybridNitroReadium(context: ThemedReactContext): HybridNitroReadiumSpec() 
             view.decorateHighlights()
         }
 
-    override var injectedJavascript: String? = null
+    override var injectedJavascriptOnPageLoad: String? = null
         set(value) {
             if (value == null || field == value) return
             field = value
-            view.injectedJavascript = value
+            view.injectedJavascriptOnPageLoad = value
         }
 
-    override var injectedJavascriptTarget: String? = null
+    override var injectedJavascriptOnResourcesLoad: String? = null
         set(value) {
             if (value == null || field == value) return
             field = value
-//            view.injectedJavascript = value
+            view.injectedJavascriptOnResourcesLoad = value
         }
 
     // Callbacks
@@ -155,10 +155,6 @@ class HybridNitroReadium(context: ThemedReactContext): HybridNitroReadiumSpec() 
     }
 
     override fun clearSelection() {
-        try {
-            view.clearSelection()
-        } catch (e: Exception) {
-            Log.e("HybridReadiumNitro", "Error clearing selection", e)
-        }
+        view.clearSelection()
     }
 }

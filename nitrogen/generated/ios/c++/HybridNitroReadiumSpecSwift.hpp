@@ -142,19 +142,19 @@ namespace margelo::nitro::nitroreadium {
     inline void setDecorations(const std::optional<std::vector<Decoration>>& decorations) noexcept override {
       _swiftPart.setDecorations(decorations);
     }
-    inline std::optional<std::string> getInjectedJavascript() noexcept override {
-      auto __result = _swiftPart.getInjectedJavascript();
+    inline std::optional<std::string> getInjectedJavascriptOnResourcesLoad() noexcept override {
+      auto __result = _swiftPart.getInjectedJavascriptOnResourcesLoad();
       return __result;
     }
-    inline void setInjectedJavascript(const std::optional<std::string>& injectedJavascript) noexcept override {
-      _swiftPart.setInjectedJavascript(injectedJavascript);
+    inline void setInjectedJavascriptOnResourcesLoad(const std::optional<std::string>& injectedJavascriptOnResourcesLoad) noexcept override {
+      _swiftPart.setInjectedJavascriptOnResourcesLoad(injectedJavascriptOnResourcesLoad);
     }
-    inline std::optional<std::string> getInjectedJavascriptTarget() noexcept override {
-      auto __result = _swiftPart.getInjectedJavascriptTarget();
+    inline std::optional<std::string> getInjectedJavascriptOnPageLoad() noexcept override {
+      auto __result = _swiftPart.getInjectedJavascriptOnPageLoad();
       return __result;
     }
-    inline void setInjectedJavascriptTarget(const std::optional<std::string>& injectedJavascriptTarget) noexcept override {
-      _swiftPart.setInjectedJavascriptTarget(injectedJavascriptTarget);
+    inline void setInjectedJavascriptOnPageLoad(const std::optional<std::string>& injectedJavascriptOnPageLoad) noexcept override {
+      _swiftPart.setInjectedJavascriptOnPageLoad(injectedJavascriptOnPageLoad);
     }
     inline std::optional<std::function<void(const Locator& /* locator */)>> getOnLocatorChanged() noexcept override {
       auto __result = _swiftPart.getOnLocatorChanged();

@@ -83,8 +83,8 @@ namespace margelo::nitro::nitroreadium::views {
     CachedProp<std::optional<Locator>> locator;
     CachedProp<std::optional<EpubPreferences>> preferences;
     CachedProp<std::optional<std::vector<Decoration>>> decorations;
-    CachedProp<std::optional<std::string>> injectedJavascript;
-    CachedProp<std::optional<std::string>> injectedJavascriptTarget;
+    CachedProp<std::optional<std::string>> injectedJavascriptOnResourcesLoad;
+    CachedProp<std::optional<std::string>> injectedJavascriptOnPageLoad;
     CachedProp<std::optional<std::function<void(const Locator& /* locator */)>>> onLocatorChanged;
     CachedProp<std::optional<std::function<void(const std::optional<Selection>& /* selection */)>>> onSelection;
     CachedProp<std::optional<std::function<void(const DecorationActivatedEvent& /* event */)>>> onDecorationActivated;

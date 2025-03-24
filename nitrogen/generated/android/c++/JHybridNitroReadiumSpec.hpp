@@ -55,10 +55,10 @@ namespace margelo::nitro::nitroreadium {
     void setPreferences(const std::optional<EpubPreferences>& preferences) override;
     std::optional<std::vector<Decoration>> getDecorations() override;
     void setDecorations(const std::optional<std::vector<Decoration>>& decorations) override;
-    std::optional<std::string> getInjectedJavascript() override;
-    void setInjectedJavascript(const std::optional<std::string>& injectedJavascript) override;
-    std::optional<std::string> getInjectedJavascriptTarget() override;
-    void setInjectedJavascriptTarget(const std::optional<std::string>& injectedJavascriptTarget) override;
+    std::optional<std::string> getInjectedJavascriptOnResourcesLoad() override;
+    void setInjectedJavascriptOnResourcesLoad(const std::optional<std::string>& injectedJavascriptOnResourcesLoad) override;
+    std::optional<std::string> getInjectedJavascriptOnPageLoad() override;
+    void setInjectedJavascriptOnPageLoad(const std::optional<std::string>& injectedJavascriptOnPageLoad) override;
     std::optional<std::function<void(const Locator& /* locator */)>> getOnLocatorChanged() override;
     void setOnLocatorChanged(const std::optional<std::function<void(const Locator& /* locator */)>>& onLocatorChanged) override;
     std::optional<std::function<void(const std::optional<Selection>& /* selection */)>> getOnSelection() override;

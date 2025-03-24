@@ -66,13 +66,13 @@ abstract class HybridNitroReadiumSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var injectedJavascript: String?
+  abstract var injectedJavascriptOnResourcesLoad: String?
   
   @get:DoNotStrip
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var injectedJavascriptTarget: String?
+  abstract var injectedJavascriptOnPageLoad: String?
   
   abstract var onLocatorChanged: ((locator: Locator) -> Unit)?
   

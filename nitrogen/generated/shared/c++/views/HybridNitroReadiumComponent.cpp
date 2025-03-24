@@ -65,24 +65,24 @@ namespace margelo::nitro::nitroreadium::views {
         throw std::runtime_error(std::string("NitroReadium.decorations: ") + exc.what());
       }
     }()),
-    injectedJavascript([&]() -> CachedProp<std::optional<std::string>> {
+    injectedJavascriptOnResourcesLoad([&]() -> CachedProp<std::optional<std::string>> {
       try {
-        const react::RawValue* rawValue = rawProps.at("injectedJavascript", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.injectedJavascript;
+        const react::RawValue* rawValue = rawProps.at("injectedJavascriptOnResourcesLoad", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.injectedJavascriptOnResourcesLoad;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.injectedJavascript);
+        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.injectedJavascriptOnResourcesLoad);
       } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroReadium.injectedJavascript: ") + exc.what());
+        throw std::runtime_error(std::string("NitroReadium.injectedJavascriptOnResourcesLoad: ") + exc.what());
       }
     }()),
-    injectedJavascriptTarget([&]() -> CachedProp<std::optional<std::string>> {
+    injectedJavascriptOnPageLoad([&]() -> CachedProp<std::optional<std::string>> {
       try {
-        const react::RawValue* rawValue = rawProps.at("injectedJavascriptTarget", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.injectedJavascriptTarget;
+        const react::RawValue* rawValue = rawProps.at("injectedJavascriptOnPageLoad", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.injectedJavascriptOnPageLoad;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.injectedJavascriptTarget);
+        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.injectedJavascriptOnPageLoad);
       } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroReadium.injectedJavascriptTarget: ") + exc.what());
+        throw std::runtime_error(std::string("NitroReadium.injectedJavascriptOnPageLoad: ") + exc.what());
       }
     }()),
     onLocatorChanged([&]() -> CachedProp<std::optional<std::function<void(const Locator& /* locator */)>>> {
@@ -182,8 +182,8 @@ namespace margelo::nitro::nitroreadium::views {
     locator(other.locator),
     preferences(other.preferences),
     decorations(other.decorations),
-    injectedJavascript(other.injectedJavascript),
-    injectedJavascriptTarget(other.injectedJavascriptTarget),
+    injectedJavascriptOnResourcesLoad(other.injectedJavascriptOnResourcesLoad),
+    injectedJavascriptOnPageLoad(other.injectedJavascriptOnPageLoad),
     onLocatorChanged(other.onLocatorChanged),
     onSelection(other.onSelection),
     onDecorationActivated(other.onDecorationActivated),
@@ -200,8 +200,8 @@ namespace margelo::nitro::nitroreadium::views {
       case hashString("locator"): return true;
       case hashString("preferences"): return true;
       case hashString("decorations"): return true;
-      case hashString("injectedJavascript"): return true;
-      case hashString("injectedJavascriptTarget"): return true;
+      case hashString("injectedJavascriptOnResourcesLoad"): return true;
+      case hashString("injectedJavascriptOnPageLoad"): return true;
       case hashString("onLocatorChanged"): return true;
       case hashString("onSelection"): return true;
       case hashString("onDecorationActivated"): return true;

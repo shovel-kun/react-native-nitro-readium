@@ -44,12 +44,12 @@ void JHybridNitroReadiumStateUpdater::updateViewProps(jni::alias_ref<jni::JClass
     view->setDecorations(props.decorations.value);
     // TODO: Set isDirty = false
   }
-  if (props.injectedJavascript.isDirty) {
-    view->setInjectedJavascript(props.injectedJavascript.value);
+  if (props.injectedJavascriptOnResourcesLoad.isDirty) {
+    view->setInjectedJavascriptOnResourcesLoad(props.injectedJavascriptOnResourcesLoad.value);
     // TODO: Set isDirty = false
   }
-  if (props.injectedJavascriptTarget.isDirty) {
-    view->setInjectedJavascriptTarget(props.injectedJavascriptTarget.value);
+  if (props.injectedJavascriptOnPageLoad.isDirty) {
+    view->setInjectedJavascriptOnPageLoad(props.injectedJavascriptOnPageLoad.value);
     // TODO: Set isDirty = false
   }
   if (props.onLocatorChanged.isDirty) {

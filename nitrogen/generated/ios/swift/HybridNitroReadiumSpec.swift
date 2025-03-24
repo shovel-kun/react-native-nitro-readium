@@ -15,8 +15,8 @@ public protocol HybridNitroReadiumSpec_protocol: HybridObject, HybridView {
   var locator: Locator? { get set }
   var preferences: EpubPreferences? { get set }
   var decorations: [Decoration]? { get set }
-  var injectedJavascript: String? { get set }
-  var injectedJavascriptTarget: String? { get set }
+  var injectedJavascriptOnResourcesLoad: String? { get set }
+  var injectedJavascriptOnPageLoad: String? { get set }
   var onLocatorChanged: ((_ locator: Locator) -> Void)? { get set }
   var onSelection: ((_ selection: Selection?) -> Void)? { get set }
   var onDecorationActivated: ((_ event: DecorationActivatedEvent) -> Void)? { get set }

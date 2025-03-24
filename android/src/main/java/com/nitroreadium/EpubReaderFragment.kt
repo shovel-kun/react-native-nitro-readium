@@ -58,10 +58,6 @@ import com.margelo.nitro.nitroreadium.Point as NitroPoint
 import com.margelo.nitro.nitroreadium.TapEvent as NitroTapEvent
 import com.margelo.nitro.nitroreadium.DragEvent as NitroDragEvent
 import com.margelo.nitro.nitroreadium.DragEventType as NitroDragEventType
-//import org.readium.r2.testapp.LITERATA
-//import org.readium.r2.testapp.R
-//import org.readium.r2.testapp.reader.preferences.UserPreferencesViewModel
-//import org.readium.r2.testapp.search.SearchFragment
 
 @OptIn(ExperimentalReadiumApi::class)
 class EpubReaderFragment(

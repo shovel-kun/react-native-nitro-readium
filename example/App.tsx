@@ -128,7 +128,7 @@ function App(): React.JSX.Element {
   //
 
   const injectedJavascript: string = require('./script.raw.js');
-  // console.log(injectedJavascript.substring(0, 100));
+  console.log('Injecting: ', injectedJavascript.substring(0, 100));
 
   console.log('RERENDER!!!!!');
 
@@ -163,7 +163,7 @@ function App(): React.JSX.Element {
             decorations={decorations}
             onSelection={onSelectionChanged}
             onDecorationActivated={onDecorationActivatedChanged}
-            injectedJavascript={injectedJavascript}
+            injectedJavascriptOnResourcesLoad={injectedJavascript}
             // onTap={{f: ({x, y}) => handleTap(x, y)}}
             // onTap={({x, y}) => {
             // console.log('Tap detected');

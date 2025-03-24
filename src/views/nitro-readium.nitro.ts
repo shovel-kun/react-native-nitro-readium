@@ -19,9 +19,9 @@ export interface NitroReadiumProps extends HybridViewProps {
   preferences?: EpubPreferences
   decorations?: Decoration[]
   // runs on all webviews when resources are loaded
-  injectedJavascript?: string
+  injectedJavascriptOnResourcesLoad?: string
   // runs on the webview that is the current page
-  injectedJavascriptTarget?: string
+  injectedJavascriptOnPageLoad?: string
   onLocatorChanged?: (locator: Locator) => void
   onSelection?: (selection: Selection | null) => void
   onDecorationActivated?: (event: DecorationActivatedEvent) => void

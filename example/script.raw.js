@@ -1,1 +1,1 @@
-document.documentElement.style.setProperty('--RS__backgroundColor', 'blue');
+window.ReadiumWebView.postMessage('Hello from JS!');

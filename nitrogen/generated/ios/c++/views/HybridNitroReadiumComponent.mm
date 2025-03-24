@@ -91,15 +91,15 @@ using namespace margelo::nitro::nitroreadium::views;
     swiftPart.setDecorations(newViewProps.decorations.value);
     newViewProps.decorations.isDirty = false;
   }
-  // injectedJavascript: optional
-  if (newViewProps.injectedJavascript.isDirty) {
-    swiftPart.setInjectedJavascript(newViewProps.injectedJavascript.value);
-    newViewProps.injectedJavascript.isDirty = false;
+  // injectedJavascriptOnResourcesLoad: optional
+  if (newViewProps.injectedJavascriptOnResourcesLoad.isDirty) {
+    swiftPart.setInjectedJavascriptOnResourcesLoad(newViewProps.injectedJavascriptOnResourcesLoad.value);
+    newViewProps.injectedJavascriptOnResourcesLoad.isDirty = false;
   }
-  // injectedJavascriptTarget: optional
-  if (newViewProps.injectedJavascriptTarget.isDirty) {
-    swiftPart.setInjectedJavascriptTarget(newViewProps.injectedJavascriptTarget.value);
-    newViewProps.injectedJavascriptTarget.isDirty = false;
+  // injectedJavascriptOnPageLoad: optional
+  if (newViewProps.injectedJavascriptOnPageLoad.isDirty) {
+    swiftPart.setInjectedJavascriptOnPageLoad(newViewProps.injectedJavascriptOnPageLoad.value);
+    newViewProps.injectedJavascriptOnPageLoad.isDirty = false;
   }
   // onLocatorChanged: optional
   if (newViewProps.onLocatorChanged.isDirty) {

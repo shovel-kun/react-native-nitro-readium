@@ -174,23 +174,23 @@ namespace margelo::nitro::nitroreadium {
       return __array;
     }() : nullptr);
   }
-  std::optional<std::string> JHybridNitroReadiumSpec::getInjectedJavascript() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getInjectedJavascript");
+  std::optional<std::string> JHybridNitroReadiumSpec::getInjectedJavascriptOnResourcesLoad() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getInjectedJavascriptOnResourcesLoad");
     auto __result = method(_javaPart);
     return __result != nullptr ? std::make_optional(__result->toStdString()) : std::nullopt;
   }
-  void JHybridNitroReadiumSpec::setInjectedJavascript(const std::optional<std::string>& injectedJavascript) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* injectedJavascript */)>("setInjectedJavascript");
-    method(_javaPart, injectedJavascript.has_value() ? jni::make_jstring(injectedJavascript.value()) : nullptr);
+  void JHybridNitroReadiumSpec::setInjectedJavascriptOnResourcesLoad(const std::optional<std::string>& injectedJavascriptOnResourcesLoad) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* injectedJavascriptOnResourcesLoad */)>("setInjectedJavascriptOnResourcesLoad");
+    method(_javaPart, injectedJavascriptOnResourcesLoad.has_value() ? jni::make_jstring(injectedJavascriptOnResourcesLoad.value()) : nullptr);
   }
-  std::optional<std::string> JHybridNitroReadiumSpec::getInjectedJavascriptTarget() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getInjectedJavascriptTarget");
+  std::optional<std::string> JHybridNitroReadiumSpec::getInjectedJavascriptOnPageLoad() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getInjectedJavascriptOnPageLoad");
     auto __result = method(_javaPart);
     return __result != nullptr ? std::make_optional(__result->toStdString()) : std::nullopt;
   }
-  void JHybridNitroReadiumSpec::setInjectedJavascriptTarget(const std::optional<std::string>& injectedJavascriptTarget) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* injectedJavascriptTarget */)>("setInjectedJavascriptTarget");
-    method(_javaPart, injectedJavascriptTarget.has_value() ? jni::make_jstring(injectedJavascriptTarget.value()) : nullptr);
+  void JHybridNitroReadiumSpec::setInjectedJavascriptOnPageLoad(const std::optional<std::string>& injectedJavascriptOnPageLoad) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* injectedJavascriptOnPageLoad */)>("setInjectedJavascriptOnPageLoad");
+    method(_javaPart, injectedJavascriptOnPageLoad.has_value() ? jni::make_jstring(injectedJavascriptOnPageLoad.value()) : nullptr);
   }
   std::optional<std::function<void(const Locator& /* locator */)>> JHybridNitroReadiumSpec::getOnLocatorChanged() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_Locator::javaobject>()>("getOnLocatorChanged_cxx");

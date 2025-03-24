@@ -23,12 +23,10 @@ class HybridReadiumModule: HybridReadiumModuleSpec() {
 
     override fun getManifest(absoluteUrl: String): Promise<String> {
         return try {
-            Log.i("HybridReadiumModule", "getManifest called with absoluteUrl: $absoluteUrl")
             val cleanAbsoluteUrl = AbsoluteUrl(absoluteUrl) ?: return Promise.rejected(Exception("Invalid absoluteUrl: $absoluteUrl"))
             Promise.async {
                 val publication = bookService.openPublication(cleanAbsoluteUrl).getOrElse { throw Exception("Cannot open publication: $it") }
-                val manifest = publication.manifest
-                manifest.toJSON().toString()
+                publication.manifest.toJSON().toString()
             }
         } catch (e: Exception) {
             Log.e("HybridReadiumModule", "Error getting manifest: $e")

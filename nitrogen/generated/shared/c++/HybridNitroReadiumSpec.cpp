@@ -22,10 +22,10 @@ namespace margelo::nitro::nitroreadium {
       prototype.registerHybridSetter("preferences", &HybridNitroReadiumSpec::setPreferences);
       prototype.registerHybridGetter("decorations", &HybridNitroReadiumSpec::getDecorations);
       prototype.registerHybridSetter("decorations", &HybridNitroReadiumSpec::setDecorations);
-      prototype.registerHybridGetter("injectedJavascript", &HybridNitroReadiumSpec::getInjectedJavascript);
-      prototype.registerHybridSetter("injectedJavascript", &HybridNitroReadiumSpec::setInjectedJavascript);
-      prototype.registerHybridGetter("injectedJavascriptTarget", &HybridNitroReadiumSpec::getInjectedJavascriptTarget);
-      prototype.registerHybridSetter("injectedJavascriptTarget", &HybridNitroReadiumSpec::setInjectedJavascriptTarget);
+      prototype.registerHybridGetter("injectedJavascriptOnResourcesLoad", &HybridNitroReadiumSpec::getInjectedJavascriptOnResourcesLoad);
+      prototype.registerHybridSetter("injectedJavascriptOnResourcesLoad", &HybridNitroReadiumSpec::setInjectedJavascriptOnResourcesLoad);
+      prototype.registerHybridGetter("injectedJavascriptOnPageLoad", &HybridNitroReadiumSpec::getInjectedJavascriptOnPageLoad);
+      prototype.registerHybridSetter("injectedJavascriptOnPageLoad", &HybridNitroReadiumSpec::setInjectedJavascriptOnPageLoad);
       prototype.registerHybridGetter("onLocatorChanged", &HybridNitroReadiumSpec::getOnLocatorChanged);
       prototype.registerHybridSetter("onLocatorChanged", &HybridNitroReadiumSpec::setOnLocatorChanged);
       prototype.registerHybridGetter("onSelection", &HybridNitroReadiumSpec::getOnSelection);
