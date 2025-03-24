@@ -2,11 +2,8 @@
 
 ## Requirements
 
-- React Native v0.76.0 or higher
+- React Native v0.78.0 or higher
 - Node 18.0.0 or higher
-
-> [!IMPORTANT]  
-> To Support `Nitro Views` you need to install React Native version v0.78.0 or higher.
 
 ## Installation
 
@@ -16,7 +13,9 @@ bun add react-native-nitro-readium react-native-nitro-modules
 
 ## Credits
 
-Bootstrapped with [create-nitro-module](https://github.com/patrickkabwe/create-nitro-module).
+- Bootstrapped with [create-nitro-module](https://github.com/patrickkabwe/create-nitro-module).
+- Android: <https://github.com/readium/kotlin-toolkit>
+- iOS: <https://github.com/readium/swift-toolkit>
 
 ## Contributing
 

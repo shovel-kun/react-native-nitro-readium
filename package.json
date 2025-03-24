@@ -45,19 +45,18 @@
   "bugs": "https://github.com/ebisuzawakurumi/react-native-nitro-readium/issues",
   "homepage": "https://github.com/ebisuzawakurumi/react-native-nitro-readium#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
+    "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
     "@jamesacarr/eslint-formatter-github-actions": "^0.2.0",
-    "@release-it/bumper": "^7.0.1",
+    "@release-it/bumper": "^7.0.2",
     "@release-it/conventional-changelog": "^10.0.0",
-    "@types/jest": "^29.5.12",
-    "@types/react": "^19.0.10",
+    "@types/jest": "^29.5.14",
+    "@types/react": "^19.0.12",
     "nitro-codegen": "0.25.1",
     "react": "19.0.0",
     "react-native": "0.78.0",
-    "react-native-builder-bob": "^0.37.0",
+    "react-native-builder-bob": "^0.38.0",
     "react-native-nitro-modules": "0.25.1",
     "release-it": "^18.1.2",
     "typescript": "5.0.4"
