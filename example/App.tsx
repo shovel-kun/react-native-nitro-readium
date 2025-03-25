@@ -108,6 +108,8 @@ function App(): React.JSX.Element {
   );
 
   const onHybridRefChanged = useCallback((ref: ReadiumRef | null) => {
+    console.log('onHybridRefChanged');
+    console.log(readiumRef.current);
     readiumRef.current = ref;
   }, []);
 
@@ -165,39 +167,40 @@ function App(): React.JSX.Element {
             onDecorationActivated={onDecorationActivatedChanged}
             injectedJavascriptOnResourcesLoad={injectedJavascript}
             // onTap={{f: ({x, y}) => handleTap(x, y)}}
-            // onTap={({x, y}) => {
-            // console.log('Tap detected');
-            // console.log(`x: ${x}, y: ${y}`);
-            // console.log(
-            //   `width: ${viewDimensions.width}, height: ${viewDimensions.height}`,
-            // );
-            // console.log('Locator:', locator);
-            //}}
-            onTouchStart={(e: GestureResponderEvent) => {
-              console.log('Touch start detected');
-              console.log(e);
+            onTap={({x, y}) => {
+              // console.log('Tap detected');
+              // console.log(`x: ${x}, y: ${y}`);
+              // console.log(
+              //   `width: ${viewDimensions.width}, height: ${viewDimensions.height}`,
+              // );
+              // console.log('Locator:', locator);
+              console.log(readiumRef);
             }}
+            // onTouchStart={(e: GestureResponderEvent) => {
+            //   console.log('Touch start detected');
+            //   console.log(e);
+            // }}
             onMessage={console.log}
             onDrag={() => {
               setActivatedDecoration(null);
             }}
-            onLayout={onLayout}
+            // onLayout={onLayout}
             preferences={{
               theme: 'dark',
               scroll: true,
             }}
-            hybridRef={{f: onHybridRefChanged}}
+            ref={readiumRef}
           />
           {selection && (
             <SelectionMenu
               selection={selection}
               onClose={() => null}
-              // onAddDecoration={handleAddDecoration}
-              onAddDecoration={() => {
-                console.log('add decoration');
-                // console.log(locator);
-                console.log(viewDimensions);
-              }}
+              onAddDecoration={handleAddDecoration}
+              // onAddDecoration={() => {
+              //   console.log('add decoration');
+              //   // console.log(locator);
+              //   console.log(viewDimensions);
+              // }}
             />
           )}
           {activatedDecoration && (
