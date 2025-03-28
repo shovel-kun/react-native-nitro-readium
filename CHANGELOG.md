@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.2.1...v0.3.0) (2025-03-28)
+
+### ✨ Features
+
+* add publication hybrid object ([169b786](https://github.com/shovel-kun/react-native-nitro-readium/commit/169b786a4500a5b18f75b39ccd6660bb7663f17f))
+
 ## [0.2.1](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.2.0...v0.2.1) (2025-03-25)
 
 ### 🐛 Bug Fixes
