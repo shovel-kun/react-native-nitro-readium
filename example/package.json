@@ -13,7 +13,7 @@
   "dependencies": {
     "@react-native-documents/picker": "^10.1.1",
     "react": "19.0.0",
-    "react-native": "0.78.0",
+    "react-native": "0.78.1",
     "react-native-nitro-modules": "0.25.1",
     "react-native-gesture-handler": "^2.24.0"
   },
