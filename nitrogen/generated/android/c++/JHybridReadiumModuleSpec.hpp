@@ -52,7 +52,7 @@ namespace margelo::nitro::nitroreadium {
   public:
     // Methods
     double add(double a, double b) override;
-    std::shared_ptr<Promise<std::string>> getManifest(const std::string& absoluteUrl) override;
+    std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> openPublication(const std::string& absoluteUrl) override;
 
   private:
     friend HybridBase;

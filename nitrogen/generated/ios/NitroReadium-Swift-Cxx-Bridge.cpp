@@ -9,6 +9,7 @@
 
 // Include C++ implementation defined types
 #include "HybridNitroReadiumSpecSwift.hpp"
+#include "HybridPublicationSpecSwift.hpp"
 #include "HybridReadiumModuleSpecSwift.hpp"
 #include "NitroReadium-Swift-Cxx-Umbrella.hpp"
 
@@ -27,6 +28,30 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     auto swiftClosure = NitroReadium::Func_void_std__exception_ptr::fromUnsafe(swiftClosureWrapper);
     return [swiftClosure = std::move(swiftClosure)](const std::exception_ptr& error) mutable -> void {
       swiftClosure.call(error);
+    };
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>
+  std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec> create_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(void* _Nonnull swiftUnsafePointer) {
+    NitroReadium::HybridPublicationSpec_cxx swiftPart = NitroReadium::HybridPublicationSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::nitroreadium::HybridPublicationSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::nitroreadium::HybridPublicationSpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridPublicationSpec\" is not implemented in Swift!");
+    }
+  #endif
+    NitroReadium::HybridPublicationSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& /* result */)>
+  Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ create_Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = NitroReadium::Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& result) mutable -> void {
+      swiftClosure.call(result);
     };
   }
   

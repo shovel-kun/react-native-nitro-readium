@@ -16,7 +16,7 @@ import {
   DecorationType,
   ActivatedDecoration,
   ReadiumRef,
-  getManifest,
+  openPublication,
 } from 'react-native-nitro-readium';
 import {SelectionMenu} from './SelectionMenu';
 import {DecorationMenu} from './DecorationMenu';
@@ -126,8 +126,6 @@ function App(): React.JSX.Element {
   //   console.log('view dimensions changed');
   //   console.log(viewDimensions);
   // }, [viewDimensions]);
-  //
-  //
 
   const injectedJavascript: string = require('./script.raw.js');
   console.log('Injecting: ', injectedJavascript.substring(0, 100));
@@ -147,8 +145,9 @@ function App(): React.JSX.Element {
               if (result.uri) {
                 console.log(result);
                 setAbsolutePath(result.uri);
-                const manifest = await getManifest(result.uri);
-                console.log(manifest.toc);
+                const manifest = await openPublication(result.uri);
+                console.log(manifest.tableOfContents);
+                console.log(await manifest.cover());
               }
             } catch (err) {
               console.error(err);

@@ -27,10 +27,12 @@ target_sources(
   # Autolinking Setup
   ../nitrogen/generated/android/NitroReadiumOnLoad.cpp
   # Shared Nitrogen C++ sources
+  ../nitrogen/generated/shared/c++/HybridPublicationSpec.cpp
   ../nitrogen/generated/shared/c++/HybridReadiumModuleSpec.cpp
   ../nitrogen/generated/shared/c++/HybridNitroReadiumSpec.cpp
   ../nitrogen/generated/shared/c++/views/HybridNitroReadiumComponent.cpp
   # Android-specific Nitrogen C++ sources
+  ../nitrogen/generated/android/c++/JHybridPublicationSpec.cpp
   ../nitrogen/generated/android/c++/JHybridReadiumModuleSpec.cpp
   ../nitrogen/generated/android/c++/JHybridNitroReadiumSpec.cpp
   ../nitrogen/generated/android/c++/views/JHybridNitroReadiumStateUpdater.cpp

@@ -15,6 +15,7 @@
 #include <fbjni/fbjni.h>
 #include <NitroModules/HybridObjectRegistry.hpp>
 
+#include "JHybridPublicationSpec.hpp"
 #include "JHybridReadiumModuleSpec.hpp"
 #include "JHybridNitroReadiumSpec.hpp"
 #include "JFunc_void_Locator.hpp"
@@ -38,6 +39,7 @@ int initialize(JavaVM* vm) {
 
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
+    margelo::nitro::nitroreadium::JHybridPublicationSpec::registerNatives();
     margelo::nitro::nitroreadium::JHybridReadiumModuleSpec::registerNatives();
     margelo::nitro::nitroreadium::JHybridNitroReadiumSpec::registerNatives();
     margelo::nitro::nitroreadium::JFunc_void_Locator_cxx::registerNatives();
@@ -67,6 +69,15 @@ int initialize(JavaVM* vm) {
         auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridReadiumModuleSpec>(globalRef);
+      }
+    );
+    HybridObjectRegistry::registerHybridObjectConstructor(
+      "Publication",
+      []() -> std::shared_ptr<HybridObject> {
+        static DefaultConstructableObject<JHybridPublicationSpec::javaobject> object("com/nitroreadium/HybridPublication");
+        auto instance = object.create();
+        auto globalRef = jni::make_global(instance);
+        return JNISharedPtr::make_shared_from_jni<JHybridPublicationSpec>(globalRef);
       }
     );
   });

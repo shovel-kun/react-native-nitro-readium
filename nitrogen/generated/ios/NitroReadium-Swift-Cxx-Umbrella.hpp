@@ -26,6 +26,8 @@ namespace margelo::nitro::nitroreadium { struct DragEvent; }
 namespace margelo::nitro::nitroreadium { struct EpubPreferences; }
 // Forward declaration of `HybridNitroReadiumSpec` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { class HybridNitroReadiumSpec; }
+// Forward declaration of `HybridPublicationSpec` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { class HybridPublicationSpec; }
 // Forward declaration of `HybridReadiumModuleSpec` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { class HybridReadiumModuleSpec; }
 // Forward declaration of `ImageFilter` to properly resolve imports.
@@ -63,6 +65,7 @@ namespace margelo::nitro::nitroreadium { enum class Theme; }
 #include "DragEventType.hpp"
 #include "EpubPreferences.hpp"
 #include "HybridNitroReadiumSpec.hpp"
+#include "HybridPublicationSpec.hpp"
 #include "HybridReadiumModuleSpec.hpp"
 #include "ImageFilter.hpp"
 #include "Locations.hpp"
@@ -96,6 +99,8 @@ namespace margelo::nitro::nitroreadium { enum class Theme; }
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroReadiumSpec_cxx` to properly resolve imports.
 namespace NitroReadium { class HybridNitroReadiumSpec_cxx; }
+// Forward declaration of `HybridPublicationSpec_cxx` to properly resolve imports.
+namespace NitroReadium { class HybridPublicationSpec_cxx; }
 // Forward declaration of `HybridReadiumModuleSpec_cxx` to properly resolve imports.
 namespace NitroReadium { class HybridReadiumModuleSpec_cxx; }
 

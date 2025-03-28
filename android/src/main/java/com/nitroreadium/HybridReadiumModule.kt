@@ -6,6 +6,7 @@ import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
 import com.margelo.nitro.NitroModules
 import com.margelo.nitro.core.Promise
+import com.margelo.nitro.nitroreadium.HybridPublicationSpec
 import com.margelo.nitro.nitroreadium.HybridReadiumModuleSpec
 import org.readium.r2.shared.util.AbsoluteUrl
 import org.readium.r2.shared.util.getOrElse
@@ -21,12 +22,12 @@ class HybridReadiumModule: HybridReadiumModuleSpec() {
         return a + b
     }
 
-    override fun getManifest(absoluteUrl: String): Promise<String> {
+    override fun openPublication(absoluteUrl: String): Promise<HybridPublicationSpec> {
         return try {
             val cleanAbsoluteUrl = AbsoluteUrl(absoluteUrl) ?: return Promise.rejected(Exception("Invalid absoluteUrl: $absoluteUrl"))
             Promise.async {
                 val publication = bookService.openPublication(cleanAbsoluteUrl).getOrElse { throw Exception("Cannot open publication: $it") }
-                publication.manifest.toJSON().toString()
+                HybridPublication(publication)
             }
         } catch (e: Exception) {
             Log.e("HybridReadiumModule", "Error getting manifest: $e")

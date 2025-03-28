@@ -7,11 +7,16 @@
 
 #include "JHybridReadiumModuleSpec.hpp"
 
-
+// Forward declaration of `HybridPublicationSpec` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { class HybridPublicationSpec; }
 
 #include <NitroModules/Promise.hpp>
-#include <string>
+#include <memory>
+#include "HybridPublicationSpec.hpp"
 #include <NitroModules/JPromise.hpp>
+#include "JHybridPublicationSpec.hpp"
+#include <NitroModules/JNISharedPtr.hpp>
+#include <string>
 
 namespace margelo::nitro::nitroreadium {
 
@@ -39,14 +44,14 @@ namespace margelo::nitro::nitroreadium {
     auto __result = method(_javaPart, a, b);
     return __result;
   }
-  std::shared_ptr<Promise<std::string>> JHybridReadiumModuleSpec::getManifest(const std::string& absoluteUrl) {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* absoluteUrl */)>("getManifest");
+  std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> JHybridReadiumModuleSpec::openPublication(const std::string& absoluteUrl) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* absoluteUrl */)>("openPublication");
     auto __result = method(_javaPart, jni::make_jstring(absoluteUrl));
     return [&]() {
-      auto __promise = Promise<std::string>::create();
+      auto __promise = Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
-        auto __result = jni::static_ref_cast<jni::JString>(__boxedResult);
-        __promise->resolve(__result->toStdString());
+        auto __result = jni::static_ref_cast<JHybridPublicationSpec::javaobject>(__boxedResult);
+        __promise->resolve(JNISharedPtr::make_shared_from_jni<JHybridPublicationSpec>(jni::make_global(__result)));
       });
       __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
         jni::JniException __jniError(__throwable);
