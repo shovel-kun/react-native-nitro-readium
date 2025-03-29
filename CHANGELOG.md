@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.1](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.0...v0.3.1) (2025-03-29)
+
+### 🐛 Bug Fixes
+
+* export readium manifest types ([3f4abf8](https://github.com/shovel-kun/react-native-nitro-readium/commit/3f4abf8a70acbed234ce142aabbe891346cab113))
+
 ## [0.3.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.2.1...v0.3.0) (2025-03-28)
 
 ### ✨ Features
