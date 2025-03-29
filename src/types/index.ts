@@ -1,5 +1,5 @@
-import type { EpubPreferences } from './epub-preferences'
-import type { Manifest, Link } from './manifest'
+export type { EpubPreferences } from './epub-preferences'
+export * from './manifest'
 
 export interface Locator {
   href: string
@@ -71,5 +71,3 @@ export interface DragEvent {
   start: Point
   end: Point
 }
-
-export type { EpubPreferences, Manifest, Link }
