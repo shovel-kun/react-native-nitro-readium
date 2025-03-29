@@ -12,6 +12,7 @@ import NitroModules
 public protocol HybridPublicationSpec_protocol: HybridObject {
   // Properties
   var manifest: String { get set }
+  var metadata: String { get set }
   var tableOfContents: String { get set }
   var images: String { get set }
 

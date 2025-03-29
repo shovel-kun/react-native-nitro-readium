@@ -47,6 +47,8 @@ namespace margelo::nitro::nitroreadium {
       // Properties
       virtual std::string getManifest() = 0;
       virtual void setManifest(const std::string& manifest) = 0;
+      virtual std::string getMetadata() = 0;
+      virtual void setMetadata(const std::string& metadata) = 0;
       virtual std::string getTableOfContents() = 0;
       virtual void setTableOfContents(const std::string& tableOfContents) = 0;
       virtual std::string getImages() = 0;

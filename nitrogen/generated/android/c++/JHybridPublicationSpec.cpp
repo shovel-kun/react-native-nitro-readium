@@ -40,6 +40,15 @@ namespace margelo::nitro::nitroreadium {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* manifest */)>("setManifest");
     method(_javaPart, jni::make_jstring(manifest));
   }
+  std::string JHybridPublicationSpec::getMetadata() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getMetadata");
+    auto __result = method(_javaPart);
+    return __result->toStdString();
+  }
+  void JHybridPublicationSpec::setMetadata(const std::string& metadata) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* metadata */)>("setMetadata");
+    method(_javaPart, jni::make_jstring(metadata));
+  }
   std::string JHybridPublicationSpec::getTableOfContents() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getTableOfContents");
     auto __result = method(_javaPart);

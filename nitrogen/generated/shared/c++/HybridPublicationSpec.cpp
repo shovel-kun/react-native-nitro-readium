@@ -16,6 +16,8 @@ namespace margelo::nitro::nitroreadium {
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridGetter("manifest", &HybridPublicationSpec::getManifest);
       prototype.registerHybridSetter("manifest", &HybridPublicationSpec::setManifest);
+      prototype.registerHybridGetter("metadata", &HybridPublicationSpec::getMetadata);
+      prototype.registerHybridSetter("metadata", &HybridPublicationSpec::setMetadata);
       prototype.registerHybridGetter("tableOfContents", &HybridPublicationSpec::getTableOfContents);
       prototype.registerHybridSetter("tableOfContents", &HybridPublicationSpec::setTableOfContents);
       prototype.registerHybridGetter("images", &HybridPublicationSpec::getImages);

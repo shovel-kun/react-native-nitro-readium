@@ -59,6 +59,13 @@ namespace margelo::nitro::nitroreadium {
     inline void setManifest(const std::string& manifest) noexcept override {
       _swiftPart.setManifest(manifest);
     }
+    inline std::string getMetadata() noexcept override {
+      auto __result = _swiftPart.getMetadata();
+      return __result;
+    }
+    inline void setMetadata(const std::string& metadata) noexcept override {
+      _swiftPart.setMetadata(metadata);
+    }
     inline std::string getTableOfContents() noexcept override {
       auto __result = _swiftPart.getTableOfContents();
       return __result;

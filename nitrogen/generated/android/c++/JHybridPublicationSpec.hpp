@@ -49,6 +49,8 @@ namespace margelo::nitro::nitroreadium {
     // Properties
     std::string getManifest() override;
     void setManifest(const std::string& manifest) override;
+    std::string getMetadata() override;
+    void setMetadata(const std::string& metadata) override;
     std::string getTableOfContents() override;
     void setTableOfContents(const std::string& tableOfContents) override;
     std::string getImages() override;

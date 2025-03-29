@@ -7,6 +7,7 @@ import {
   Platform,
   Dimensions,
   LayoutChangeEvent,
+  Image,
 } from 'react-native';
 import {
   Readium,
@@ -17,10 +18,60 @@ import {
   ActivatedDecoration,
   ReadiumRef,
   openPublication,
+  LocalizedString,
+  Contributor,
 } from 'react-native-nitro-readium';
 import {SelectionMenu} from './SelectionMenu';
 import {DecorationMenu} from './DecorationMenu';
 import {pick} from '@react-native-documents/picker';
+
+// New component for displaying metadata
+const MetadataScreen = ({metadata, coverImageUri, onClose}) => {
+  return (
+    <View style={metadataStyles.container}>
+      <Text style={metadataStyles.title}>Metadata</Text>
+      <Text style={metadataStyles.label}>Title:</Text>
+      <Text style={metadataStyles.value}>{metadata.title || 'N/A'}</Text>
+      <Text style={metadataStyles.label}>Author:</Text>
+      <Text style={metadataStyles.value}>{metadata.author || 'N/A'}</Text>
+      {coverImageUri && (
+        <Image
+          source={{uri: coverImageUri}}
+          style={metadataStyles.coverImage}
+        />
+      )}
+      <Button title="Close" onPress={onClose} />
+    </View>
+  );
+};
+
+const metadataStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  value: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  coverImage: {
+    width: 200,
+    height: 300,
+    resizeMode: 'contain',
+    marginTop: 20,
+  },
+});
 
 function App(): React.JSX.Element {
   const [absolutePath, setAbsolutePath] = useState<string | null>(null);
@@ -31,6 +82,11 @@ function App(): React.JSX.Element {
     useState<ActivatedDecoration | null>(null);
   const [viewDimensions, setViewDimensions] = useState({width: 0, height: 0});
   const readiumRef = useRef<ReadiumRef>(null);
+  const [isMetadataVisible, setIsMetadataVisible] = useState(false);
+  const [metadata, setMetadata] = useState({});
+  const [coverImageUri, setCoverImageUri] = useState<string | undefined>(
+    undefined,
+  );
 
   const handleAddDecoration = useCallback(
     (type: DecorationType) => {
@@ -107,12 +163,6 @@ function App(): React.JSX.Element {
     [],
   );
 
-  const onHybridRefChanged = useCallback((ref: ReadiumRef | null) => {
-    console.log('onHybridRefChanged');
-    console.log(readiumRef.current);
-    readiumRef.current = ref;
-  }, []);
-
   const onLayout = useCallback(
     (event: LayoutChangeEvent) => {
       console.log('layout changed');
@@ -122,40 +172,74 @@ function App(): React.JSX.Element {
     [locator],
   );
 
-  // useEffect(() => {
-  //   console.log('view dimensions changed');
-  //   console.log(viewDimensions);
-  // }, [viewDimensions]);
-
   const injectedJavascript: string = require('./script.raw.js');
   console.log('Injecting: ', injectedJavascript.substring(0, 100));
 
-  console.log('RERENDER!!!!!');
+  const fetchMetadata = async () => {
+    try {
+      const [result] = await pick({
+        mode: 'open',
+      });
+      if (result.uri) {
+        console.log(result);
+        const publication = await openPublication(result.uri);
+        console.log(JSON.stringify(publication.manifest.metadata, null, 2));
+
+        const title =
+          parseLocalizedString(publication.manifest.metadata?.title) ||
+          'Unknown Title';
+        const author =
+          readiumToAuthors(publication.manifest.metadata?.author) ||
+          'Unknown Author';
+
+        setMetadata({title, author});
+
+        const coverUri = await publication.cover();
+        setCoverImageUri(coverUri);
+
+        setIsMetadataVisible(true);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {!absolutePath && (
-        <Button
-          title="open directory"
-          onPress={async () => {
-            try {
-              const [result] = await pick({
-                mode: 'open',
-              });
-              if (result.uri) {
-                console.log(result);
-                setAbsolutePath(result.uri);
-                const manifest = await openPublication(result.uri);
-                console.log(manifest.tableOfContents);
-                console.log(await manifest.cover());
+      {!absolutePath && !isMetadataVisible && (
+        <>
+          <Button
+            title="read epub in readium"
+            onPress={async () => {
+              try {
+                const [result] = await pick({
+                  mode: 'open',
+                });
+                if (result.uri) {
+                  console.log(result);
+                  setAbsolutePath(result.uri);
+                  const manifest = await openPublication(result.uri);
+                  console.log(manifest.tableOfContents);
+                  console.log(await manifest.cover());
+                }
+              } catch (err) {
+                console.error(err);
               }
-            } catch (err) {
-              console.error(err);
-            }
-          }}
+            }}
+          />
+          <Button title="view epub metadata" onPress={fetchMetadata} />
+        </>
+      )}
+
+      {isMetadataVisible && (
+        <MetadataScreen
+          metadata={metadata}
+          coverImageUri={coverImageUri}
+          onClose={() => setIsMetadataVisible(false)}
         />
       )}
-      {absolutePath && (
+
+      {absolutePath && !isMetadataVisible && (
         <>
           <Readium
             style={styles.view}
@@ -165,25 +249,12 @@ function App(): React.JSX.Element {
             onSelection={onSelectionChanged}
             onDecorationActivated={onDecorationActivatedChanged}
             injectedJavascriptOnResourcesLoad={injectedJavascript}
-            // onTap={{f: ({x, y}) => handleTap(x, y)}}
-            onTap={({x, y}) => {
-              // console.log('Tap detected');
-              // console.log(`x: ${x}, y: ${y}`);
-              // console.log(
-              //   `width: ${viewDimensions.width}, height: ${viewDimensions.height}`,
-              // );
-              // console.log('Locator:', locator);
-              console.log(readiumRef);
-            }}
-            // onTouchStart={(e: GestureResponderEvent) => {
-            //   console.log('Touch start detected');
-            //   console.log(e);
-            // }}
+            onTap={({x, y}) => handleTap(x, y)}
             onMessage={console.log}
             onDrag={() => {
               setActivatedDecoration(null);
             }}
-            // onLayout={onLayout}
+            onLayout={onLayout}
             preferences={{
               theme: 'dark',
               scroll: true,
@@ -195,11 +266,6 @@ function App(): React.JSX.Element {
               selection={selection}
               onClose={() => null}
               onAddDecoration={handleAddDecoration}
-              // onAddDecoration={() => {
-              //   console.log('add decoration');
-              //   // console.log(locator);
-              //   console.log(viewDimensions);
-              // }}
             />
           )}
           {activatedDecoration && (
@@ -213,6 +279,45 @@ function App(): React.JSX.Element {
       )}
     </View>
   );
+}
+
+function parseLocalizedString(
+  localizedString: LocalizedString,
+  locale = 'en-US',
+): string {
+  if (typeof localizedString === 'string') {
+    return localizedString;
+  }
+
+  if (locale in localizedString) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return localizedString[locale]!;
+  }
+
+  const firstLocale =
+    // Localized strings all have at least one locale
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    Object.keys(localizedString)[0]!;
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return localizedString[firstLocale]!;
+}
+
+function readiumToAuthors(
+  author: Contributor[] | Contributor | undefined,
+): string | undefined {
+  if (!author) return undefined;
+
+  const rawAuthors = Array.isArray(author) ? author : [author];
+
+  const parsedAuthors = rawAuthors.map<string>(a => {
+    if (typeof a === 'string') {
+      return parseLocalizedString(a);
+    }
+    return parseLocalizedString(a.name);
+  });
+
+  return parsedAuthors.join(', ');
 }
 
 const styles = StyleSheet.create({

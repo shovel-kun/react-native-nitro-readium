@@ -108,6 +108,17 @@ public class HybridPublicationSpec_cxx {
     }
   }
   
+  public final var metadata: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.metadata)
+    }
+    @inline(__always)
+    set {
+      self.__implementation.metadata = String(newValue)
+    }
+  }
+  
   public final var tableOfContents: std.string {
     @inline(__always)
     get {

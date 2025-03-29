@@ -47,6 +47,12 @@ abstract class HybridPublicationSpec: HybridObject() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
+  abstract var metadata: String
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
   abstract var tableOfContents: String
   
   @get:DoNotStrip
