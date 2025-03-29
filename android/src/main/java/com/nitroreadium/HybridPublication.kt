@@ -42,12 +42,10 @@ class HybridPublication(val publication: Publication) : HybridPublicationSpec() 
             return Promise.async { cacheFileUrl }
         }
 
-        publication.
-
-            // val baos = ByteArrayOutputStream()
-            // publication.cover()?.compress(Bitmap.CompressFormat.JPEG, 100, baos) ?: throw Exception("No cover found")
-            // val b = baos.toByteArray()
-            // Base64.encodeToString(b, Base64.DEFAULT)
+        // val baos = ByteArrayOutputStream()
+        // publication.cover()?.compress(Bitmap.CompressFormat.JPEG, 100, baos) ?: throw Exception("No cover found")
+        // val b = baos.toByteArray()
+        // Base64.encodeToString(b, Base64.DEFAULT)
 
         return Promise.async {
             FileOutputStream(cacheFile).use { fos ->
