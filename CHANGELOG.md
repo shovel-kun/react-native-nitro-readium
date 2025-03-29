@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.4](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.2...v0.3.4) (2025-03-29)
+
+### 🐛 Bug Fixes
+
+* throw on no cover found ([f770551](https://github.com/shovel-kun/react-native-nitro-readium/commit/f770551962ca47563412b4d0fee10c70431cf391))
+
+## [0.3.3](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.2...v0.3.3) (2025-03-29)
+
+### 🐛 Bug Fixes
+
+* throw on no cover found ([f770551](https://github.com/shovel-kun/react-native-nitro-readium/commit/f770551962ca47563412b4d0fee10c70431cf391))
+
 ## [0.3.2](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.1...v0.3.2) (2025-03-29)
 
 ### 🐛 Bug Fixes
