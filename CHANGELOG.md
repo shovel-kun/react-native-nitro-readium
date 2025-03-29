@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.2](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.1...v0.3.2) (2025-03-29)
+
+### 🐛 Bug Fixes
+
+* compilation error ([79bb87f](https://github.com/shovel-kun/react-native-nitro-readium/commit/79bb87f6c06f56f3b16d1227657dd8093601659d))
+
 ## [0.3.1](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.0...v0.3.1) (2025-03-29)
 
 ### 🐛 Bug Fixes
