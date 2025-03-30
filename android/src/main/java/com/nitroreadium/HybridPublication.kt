@@ -16,6 +16,7 @@ import org.readium.r2.shared.publication.services.content.content
 import java.io.File
 import java.io.FileOutputStream
 import android.graphics.BitmapFactory
+import com.facebook.jni.HybridData
 import org.readium.r2.shared.util.getOrElse
 import org.readium.r2.shared.util.resource.Resource
 
@@ -100,6 +101,14 @@ class HybridPublication(val publication: Publication) : HybridPublicationSpec() 
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
             ?: throw Exception("Failed to decode bitmap from resource data")
     }
+
+    override val memorySize: Long
+        get() {
+            val objectOverhead = 16L // Object header + padding
+            val stringOverhead = 40L // String object overhead
+            val manifestSize = stringOverhead + (manifest.length * 2)
+            return manifestSize + objectOverhead
+        }
 }
 
 // val baos = ByteArrayOutputStream()
