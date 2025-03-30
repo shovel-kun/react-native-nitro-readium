@@ -10,7 +10,7 @@ module.exports.transform = ({src, filename, options, plugins}) => {
       /**
        * Add return true to the end of the ouput: https://github.com/react-native-webview/react-native-webview/blob/master/docs/Guide.md#the-injectedjavascript-prop
        */
-      src: `const code = ${JSON.stringify(src)} + '\\ntrue;'; module.exports = code;`,
+      src: `const code = ${JSON.stringify(src)}; module.exports = code;`,
       filename,
       options,
       plugins,
