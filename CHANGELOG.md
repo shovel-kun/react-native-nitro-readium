@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.5](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.4...v0.3.5) (2025-03-30)
+
+### 🐛 Bug Fixes
+
+* estimate memory size ([90dfa89](https://github.com/shovel-kun/react-native-nitro-readium/commit/90dfa89b6089da87c4f7ea401f289ef2f021e4f2))
+
 ## [0.3.4](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.2...v0.3.4) (2025-03-29)
 
 ### 🐛 Bug Fixes
