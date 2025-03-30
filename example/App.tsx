@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef, useCallback, useEffect} from 'react';
 import {
   Button,
   Text,
@@ -25,7 +25,11 @@ import {SelectionMenu} from './SelectionMenu';
 import {DecorationMenu} from './DecorationMenu';
 import {pick, pickDirectory} from '@react-native-documents/picker';
 import {UniFile, fromUri} from 'react-native-unifile';
-import {createStaticNavigation, useNavigation} from '@react-navigation/native';
+import {
+  createStaticNavigation,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import type {
   StaticParamList,
@@ -54,7 +58,19 @@ type HomeScreenProps = StaticScreenProps<{}>;
 
 const BookListScreen = ({route}: BookListScreenProps) => {
   const navigation = useNavigation();
-  const {books} = route.params;
+  const {books, isAutoScan} = route.params;
+  // CHANGE ME!
+  const TIME_BETWEEN_SCANS = 50;
+
+  useEffect(() => {
+    if (isAutoScan) {
+      const timer = setTimeout(() => {
+        navigation.goBack();
+      }, TIME_BETWEEN_SCANS);
+
+      return () => clearTimeout(timer); // Cleanup on unmount
+    }
+  }, []);
 
   const renderItem = ({item}: {item: Book}) => (
     <View style={bookListStyles.itemContainer}>
@@ -262,6 +278,17 @@ const ReadiumViewerScreen = ({route}: ReadiumViewerScreenProps) => {
 const HomeScreen = ({}: HomeScreenProps) => {
   const navigation = useNavigation();
   const [pickedDirectory, setPickedDirectory] = useState<string | null>(null);
+  const [isButtonToggled, setIsButtonToggled] = useState(false);
+  const scanCountRef = useRef(0);
+
+  // DEBUG
+  useFocusEffect(
+    React.useCallback(() => {
+      if (isButtonToggled) {
+        fetchBooksInDirectory();
+      }
+    }, [isButtonToggled]),
+  );
 
   const fetchMetadata = async () => {
     try {
@@ -354,7 +381,15 @@ const HomeScreen = ({}: HomeScreenProps) => {
       console.log(
         `Finished processing all files. Found ${books.length} valid books.`,
       );
-      navigation.navigate('BookList', {books});
+
+      // DEBUG
+      scanCountRef.current += 1; // Update the ref
+      console.log('Scan count:', scanCountRef.current);
+
+      navigation.navigate('BookList', {
+        books,
+        isAutoScan: isButtonToggled,
+      });
     }
   };
 
@@ -381,6 +416,12 @@ const HomeScreen = ({}: HomeScreenProps) => {
         <Button
           title="view epubs in directory"
           onPress={fetchBooksInDirectory}
+        />
+        <Button
+          title={isButtonToggled ? 'Scanning...' : 'Start Auto Scan'}
+          onPress={() => setIsButtonToggled(true)}
+          disabled={!pickedDirectory || isButtonToggled}
+          color={isButtonToggled ? 'green' : undefined}
         />
       </>
     </View>
