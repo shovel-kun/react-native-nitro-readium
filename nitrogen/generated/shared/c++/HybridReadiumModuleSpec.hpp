@@ -13,9 +13,12 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `HybridPublicationSpec` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { class HybridPublicationSpec; }
 
 #include <NitroModules/Promise.hpp>
+#include <memory>
+#include "HybridPublicationSpec.hpp"
 #include <string>
 
 namespace margelo::nitro::nitroreadium {
@@ -50,7 +53,7 @@ namespace margelo::nitro::nitroreadium {
     public:
       // Methods
       virtual double add(double a, double b) = 0;
-      virtual std::shared_ptr<Promise<std::string>> getManifest(const std::string& absoluteUrl) = 0;
+      virtual std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> openPublication(const std::string& absoluteUrl) = 0;
 
     protected:
       // Hybrid Setup

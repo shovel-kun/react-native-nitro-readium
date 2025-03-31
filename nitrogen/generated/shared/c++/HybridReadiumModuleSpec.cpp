@@ -15,7 +15,7 @@ namespace margelo::nitro::nitroreadium {
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
       prototype.registerHybridMethod("add", &HybridReadiumModuleSpec::add);
-      prototype.registerHybridMethod("getManifest", &HybridReadiumModuleSpec::getManifest);
+      prototype.registerHybridMethod("openPublication", &HybridReadiumModuleSpec::openPublication);
     });
   }
 

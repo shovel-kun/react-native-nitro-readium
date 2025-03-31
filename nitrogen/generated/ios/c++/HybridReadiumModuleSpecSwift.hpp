@@ -12,9 +12,12 @@
 // Forward declaration of `HybridReadiumModuleSpec_cxx` to properly resolve imports.
 namespace NitroReadium { class HybridReadiumModuleSpec_cxx; }
 
-
+// Forward declaration of `HybridPublicationSpec` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { class HybridPublicationSpec; }
 
 #include <NitroModules/Promise.hpp>
+#include <memory>
+#include "HybridPublicationSpec.hpp"
 #include <string>
 
 #include "NitroReadium-Swift-Cxx-Umbrella.hpp"
@@ -64,8 +67,8 @@ namespace margelo::nitro::nitroreadium {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::shared_ptr<Promise<std::string>> getManifest(const std::string& absoluteUrl) override {
-      auto __result = _swiftPart.getManifest(absoluteUrl);
+    inline std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> openPublication(const std::string& absoluteUrl) override {
+      auto __result = _swiftPart.openPublication(absoluteUrl);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

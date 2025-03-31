@@ -16,8 +16,11 @@
     "ReadiumModule": {
       "swift": "HybridReadiumModule",
       "kotlin": "HybridReadiumModule"
+    },
+    "Publication": {
+      "swift": "HybridPublication",
+      "kotlin": "HybridPublication"
     }
   },
   "ignorePaths": ["**/node_modules"]
 }
-

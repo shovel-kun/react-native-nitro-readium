@@ -15,7 +15,7 @@ public protocol HybridReadiumModuleSpec_protocol: HybridObject {
 
   // Methods
   func add(a: Double, b: Double) throws -> Double
-  func getManifest(absoluteUrl: String) throws -> Promise<String>
+  func openPublication(absoluteUrl: String) throws -> Promise<(any HybridPublicationSpec)>
 }
 
 /// See ``HybridReadiumModuleSpec``

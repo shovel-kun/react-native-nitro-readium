@@ -26,6 +26,8 @@ namespace margelo::nitro::nitroreadium { struct DragEvent; }
 namespace margelo::nitro::nitroreadium { struct EpubPreferences; }
 // Forward declaration of `HybridNitroReadiumSpec` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { class HybridNitroReadiumSpec; }
+// Forward declaration of `HybridPublicationSpec` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { class HybridPublicationSpec; }
 // Forward declaration of `HybridReadiumModuleSpec` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { class HybridReadiumModuleSpec; }
 // Forward declaration of `ImageFilter` to properly resolve imports.
@@ -56,6 +58,8 @@ namespace margelo::nitro::nitroreadium { enum class Theme; }
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridNitroReadiumSpec_cxx` to properly resolve imports.
 namespace NitroReadium { class HybridNitroReadiumSpec_cxx; }
+// Forward declaration of `HybridPublicationSpec_cxx` to properly resolve imports.
+namespace NitroReadium { class HybridPublicationSpec_cxx; }
 // Forward declaration of `HybridReadiumModuleSpec_cxx` to properly resolve imports.
 namespace NitroReadium { class HybridReadiumModuleSpec_cxx; }
 
@@ -69,6 +73,7 @@ namespace NitroReadium { class HybridReadiumModuleSpec_cxx; }
 #include "DragEventType.hpp"
 #include "EpubPreferences.hpp"
 #include "HybridNitroReadiumSpec.hpp"
+#include "HybridPublicationSpec.hpp"
 #include "HybridReadiumModuleSpec.hpp"
 #include "ImageFilter.hpp"
 #include "Locations.hpp"
@@ -154,6 +159,61 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
+  // pragma MARK: std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ = std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>;
+  std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec> create_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>
+  using std__weak_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ = std::weak_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>;
+  inline std__weak_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ weakify_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<std::string>>>
+  using Result_std__shared_ptr_Promise_std__string___ = Result<std::shared_ptr<Promise<std::string>>>;
+  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::shared_ptr<Promise<std::string>>& value) {
+    return Result<std::shared_ptr<Promise<std::string>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>`.
+   */
+  using std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec___ = std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>;
+  inline std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> create_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec___() {
+    return Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>::create();
+  }
+  inline PromiseHolder<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>> wrap_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec___(std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> promise) {
+    return PromiseHolder<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>&)>`.
+   */
+  using Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ = std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec__Wrapper final {
+  public:
+    explicit Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec__Wrapper(std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& /* result */)>>(std::move(func))) {}
+    inline void call(std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec> result) const {
+      _function->operator()(result);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& /* result */)>> _function;
+  };
+  Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ create_Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec__Wrapper wrap_Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ value) {
+    return Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec__Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::nitroreadium::HybridReadiumModuleSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::nitroreadium::HybridReadiumModuleSpec>`.
@@ -175,13 +235,13 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     return Result<double>::withError(error);
   }
   
-  // pragma MARK: Result<std::shared_ptr<Promise<std::string>>>
-  using Result_std__shared_ptr_Promise_std__string___ = Result<std::shared_ptr<Promise<std::string>>>;
-  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::shared_ptr<Promise<std::string>>& value) {
-    return Result<std::shared_ptr<Promise<std::string>>>::withValue(value);
+  // pragma MARK: Result<std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>>
+  using Result_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec____ = Result<std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>>;
+  inline Result_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec____ create_Result_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec____(const std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>& value) {
+    return Result<std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>>::withValue(value);
   }
-  inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
-    return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
+  inline Result_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec____ create_Result_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec____(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>>::withError(error);
   }
   
   // pragma MARK: std::optional<std::string>

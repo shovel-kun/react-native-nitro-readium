@@ -12,6 +12,7 @@
 
 #include "HybridNitroReadiumSpecSwift.hpp"
 #include "HybridReadiumModuleSpecSwift.hpp"
+#include "HybridPublicationSpecSwift.hpp"
 
 @interface NitroReadiumAutolinking : NSObject
 @end
@@ -33,6 +34,13 @@
     "ReadiumModule",
     []() -> std::shared_ptr<HybridObject> {
       std::shared_ptr<margelo::nitro::nitroreadium::HybridReadiumModuleSpec> hybridObject = NitroReadium::NitroReadiumAutolinking::createReadiumModule();
+      return hybridObject;
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "Publication",
+    []() -> std::shared_ptr<HybridObject> {
+      std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec> hybridObject = NitroReadium::NitroReadiumAutolinking::createPublication();
       return hybridObject;
     }
   );

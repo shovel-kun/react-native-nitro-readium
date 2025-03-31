@@ -30,7 +30,7 @@ export interface NitroReadiumProps extends HybridViewProps {
   onPageChanged?: (page: number, totalPages: number, locator: Locator) => void
   onPageLoaded?: () => void
   /*
-   * To post a message from webview to React Native, call:
+   * To post a message from Readium WebView to React Native, call:
    *
    * window.ReadiumWebView.postMessage("your message")
    */
