@@ -97,26 +97,14 @@ public class HybridNitroReadiumSpec_cxx {
   }
 
   // Properties
-  public final var absolutePath: bridge.std__optional_std__string_ {
+  public final var nitroSource: NitroFileSource {
     @inline(__always)
     get {
-      return { () -> bridge.std__optional_std__string_ in
-        if let __unwrappedValue = self.__implementation.absolutePath {
-          return bridge.create_std__optional_std__string_(std.string(__unwrappedValue))
-        } else {
-          return .init()
-        }
-      }()
+      return self.__implementation.nitroSource
     }
     @inline(__always)
     set {
-      self.__implementation.absolutePath = { () -> String? in
-        if let __unwrapped = newValue.value {
-          return String(__unwrapped)
-        } else {
-          return nil
-        }
-      }()
+      self.__implementation.nitroSource = newValue
     }
   }
   

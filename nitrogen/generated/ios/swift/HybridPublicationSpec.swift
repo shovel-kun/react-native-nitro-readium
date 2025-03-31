@@ -18,6 +18,9 @@ public protocol HybridPublicationSpec_protocol: HybridObject {
 
   // Methods
   func cover() throws -> Promise<String>
+  func locatorFromLink(link: String) throws -> Locator?
+  func locate(locator: Locator) throws -> Promise<Locator?>
+  func locateProgression(progression: Double) throws -> Promise<Locator?>
 }
 
 /// See ``HybridPublicationSpec``

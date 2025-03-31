@@ -2,7 +2,7 @@ import { NitroModules } from 'react-native-nitro-modules'
 export * from './types'
 export type { DecorationActivatedEvent as ActivatedDecoration } from './types'
 import type { ReadiumModule as ReadiumModuleSpecs } from './specs/readium-module.nitro'
-import type { Manifest, Link, MetaData } from './types'
+import type { Manifest, Link, MetaData, Locator } from './types'
 import type { Publication as RawPublication } from './specs/publication.nitro'
 export {
   default as Readium,
@@ -19,6 +19,9 @@ export interface Publication {
   metadata: MetaData
   images: Link[]
   cover(): Promise<string>
+  locatorFromLink(link: Link): Locator | null
+  locate(locator: Locator): Promise<Locator | null>
+  locateProgression(progression: number): Promise<Locator | null>
 }
 
 async function parsePublication(
@@ -30,6 +33,11 @@ async function parsePublication(
     images: JSON.parse(rawPublication.images),
     metadata: JSON.parse(rawPublication.metadata),
     cover: () => rawPublication.cover(),
+    locatorFromLink: (link: Link) =>
+      rawPublication.locatorFromLink(JSON.stringify(link)),
+    locate: (locator: Locator) => rawPublication.locate(locator),
+    locateProgression: (progression: number) =>
+      rawPublication.locateProgression(progression),
   }
 }
 

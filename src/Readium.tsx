@@ -4,6 +4,7 @@ import React, {
   useImperativeHandle,
   memo,
   useCallback,
+  useMemo,
 } from 'react'
 import { getHostComponent, type HybridRef } from 'react-native-nitro-modules'
 import type { StyleProp, ViewStyle } from 'react-native'
@@ -13,25 +14,33 @@ import type {
   NitroReadiumMethods,
   NitroReadium as NitroReadiumType,
 } from './views/nitro-readium.nitro'
-import type { Locator } from './types'
+import type { Link, Locator } from './types'
 
 const NitroReadium = getHostComponent<NitroReadiumProps, NitroReadiumMethods>(
   'NitroReadium',
   () => NitroReadiumConfig
 )
 
-export interface ReadiumProps extends NitroReadiumProps {
+export interface ReadiumProps extends Omit<NitroReadiumProps, 'nitroSource'> {
+  source: {
+    uri: string
+    initialLocation?: Locator | Link
+  }
   style?: StyleProp<ViewStyle>
   hybridRef?: {
     f: (ref: ReadiumNitroRef | null) => void
   }
 }
 
-export type ReadiumNitroRef = HybridRef<NitroReadiumProps, NitroReadiumMethods>
+export type ReadiumNitroRef = HybridRef<
+  Omit<NitroReadiumProps, 'nitroSource'>,
+  NitroReadiumMethods
+>
 
 const Readium = forwardRef<NitroReadiumMethods, ReadiumProps>(
   (
     {
+      source,
       style,
       onLocatorChanged,
       onTap,
@@ -87,9 +96,18 @@ const Readium = forwardRef<NitroReadiumMethods, ReadiumProps>(
       }
     }, [])
 
+    const nitroSource = useMemo(() => {
+      return {
+        uri: source.uri,
+        // Stringify initialLocation before passing it to native side
+        initialLocation: JSON.stringify(source.initialLocation),
+      }
+    }, [source])
+
     return (
       <NitroReadium
         {...rest}
+        nitroSource={nitroSource}
         style={style}
         onLocatorChanged={{ f: onLocatorChanged }}
         onTap={{ f: onTap }}

@@ -16,8 +16,7 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/renderer/components/view/ViewProps.h>
 
-#include <optional>
-#include <string>
+#include "NitroFileSource.hpp"
 #include <optional>
 #include "Locator.hpp"
 #include <optional>
@@ -79,7 +78,7 @@ namespace margelo::nitro::nitroreadium::views {
                             const react::RawProps& rawProps);
 
   public:
-    CachedProp<std::optional<std::string>> absolutePath;
+    CachedProp<NitroFileSource> nitroSource;
     CachedProp<std::optional<Locator>> locator;
     CachedProp<std::optional<EpubPreferences>> preferences;
     CachedProp<std::optional<std::vector<Decoration>>> decorations;

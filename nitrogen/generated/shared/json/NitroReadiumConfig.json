@@ -4,7 +4,7 @@
   "bubblingEventTypes": {},
   "directEventTypes": {},
   "validAttributes": {
-    "absolutePath": true,
+    "nitroSource": true,
     "locator": true,
     "preferences": true,
     "decorations": true,

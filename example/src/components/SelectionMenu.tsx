@@ -1,23 +1,24 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {
+  Selection,
   Decoration,
   DecorationType,
-  ActivatedDecoration,
-} from 'react-native-readium-nitro';
+} from 'react-native-nitro-readium';
 
-interface DecorationMenuProps {
-  activatedDecoration: ActivatedDecoration;
+interface SelectionMenuProps {
+  selection: Selection;
   onClose: () => void;
-  onRemoveDecoration: (id: string) => void;
+  onAddDecoration: (type: DecorationType) => void;
 }
 
-export const DecorationMenu: React.FC<DecorationMenuProps> = ({
-  activatedDecoration,
+export const SelectionMenu: React.FC<SelectionMenuProps> = ({
+  selection,
   onClose,
-  onRemoveDecoration,
+  onAddDecoration,
 }) => {
-  const {rect} = activatedDecoration;
+  const {rect} = selection;
+  console.log(rect);
 
   if (!rect) {
     return null;
@@ -40,11 +41,19 @@ export const DecorationMenu: React.FC<DecorationMenuProps> = ({
         elevation: 4,
       }}>
       <TouchableOpacity
+        style={{marginRight: 8}}
         onPress={() => {
-          onRemoveDecoration(activatedDecoration.decoration.id);
+          onAddDecoration('highlight');
           onClose();
         }}>
-        <Text style={{color: 'red'}}>Remove</Text>
+        <Text>Highlight</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          onAddDecoration('underline');
+          onClose();
+        }}>
+        <Text>Underline</Text>
       </TouchableOpacity>
     </View>
   );

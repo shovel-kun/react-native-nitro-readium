@@ -25,14 +25,14 @@ namespace margelo::nitro::nitroreadium::views {
                                                    const HybridNitroReadiumProps& sourceProps,
                                                    const react::RawProps& rawProps):
     react::ViewProps(context, sourceProps, rawProps, filterObjectKeys),
-    absolutePath([&]() -> CachedProp<std::optional<std::string>> {
+    nitroSource([&]() -> CachedProp<NitroFileSource> {
       try {
-        const react::RawValue* rawValue = rawProps.at("absolutePath", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.absolutePath;
+        const react::RawValue* rawValue = rawProps.at("nitroSource", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.nitroSource;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::optional<std::string>>::fromRawValue(*runtime, value, sourceProps.absolutePath);
+        return CachedProp<NitroFileSource>::fromRawValue(*runtime, value, sourceProps.nitroSource);
       } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroReadium.absolutePath: ") + exc.what());
+        throw std::runtime_error(std::string("NitroReadium.nitroSource: ") + exc.what());
       }
     }()),
     locator([&]() -> CachedProp<std::optional<Locator>> {
@@ -178,7 +178,7 @@ namespace margelo::nitro::nitroreadium::views {
 
   HybridNitroReadiumProps::HybridNitroReadiumProps(const HybridNitroReadiumProps& other):
     react::ViewProps(),
-    absolutePath(other.absolutePath),
+    nitroSource(other.nitroSource),
     locator(other.locator),
     preferences(other.preferences),
     decorations(other.decorations),
@@ -196,7 +196,7 @@ namespace margelo::nitro::nitroreadium::views {
 
   bool HybridNitroReadiumProps::filterObjectKeys(const std::string& propName) {
     switch (hashString(propName)) {
-      case hashString("absolutePath"): return true;
+      case hashString("nitroSource"): return true;
       case hashString("locator"): return true;
       case hashString("preferences"): return true;
       case hashString("decorations"): return true;

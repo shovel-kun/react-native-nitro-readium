@@ -159,6 +159,105 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
+  // pragma MARK: std::optional<std::string>
+  /**
+   * Specialized version of `std::optional<std::string>`.
+   */
+  using std__optional_std__string_ = std::optional<std::string>;
+  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
+    return std::optional<std::string>(value);
+  }
+  
+  // pragma MARK: std::vector<std::string>
+  /**
+   * Specialized version of `std::vector<std::string>`.
+   */
+  using std__vector_std__string_ = std::vector<std::string>;
+  inline std::vector<std::string> create_std__vector_std__string_(size_t size) {
+    std::vector<std::string> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: std::optional<std::vector<std::string>>
+  /**
+   * Specialized version of `std::optional<std::vector<std::string>>`.
+   */
+  using std__optional_std__vector_std__string__ = std::optional<std::vector<std::string>>;
+  inline std::optional<std::vector<std::string>> create_std__optional_std__vector_std__string__(const std::vector<std::string>& value) {
+    return std::optional<std::vector<std::string>>(value);
+  }
+  
+  // pragma MARK: std::optional<double>
+  /**
+   * Specialized version of `std::optional<double>`.
+   */
+  using std__optional_double_ = std::optional<double>;
+  inline std::optional<double> create_std__optional_double_(const double& value) {
+    return std::optional<double>(value);
+  }
+  
+  // pragma MARK: std::optional<Locations>
+  /**
+   * Specialized version of `std::optional<Locations>`.
+   */
+  using std__optional_Locations_ = std::optional<Locations>;
+  inline std::optional<Locations> create_std__optional_Locations_(const Locations& value) {
+    return std::optional<Locations>(value);
+  }
+  
+  // pragma MARK: std::optional<TextObject>
+  /**
+   * Specialized version of `std::optional<TextObject>`.
+   */
+  using std__optional_TextObject_ = std::optional<TextObject>;
+  inline std::optional<TextObject> create_std__optional_TextObject_(const TextObject& value) {
+    return std::optional<TextObject>(value);
+  }
+  
+  // pragma MARK: std::optional<Locator>
+  /**
+   * Specialized version of `std::optional<Locator>`.
+   */
+  using std__optional_Locator_ = std::optional<Locator>;
+  inline std::optional<Locator> create_std__optional_Locator_(const Locator& value) {
+    return std::optional<Locator>(value);
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<std::optional<Locator>>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<std::optional<Locator>>>`.
+   */
+  using std__shared_ptr_Promise_std__optional_Locator___ = std::shared_ptr<Promise<std::optional<Locator>>>;
+  inline std::shared_ptr<Promise<std::optional<Locator>>> create_std__shared_ptr_Promise_std__optional_Locator___() {
+    return Promise<std::optional<Locator>>::create();
+  }
+  inline PromiseHolder<std::optional<Locator>> wrap_std__shared_ptr_Promise_std__optional_Locator___(std::shared_ptr<Promise<std::optional<Locator>>> promise) {
+    return PromiseHolder<std::optional<Locator>>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const std::optional<Locator>& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const std::optional<Locator>&)>`.
+   */
+  using Func_void_std__optional_Locator_ = std::function<void(const std::optional<Locator>& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::optional<Locator>& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__optional_Locator__Wrapper final {
+  public:
+    explicit Func_void_std__optional_Locator__Wrapper(std::function<void(const std::optional<Locator>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::optional<Locator>& /* result */)>>(std::move(func))) {}
+    inline void call(std::optional<Locator> result) const {
+      _function->operator()(result);
+    }
+  private:
+    std::shared_ptr<std::function<void(const std::optional<Locator>& /* result */)>> _function;
+  };
+  Func_void_std__optional_Locator_ create_Func_void_std__optional_Locator_(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__optional_Locator__Wrapper wrap_Func_void_std__optional_Locator_(Func_void_std__optional_Locator_ value) {
+    return Func_void_std__optional_Locator__Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>`.
@@ -178,6 +277,24 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::optional<Locator>>
+  using Result_std__optional_Locator__ = Result<std::optional<Locator>>;
+  inline Result_std__optional_Locator__ create_Result_std__optional_Locator__(const std::optional<Locator>& value) {
+    return Result<std::optional<Locator>>::withValue(value);
+  }
+  inline Result_std__optional_Locator__ create_Result_std__optional_Locator__(const std::exception_ptr& error) {
+    return Result<std::optional<Locator>>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<std::optional<Locator>>>>
+  using Result_std__shared_ptr_Promise_std__optional_Locator____ = Result<std::shared_ptr<Promise<std::optional<Locator>>>>;
+  inline Result_std__shared_ptr_Promise_std__optional_Locator____ create_Result_std__shared_ptr_Promise_std__optional_Locator____(const std::shared_ptr<Promise<std::optional<Locator>>>& value) {
+    return Result<std::shared_ptr<Promise<std::optional<Locator>>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_std__optional_Locator____ create_Result_std__shared_ptr_Promise_std__optional_Locator____(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<std::optional<Locator>>>>::withError(error);
   }
   
   // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>
@@ -242,71 +359,6 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec____ create_Result_std__shared_ptr_Promise_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec____(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>>::withError(error);
-  }
-  
-  // pragma MARK: std::optional<std::string>
-  /**
-   * Specialized version of `std::optional<std::string>`.
-   */
-  using std__optional_std__string_ = std::optional<std::string>;
-  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
-    return std::optional<std::string>(value);
-  }
-  
-  // pragma MARK: std::vector<std::string>
-  /**
-   * Specialized version of `std::vector<std::string>`.
-   */
-  using std__vector_std__string_ = std::vector<std::string>;
-  inline std::vector<std::string> create_std__vector_std__string_(size_t size) {
-    std::vector<std::string> vector;
-    vector.reserve(size);
-    return vector;
-  }
-  
-  // pragma MARK: std::optional<std::vector<std::string>>
-  /**
-   * Specialized version of `std::optional<std::vector<std::string>>`.
-   */
-  using std__optional_std__vector_std__string__ = std::optional<std::vector<std::string>>;
-  inline std::optional<std::vector<std::string>> create_std__optional_std__vector_std__string__(const std::vector<std::string>& value) {
-    return std::optional<std::vector<std::string>>(value);
-  }
-  
-  // pragma MARK: std::optional<double>
-  /**
-   * Specialized version of `std::optional<double>`.
-   */
-  using std__optional_double_ = std::optional<double>;
-  inline std::optional<double> create_std__optional_double_(const double& value) {
-    return std::optional<double>(value);
-  }
-  
-  // pragma MARK: std::optional<Locations>
-  /**
-   * Specialized version of `std::optional<Locations>`.
-   */
-  using std__optional_Locations_ = std::optional<Locations>;
-  inline std::optional<Locations> create_std__optional_Locations_(const Locations& value) {
-    return std::optional<Locations>(value);
-  }
-  
-  // pragma MARK: std::optional<TextObject>
-  /**
-   * Specialized version of `std::optional<TextObject>`.
-   */
-  using std__optional_TextObject_ = std::optional<TextObject>;
-  inline std::optional<TextObject> create_std__optional_TextObject_(const TextObject& value) {
-    return std::optional<TextObject>(value);
-  }
-  
-  // pragma MARK: std::optional<Locator>
-  /**
-   * Specialized version of `std::optional<Locator>`.
-   */
-  using std__optional_Locator_ = std::optional<Locator>;
-  inline std::optional<Locator> create_std__optional_Locator_(const Locator& value) {
-    return std::optional<Locator>(value);
   }
   
   // pragma MARK: std::optional<ColumnCount>
