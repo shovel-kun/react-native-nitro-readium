@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.6...v0.4.0) (2025-04-04)
+
+### ✨ Features
+
+* links and locators ([eacf990](https://github.com/shovel-kun/react-native-nitro-readium/commit/eacf9905f916bc394b02ba309da45db2daeb90eb))
+
 ## [0.3.6](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.5...v0.3.6) (2025-03-30)
 
 ## [0.3.5](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.4...v0.3.5) (2025-03-30)
