@@ -12,6 +12,8 @@
 // Forward declaration of `HybridNitroReadiumSpec_cxx` to properly resolve imports.
 namespace NitroReadium { class HybridNitroReadiumSpec_cxx; }
 
+// Forward declaration of `NitroFileSource` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct NitroFileSource; }
 // Forward declaration of `Locator` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { struct Locator; }
 // Forward declaration of `Locations` to properly resolve imports.
@@ -53,8 +55,9 @@ namespace margelo::nitro::nitroreadium { struct DragEvent; }
 // Forward declaration of `DragEventType` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { enum class DragEventType; }
 
-#include <optional>
+#include "NitroFileSource.hpp"
 #include <string>
+#include <optional>
 #include "Locator.hpp"
 #include "Locations.hpp"
 #include <vector>
@@ -114,12 +117,12 @@ namespace margelo::nitro::nitroreadium {
 
   public:
     // Properties
-    inline std::optional<std::string> getAbsolutePath() noexcept override {
-      auto __result = _swiftPart.getAbsolutePath();
+    inline NitroFileSource getNitroSource() noexcept override {
+      auto __result = _swiftPart.getNitroSource();
       return __result;
     }
-    inline void setAbsolutePath(const std::optional<std::string>& absolutePath) noexcept override {
-      _swiftPart.setAbsolutePath(absolutePath);
+    inline void setNitroSource(const NitroFileSource& nitroSource) noexcept override {
+      _swiftPart.setNitroSource(nitroSource);
     }
     inline std::optional<Locator> getLocator() noexcept override {
       auto __result = _swiftPart.getLocator();

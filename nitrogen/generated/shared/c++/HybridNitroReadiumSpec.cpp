@@ -14,8 +14,8 @@ namespace margelo::nitro::nitroreadium {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridGetter("absolutePath", &HybridNitroReadiumSpec::getAbsolutePath);
-      prototype.registerHybridSetter("absolutePath", &HybridNitroReadiumSpec::setAbsolutePath);
+      prototype.registerHybridGetter("nitroSource", &HybridNitroReadiumSpec::getNitroSource);
+      prototype.registerHybridSetter("nitroSource", &HybridNitroReadiumSpec::setNitroSource);
       prototype.registerHybridGetter("locator", &HybridNitroReadiumSpec::getLocator);
       prototype.registerHybridSetter("locator", &HybridNitroReadiumSpec::setLocator);
       prototype.registerHybridGetter("preferences", &HybridNitroReadiumSpec::getPreferences);

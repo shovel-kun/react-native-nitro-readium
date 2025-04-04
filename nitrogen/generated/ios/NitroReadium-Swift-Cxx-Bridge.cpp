@@ -31,6 +31,14 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(const std::optional<Locator>& /* result */)>
+  Func_void_std__optional_Locator_ create_Func_void_std__optional_Locator_(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = NitroReadium::Func_void_std__optional_Locator_::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::optional<Locator>& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>
   std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec> create_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(void* _Nonnull swiftUnsafePointer) {
     NitroReadium::HybridPublicationSpec_cxx swiftPart = NitroReadium::HybridPublicationSpec_cxx::fromUnsafe(swiftUnsafePointer);

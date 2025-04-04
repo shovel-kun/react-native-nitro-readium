@@ -23,6 +23,9 @@ namespace margelo::nitro::nitroreadium {
       prototype.registerHybridGetter("images", &HybridPublicationSpec::getImages);
       prototype.registerHybridSetter("images", &HybridPublicationSpec::setImages);
       prototype.registerHybridMethod("cover", &HybridPublicationSpec::cover);
+      prototype.registerHybridMethod("locatorFromLink", &HybridPublicationSpec::locatorFromLink);
+      prototype.registerHybridMethod("locate", &HybridPublicationSpec::locate);
+      prototype.registerHybridMethod("locateProgression", &HybridPublicationSpec::locateProgression);
     });
   }
 

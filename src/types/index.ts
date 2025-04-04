@@ -1,6 +1,12 @@
 export type { EpubPreferences } from './epub-preferences'
 export * from './manifest'
 
+export interface NitroFileSource {
+  uri: string
+  // NOTE: Make sure the location is a JSON.stringified Link Or Locator in JS side
+  initialLocation?: string
+}
+
 export interface Locator {
   href: string
   type: string // MediaType

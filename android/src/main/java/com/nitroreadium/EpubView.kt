@@ -15,12 +15,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import org.readium.r2.navigator.DecorableNavigator
 import org.readium.r2.navigator.Decoration
 import org.readium.r2.navigator.epub.EpubNavigatorFragment
 import org.readium.r2.navigator.epub.EpubPreferences
 import org.readium.r2.navigator.preferences.FontFamily
 import org.readium.r2.shared.ExperimentalReadiumApi
+import org.readium.r2.shared.publication.Link
 import org.readium.r2.shared.publication.Locator
 import org.readium.r2.shared.publication.services.positions
 import org.readium.r2.shared.util.AbsoluteUrl
@@ -38,17 +40,18 @@ import com.margelo.nitro.nitroreadium.TapEvent as NitroTapEvent
 
 @SuppressLint("ViewConstructor", "ResourceType")
 class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
-    EpubNavigatorFragment.Listener, DecorableNavigator.Listener, EpubNavigatorFragment.PaginationListener, EpubNavigatorFragment.MessageListener {
+    EpubNavigatorFragment.Listener, DecorableNavigator.Listener,
+    EpubNavigatorFragment.PaginationListener, EpubNavigatorFragment.MessageListener {
 
+    //    private var initialLocator: Locator? = null
+    //    private var absoluteUrl: AbsoluteUrl? = null
+    //    var isPlaying: Boolean = false
+    //    var readaloudColor = 0xffffff00.toInt()
     var bookService: BookService? = null
-    var initialLocator: Locator? = null
-    var locator: Locator? = null
-    var isPlaying: Boolean = false
     var navigator: EpubNavigatorFragment? = null
     var customFonts: List<CustomFont> = listOf()
     var highlights: List<NitroDecoration> = listOf()
     var bookmarks: List<Locator> = listOf()
-    var readaloudColor = 0xffffff00.toInt()
     var injectedJavascriptOnResourcesLoad: String? = null
         set(value) {
             field = "(function() {\n$value\nreturn true;\n})();"
@@ -57,6 +60,7 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
         set(value) {
             field = "(function() {\n$value\nreturn true;\n})();"
         }
+
     @OptIn(ExperimentalReadiumApi::class)
     var preferences: EpubPreferences = EpubPreferences(
         fontFamily = FontFamily("Literata"),
@@ -67,7 +71,6 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
             field = value
             updatePreferences()
         }
-    var absoluteUrl: AbsoluteUrl? = null
 
     // Callbacks
     var onSelection: (NitroSelection?) -> Unit = {}
@@ -80,41 +83,49 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     var onMessage: ((String) -> Unit)? = null
     val onBookmarksActivate: (Map<String, Any>) -> Unit = {}
 
-    suspend fun initializeNavigator() {
+    suspend fun initializeNavigator(
+        absoluteUrl: AbsoluteUrl,
+        locatorOrLink: String?
+    ) {
         withContext(Dispatchers.Main) {
-            if (BuildConfig.DEBUG) {
-                Log.d("HybridNitroReadium", "absoluteUrl: $absoluteUrl")
-            }
+            Log.d(
+                "HybridNitroReadium",
+                "absoluteUrl: $absoluteUrl, initialLocatorOrLinkString: $locatorOrLink"
+            )
 
-            val publication = absoluteUrl?.let {
-                bookService?.openPublication(it) ?: return@withContext
-            } ?: return@withContext
-
-            val successPublication = publication.getOrElse { return@withContext }
-
-            val newLocator = successPublication.positions()[0]
-
-//            if (newLocator == null) {
-//                Log.d("HybridNitroReadium", "newLocator is null")
-//                return@withContext
-//            }
-
-//            Log.d("HybridNitroReadium", "newLocator: $newLocator")
+            val publication = bookService?.openPublication(absoluteUrl)
+                ?.getOrElse { return@withContext } ?: return@withContext
 
             val fragmentTag = resources.getString(R.string.epub_fragment_tag)
             val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
 
-//            Log.i("HybridNitroReadium", "Activity: $activity")
+            // TODO: May not be entirely accurate, need a better to check
+            val locator: Locator = when {
+                locatorOrLink == null -> publication.positions().first()
+                else -> {
+                    val locatorOrLinkJson = JSONObject(locatorOrLink)
+                    if (locatorOrLinkJson.has("location")) {
+                        Locator.fromJSON(locatorOrLinkJson) ?: throw Exception("Invalid locator")
+                    } else {
+                        val link = Link.fromJSON(locatorOrLinkJson)
+                            ?: throw Exception("Invalid link: Link could not be parsed")
+                        publication.locatorFromLink(link)
+                            ?: throw Exception("Invalid locator: Could not get locator for link")
+                    }
+                }
+            }
+
+            // Log.i("HybridNitroReadium", "Activity: $activity")
 
             val listener = this@EpubView
             val epubFragment = EpubReaderFragment(
-                newLocator,
-                successPublication,
+                locator,
+                publication,
                 customFonts,
                 listener
             )
 
-//            Log.i("HybridNitroReadium", "EpubFragment {$epubFragment} created")
+            //  Log.i("HybridNitroReadium", "EpubFragment {$epubFragment} created")
 
             try {
                 activity?.supportFragmentManager?.commitNow {
@@ -127,7 +138,6 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
             }
 
             addView(epubFragment.view)
-
             navigator = epubFragment.navigator
 
             epubFragment.apply {
@@ -142,23 +152,18 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
         }
     }
 
-    fun destroyNavigator() {
-        val navigator = this.navigator ?: return
-        val fragmentTag = resources.getString(R.string.epub_fragment_tag)
-        val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
-        activity?.supportFragmentManager?.commitNow {
-            setReorderingAllowed(true)
-            remove(navigator)
-        }
-        removeView(navigator.view)
-    }
+    //    fun destroyNavigator() {
+    //        val navigator = this.navigator ?: return
+    //        val fragmentTag = resources.getString(R.string.epub_fragment_tag)
+    //        val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
+    //        activity?.supportFragmentManager?.commitNow {
+    //            setReorderingAllowed(true)
+    //            remove(navigator)
+    //        }
+    //        removeView(navigator.view)
+    //    }
 
     fun go(locator: Locator) {
-//        val navigator = this.navigator ?: run {
-//            this.initialLocator = locator
-//            return initializeNavigator()
-//        }
-
         navigator?.go(locator, true)
     }
 
@@ -167,9 +172,6 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     }
 
     override fun onDecorationActivated(event: DecorableNavigator.OnActivatedEvent): Boolean {
-        if (BuildConfig.DEBUG) {
-            Log.d("TAG", "Debug message");
-        }
         event.point?.let {
             onTap?.invoke(
                 NitroTapEvent(
@@ -197,8 +199,20 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
                     )
                 ),
                 group = event.group,
-                rect = event.rect?.let { NitroRect(it.left.pxToDp().toDouble(), it.top.pxToDp().toDouble(), it.right.pxToDp().toDouble(), it.bottom.pxToDp().toDouble()) },
-                point = event.point?.let { NitroPoint(it.x.pxToDp().toDouble(), it.y.pxToDp().toDouble()) }
+                rect = event.rect?.let {
+                    NitroRect(
+                        it.left.pxToDp().toDouble(),
+                        it.top.pxToDp().toDouble(),
+                        it.right.pxToDp().toDouble(),
+                        it.bottom.pxToDp().toDouble()
+                    )
+                },
+                point = event.point?.let {
+                    NitroPoint(
+                        it.x.pxToDp().toDouble(),
+                        it.y.pxToDp().toDouble()
+                    )
+                }
             )
         )
         return true
@@ -224,22 +238,16 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     suspend fun evaluateJavascript(script: String): String? {
         val result = navigator?.evaluateJavascript(script)
 
-        if (result == null) {
-            throw Exception("Failed to evaluate. Either webview has not been initialized yet, or the resource is not reflowable")
-        } else {
-            return result
-        }
+        return result
+            ?: throw Exception("Failed to evaluate. Either webview has not been initialized yet, or the resource is not reflowable")
     }
 
     fun injectJavascript(script: String) {
         CoroutineScope(Dispatchers.Main).launch {
             val result = navigator?.evaluateJavascript(script.trimIndent())
 
-            if (result == null) {
-                throw Exception("Failed to inject. Either webview has not been initialized yet, or the resource is not reflowable")
-            } else {
-                Log.d("EpubView", result)
-            }
+            result
+                ?: throw Exception("Failed to inject. Either webview has not been initialized yet, or the resource is not reflowable")
         }
     }
 

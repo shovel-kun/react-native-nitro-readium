@@ -12,10 +12,20 @@
 // Forward declaration of `HybridPublicationSpec_cxx` to properly resolve imports.
 namespace NitroReadium { class HybridPublicationSpec_cxx; }
 
-
+// Forward declaration of `Locator` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct Locator; }
+// Forward declaration of `Locations` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct Locations; }
+// Forward declaration of `TextObject` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct TextObject; }
 
 #include <string>
 #include <NitroModules/Promise.hpp>
+#include <optional>
+#include "Locator.hpp"
+#include "Locations.hpp"
+#include <vector>
+#include "TextObject.hpp"
 
 #include "NitroReadium-Swift-Cxx-Umbrella.hpp"
 
@@ -85,6 +95,30 @@ namespace margelo::nitro::nitroreadium {
     // Methods
     inline std::shared_ptr<Promise<std::string>> cover() override {
       auto __result = _swiftPart.cover();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::optional<Locator> locatorFromLink(const std::string& link) override {
+      auto __result = _swiftPart.locatorFromLink(link);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<std::optional<Locator>>> locate(const Locator& locator) override {
+      auto __result = _swiftPart.locate(locator);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<std::optional<Locator>>> locateProgression(double progression) override {
+      auto __result = _swiftPart.locateProgression(std::forward<decltype(progression)>(progression));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

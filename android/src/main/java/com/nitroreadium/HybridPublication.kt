@@ -16,9 +16,13 @@ import org.readium.r2.shared.publication.services.content.content
 import java.io.File
 import java.io.FileOutputStream
 import android.graphics.BitmapFactory
-import com.facebook.jni.HybridData
+import org.json.JSONObject
+import org.readium.r2.shared.publication.Link
+import org.readium.r2.shared.publication.services.locate
+import org.readium.r2.shared.publication.services.locateProgression
 import org.readium.r2.shared.util.getOrElse
 import org.readium.r2.shared.util.resource.Resource
+import com.margelo.nitro.nitroreadium.Locator as NitroLocator
 
 @Suppress("unused")
 @Keep
@@ -30,6 +34,24 @@ class HybridPublication(val publication: Publication) : HybridPublicationSpec() 
     override var tableOfContents: String = publication.tableOfContents.toJSON().toString()
     override var images: String = publication.images.toJSON().toString()
     override var metadata: String = publication.metadata.toJSON().toString()
+
+    override fun locatorFromLink(link: String): NitroLocator? {
+        val linkJson = JSONObject(link)
+        val link = Link.fromJSON(linkJson) ?: throw Exception("Failed to parse link from json")
+        return publication.locatorFromLink(link)?.toNitroLocator()
+    }
+
+    override fun locate(locator: NitroLocator): Promise<NitroLocator?> {
+        return Promise.async {
+            locator.toLocator()?.let {
+                publication.locate(it)?.toNitroLocator()
+            }
+        }
+    }
+
+    override fun locateProgression(progression: Double): Promise<NitroLocator?> {
+        return Promise.async { publication.locateProgression(progression)?.toNitroLocator() }
+    }
 
     // Using caching logic from
     // https://github.com/oblador/react-native-vector-icons/blob/master/packages/common/android/src/main/java/com/reactnativevectoricons/common/VectorIconsModule.kt

@@ -47,8 +47,8 @@ namespace margelo::nitro::nitroreadium {
 
   public:
     // Properties
-    std::optional<std::string> getAbsolutePath() override;
-    void setAbsolutePath(const std::optional<std::string>& absolutePath) override;
+    NitroFileSource getNitroSource() override;
+    void setNitroSource(const NitroFileSource& nitroSource) override;
     std::optional<Locator> getLocator() override;
     void setLocator(const std::optional<Locator>& locator) override;
     std::optional<EpubPreferences> getPreferences() override;

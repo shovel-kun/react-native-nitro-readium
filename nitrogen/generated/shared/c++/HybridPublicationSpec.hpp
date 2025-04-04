@@ -13,10 +13,13 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `Locator` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct Locator; }
 
 #include <string>
 #include <NitroModules/Promise.hpp>
+#include <optional>
+#include "Locator.hpp"
 
 namespace margelo::nitro::nitroreadium {
 
@@ -57,6 +60,9 @@ namespace margelo::nitro::nitroreadium {
     public:
       // Methods
       virtual std::shared_ptr<Promise<std::string>> cover() = 0;
+      virtual std::optional<Locator> locatorFromLink(const std::string& link) = 0;
+      virtual std::shared_ptr<Promise<std::optional<Locator>>> locate(const Locator& locator) = 0;
+      virtual std::shared_ptr<Promise<std::optional<Locator>>> locateProgression(double progression) = 0;
 
     protected:
       // Hybrid Setup

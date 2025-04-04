@@ -13,6 +13,8 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
+// Forward declaration of `NitroFileSource` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct NitroFileSource; }
 // Forward declaration of `Locator` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { struct Locator; }
 // Forward declaration of `EpubPreferences` to properly resolve imports.
@@ -28,12 +30,13 @@ namespace margelo::nitro::nitroreadium { struct TapEvent; }
 // Forward declaration of `DragEvent` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { struct DragEvent; }
 
+#include "NitroFileSource.hpp"
 #include <optional>
-#include <string>
 #include "Locator.hpp"
 #include "EpubPreferences.hpp"
 #include <vector>
 #include "Decoration.hpp"
+#include <string>
 #include <functional>
 #include "Selection.hpp"
 #include "DecorationActivatedEvent.hpp"
@@ -68,8 +71,8 @@ namespace margelo::nitro::nitroreadium {
 
     public:
       // Properties
-      virtual std::optional<std::string> getAbsolutePath() = 0;
-      virtual void setAbsolutePath(const std::optional<std::string>& absolutePath) = 0;
+      virtual NitroFileSource getNitroSource() = 0;
+      virtual void setNitroSource(const NitroFileSource& nitroSource) = 0;
       virtual std::optional<Locator> getLocator() = 0;
       virtual void setLocator(const std::optional<Locator>& locator) = 0;
       virtual std::optional<EpubPreferences> getPreferences() = 0;

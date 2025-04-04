@@ -65,6 +65,18 @@ abstract class HybridPublicationSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun cover(): Promise<String>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun locatorFromLink(link: String): Locator?
+  
+  @DoNotStrip
+  @Keep
+  abstract fun locate(locator: Locator): Promise<Locator?>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun locateProgression(progression: Double): Promise<Locator?>
 
   private external fun initHybrid(): HybridData
 

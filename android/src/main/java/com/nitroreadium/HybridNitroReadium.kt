@@ -10,6 +10,7 @@ import com.margelo.nitro.nitroreadium.Decoration
 import com.margelo.nitro.nitroreadium.DecorationActivatedEvent
 import com.margelo.nitro.nitroreadium.DragEvent
 import com.margelo.nitro.nitroreadium.Locator
+import com.margelo.nitro.nitroreadium.NitroFileSource
 import com.margelo.nitro.nitroreadium.Selection
 import com.margelo.nitro.nitroreadium.TapEvent
 import org.readium.r2.shared.util.AbsoluteUrl
@@ -17,34 +18,39 @@ import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
 
 @Keep
 @DoNotStrip
-class HybridNitroReadium(context: ThemedReactContext): HybridNitroReadiumSpec() {
-    val bookService = BookService.getInstance(context)
+class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec() {
 
     // View
     override val view = EpubView(context).apply {
-        bookService = this@HybridNitroReadium.bookService
+        bookService = BookService.getInstance(context)
     }
 
     // Props
-    override var absolutePath: String? = null
+    @Suppress("PropertyName")
+    var _source: NitroFileSource = NitroFileSource(uri = "", initialLocation = null)
+    override var nitroSource: NitroFileSource
+        get() = _source
         set(value) {
-            if (value == null || field == value ) return
-            field = value
-            view.absoluteUrl = AbsoluteUrl(value)
+            if (_source == value) return
+            _source = value
+            if (_source.uri.isEmpty()) return
+            val absoluteUrl = AbsoluteUrl(value.uri) ?: throw Exception("Invalid URI")
+
             Promise.async {
-                view.initializeNavigator()
+                view.initializeNavigator(absoluteUrl, value.initialLocation)
             }
         }
 
     override var locator: Locator? = null
         set(value) {
             if (value == null || field == value) return
-            val locatorToGoTo = value.toLocator() ?: return
+            val locatorToGoTo = value.toLocator() ?: throw Exception("Invalid locator")
             val maybeCurrentLocator = view.navigator?.currentLocator?.value
             maybeCurrentLocator?.let { currentLocator ->
                 if (currentLocator == locatorToGoTo) return
             }
             field = value
+            Log.d("HybridNitroReadium", "Going to locator $locatorToGoTo")
             view.go(locatorToGoTo)
         }
 
@@ -94,13 +100,13 @@ class HybridNitroReadium(context: ThemedReactContext): HybridNitroReadiumSpec() 
 
     override var onTap: ((TapEvent) -> Unit)? = null
         set(value) {
-            Log.d("HybridNitroReadium", "onTap of value: ${value}")
-//            if (value == null || field == value) return
-            Log.d("HybridNitroReadium", "Invoking: ${value?.invoke(TapEvent(5.0, 5.0))}")
-            Log.d("HybridNitroReadium", "End of invoke")
+            //            Log.d("HybridNitroReadium", "onTap of value: ${value}")
+            if (value == null || field == value) return
+            //            Log.d("HybridNitroReadium", "Invoking: ${value.invoke(TapEvent(5.0, 5.0))}")
+            //            Log.d("HybridNitroReadium", "End of invoke")
             field = value
             view.onTap = value
-            Log.d("HybridNitroReadium", "onTap of view: ${view.onTap}")
+            //            Log.d("HybridNitroReadium", "onTap of view: ${view.onTap}")
         }
 
     override var onDrag: ((DragEvent) -> Unit)? = {}
@@ -117,11 +123,18 @@ class HybridNitroReadium(context: ThemedReactContext): HybridNitroReadiumSpec() 
             view.onDecorationActivated = { this.onDecorationActivated?.invoke(it) }
         }
 
-    override var onPageChanged: ((page: Double, totalPages: Double, locator: Locator) -> Unit)? = null
+    override var onPageChanged: ((page: Double, totalPages: Double, locator: Locator) -> Unit)? =
+        null
         set(value) {
             if (value == null || field == value) return
             field = value
-            view.onPageChanged = { page, totalPages, locator -> this.onPageChanged?.invoke(page, totalPages, locator) }
+            view.onPageChanged = { page, totalPages, locator ->
+                this.onPageChanged?.invoke(
+                    page,
+                    totalPages,
+                    locator
+                )
+            }
         }
 
     override var onPageLoaded: (() -> Unit)? = null

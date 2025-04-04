@@ -11,7 +11,7 @@ import NitroModules
 /// See ``HybridNitroReadiumSpec``
 public protocol HybridNitroReadiumSpec_protocol: HybridObject, HybridView {
   // Properties
-  var absolutePath: String? { get set }
+  var nitroSource: NitroFileSource { get set }
   var locator: Locator? { get set }
   var preferences: EpubPreferences? { get set }
   var decorations: [Decoration]? { get set }

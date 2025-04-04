@@ -7,6 +7,8 @@
 
 #include "JHybridNitroReadiumSpec.hpp"
 
+// Forward declaration of `NitroFileSource` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct NitroFileSource; }
 // Forward declaration of `Locator` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { struct Locator; }
 // Forward declaration of `Locations` to properly resolve imports.
@@ -48,8 +50,10 @@ namespace margelo::nitro::nitroreadium { struct DragEvent; }
 // Forward declaration of `DragEventType` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { enum class DragEventType; }
 
-#include <optional>
+#include "NitroFileSource.hpp"
+#include "JNitroFileSource.hpp"
 #include <string>
+#include <optional>
 #include "Locator.hpp"
 #include "JLocator.hpp"
 #include "Locations.hpp"
@@ -121,14 +125,14 @@ namespace margelo::nitro::nitroreadium {
   }
 
   // Properties
-  std::optional<std::string> JHybridNitroReadiumSpec::getAbsolutePath() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getAbsolutePath");
+  NitroFileSource JHybridNitroReadiumSpec::getNitroSource() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JNitroFileSource>()>("getNitroSource");
     auto __result = method(_javaPart);
-    return __result != nullptr ? std::make_optional(__result->toStdString()) : std::nullopt;
+    return __result->toCpp();
   }
-  void JHybridNitroReadiumSpec::setAbsolutePath(const std::optional<std::string>& absolutePath) {
-    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* absolutePath */)>("setAbsolutePath");
-    method(_javaPart, absolutePath.has_value() ? jni::make_jstring(absolutePath.value()) : nullptr);
+  void JHybridNitroReadiumSpec::setNitroSource(const NitroFileSource& nitroSource) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JNitroFileSource> /* nitroSource */)>("setNitroSource");
+    method(_javaPart, JNitroFileSource::fromCpp(nitroSource));
   }
   std::optional<Locator> JHybridNitroReadiumSpec::getLocator() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JLocator>()>("getLocator");

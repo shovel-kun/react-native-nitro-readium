@@ -28,8 +28,8 @@ void JHybridNitroReadiumStateUpdater::updateViewProps(jni::alias_ref<jni::JClass
     throw std::runtime_error("HybridNitroReadiumState's data doesn't contain any props!");
   }
   const HybridNitroReadiumProps& props = maybeProps.value();
-  if (props.absolutePath.isDirty) {
-    view->setAbsolutePath(props.absolutePath.value);
+  if (props.nitroSource.isDirty) {
+    view->setNitroSource(props.nitroSource.value);
     // TODO: Set isDirty = false
   }
   if (props.locator.isDirty) {

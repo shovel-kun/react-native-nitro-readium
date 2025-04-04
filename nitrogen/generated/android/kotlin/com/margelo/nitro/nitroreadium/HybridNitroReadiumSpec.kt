@@ -42,7 +42,7 @@ abstract class HybridNitroReadiumSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var absolutePath: String?
+  abstract var nitroSource: NitroFileSource
   
   @get:DoNotStrip
   @get:Keep

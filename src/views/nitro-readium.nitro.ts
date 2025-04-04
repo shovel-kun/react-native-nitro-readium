@@ -4,6 +4,7 @@ import type {
   HybridViewMethods,
 } from 'react-native-nitro-modules'
 import type {
+  NitroFileSource,
   Locator,
   Selection,
   Decoration,
@@ -14,7 +15,7 @@ import type {
 } from '../types'
 
 export interface NitroReadiumProps extends HybridViewProps {
-  absolutePath?: string
+  nitroSource: NitroFileSource
   locator?: Locator
   preferences?: EpubPreferences
   decorations?: Decoration[]

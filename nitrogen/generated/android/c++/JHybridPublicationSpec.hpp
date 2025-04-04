@@ -59,6 +59,9 @@ namespace margelo::nitro::nitroreadium {
   public:
     // Methods
     std::shared_ptr<Promise<std::string>> cover() override;
+    std::optional<Locator> locatorFromLink(const std::string& link) override;
+    std::shared_ptr<Promise<std::optional<Locator>>> locate(const Locator& locator) override;
+    std::shared_ptr<Promise<std::optional<Locator>>> locateProgression(double progression) override;
 
   private:
     friend HybridBase;

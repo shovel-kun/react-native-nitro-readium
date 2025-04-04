@@ -36,6 +36,8 @@ namespace margelo::nitro::nitroreadium { enum class ImageFilter; }
 namespace margelo::nitro::nitroreadium { struct Locations; }
 // Forward declaration of `Locator` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { struct Locator; }
+// Forward declaration of `NitroFileSource` to properly resolve imports.
+namespace margelo::nitro::nitroreadium { struct NitroFileSource; }
 // Forward declaration of `Point` to properly resolve imports.
 namespace margelo::nitro::nitroreadium { struct Point; }
 // Forward declaration of `ReadingProgression` to properly resolve imports.
@@ -70,6 +72,7 @@ namespace margelo::nitro::nitroreadium { enum class Theme; }
 #include "ImageFilter.hpp"
 #include "Locations.hpp"
 #include "Locator.hpp"
+#include "NitroFileSource.hpp"
 #include "Point.hpp"
 #include "ReadingProgression.hpp"
 #include "Rect.hpp"

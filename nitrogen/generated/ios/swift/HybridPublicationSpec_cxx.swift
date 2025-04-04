@@ -160,4 +160,72 @@ public class HybridPublicationSpec_cxx {
       return bridge.create_Result_std__shared_ptr_Promise_std__string___(__exceptionPtr)
     }
   }
+  
+  @inline(__always)
+  public final func locatorFromLink(link: std.string) -> bridge.Result_std__optional_Locator__ {
+    do {
+      let __result = try self.__implementation.locatorFromLink(link: String(link))
+      let __resultCpp = { () -> bridge.std__optional_Locator_ in
+        if let __unwrappedValue = __result {
+          return bridge.create_std__optional_Locator_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+      return bridge.create_Result_std__optional_Locator__(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__optional_Locator__(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func locate(locator: Locator) -> bridge.Result_std__shared_ptr_Promise_std__optional_Locator____ {
+    do {
+      let __result = try self.__implementation.locate(locator: locator)
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_std__optional_Locator___ in
+        let __promise = bridge.create_std__shared_ptr_Promise_std__optional_Locator___()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__optional_Locator___(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve({ () -> bridge.std__optional_Locator_ in
+              if let __unwrappedValue = __result {
+                return bridge.create_std__optional_Locator_(__unwrappedValue)
+              } else {
+                return .init()
+              }
+            }()) })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_std__optional_Locator____(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__shared_ptr_Promise_std__optional_Locator____(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func locateProgression(progression: Double) -> bridge.Result_std__shared_ptr_Promise_std__optional_Locator____ {
+    do {
+      let __result = try self.__implementation.locateProgression(progression: progression)
+      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_std__optional_Locator___ in
+        let __promise = bridge.create_std__shared_ptr_Promise_std__optional_Locator___()
+        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_std__optional_Locator___(__promise)
+        __result
+          .then({ __result in __promiseHolder.resolve({ () -> bridge.std__optional_Locator_ in
+              if let __unwrappedValue = __result {
+                return bridge.create_std__optional_Locator_(__unwrappedValue)
+              } else {
+                return .init()
+              }
+            }()) })
+          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
+        return __promise
+      }()
+      return bridge.create_Result_std__shared_ptr_Promise_std__optional_Locator____(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_std__shared_ptr_Promise_std__optional_Locator____(__exceptionPtr)
+    }
+  }
 }

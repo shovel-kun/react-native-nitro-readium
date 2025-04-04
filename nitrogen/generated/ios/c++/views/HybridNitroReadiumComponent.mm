@@ -71,10 +71,10 @@ using namespace margelo::nitro::nitroreadium::views;
   // 2. Update each prop individually
   swiftPart.beforeUpdate();
 
-  // absolutePath: optional
-  if (newViewProps.absolutePath.isDirty) {
-    swiftPart.setAbsolutePath(newViewProps.absolutePath.value);
-    newViewProps.absolutePath.isDirty = false;
+  // nitroSource: struct
+  if (newViewProps.nitroSource.isDirty) {
+    swiftPart.setNitroSource(newViewProps.nitroSource.value);
+    newViewProps.nitroSource.isDirty = false;
   }
   // locator: optional
   if (newViewProps.locator.isDirty) {
