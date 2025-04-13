@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.4.0...v0.5.0) (2025-04-13)
+
+### ✨ Features
+
+* drop commonjs support ([b18b627](https://github.com/shovel-kun/react-native-nitro-readium/commit/b18b627e2a10a3e6cfefde8c9d7463f54413d371))
+
 ## [0.4.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.3.6...v0.4.0) (2025-04-04)
 
 ### ✨ Features
