@@ -99,7 +99,7 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
             val fragmentTag = resources.getString(R.string.epub_fragment_tag)
             val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
 
-            // TODO: May not be entirely accurate, need a better to check
+            // TODO: May not be entirely accurate, need a better way to check
             val locator: Locator = when {
                 locatorOrLink == null -> publication.positions().first()
                 else -> {
