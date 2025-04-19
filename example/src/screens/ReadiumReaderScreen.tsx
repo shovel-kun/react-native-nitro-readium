@@ -10,6 +10,7 @@ import type {
   Decoration,
   ActivatedDecoration,
   DecorationType,
+  EpubPreferences,
 } from 'react-native-nitro-readium';
 
 const ReadiumReaderScreen = ({route}: ReadiumViewerScreenProps) => {
@@ -81,6 +82,8 @@ const ReadiumReaderScreen = ({route}: ReadiumViewerScreenProps) => {
 
   const onLocatorChanged = useCallback((locator: Locator) => {
     setCurrentLocator(locator);
+
+    // console.log('Settings:', readiumRef.current?.getSettings());
     // console.log(locator);
   }, []);
 
@@ -105,6 +108,14 @@ const ReadiumReaderScreen = ({route}: ReadiumViewerScreenProps) => {
       console.log('layout changed');
       const {width, height} = event.nativeEvent.layout;
       setViewDimensions({width, height});
+    },
+    [currentLocator],
+  );
+
+  const onPreferencesChanged = useCallback(
+    (preferences: EpubPreferences) => {
+      console.log('Preferences changed');
+      console.log(preferences);
     },
     [currentLocator],
   );
@@ -134,11 +145,13 @@ const ReadiumReaderScreen = ({route}: ReadiumViewerScreenProps) => {
         onDrag={() => {
           setActivatedDecoration(null);
         }}
+        onPreferencesChanged={onPreferencesChanged}
         //@ts-expect-error remove once nitro fixes the type
         onLayout={onLayout}
         preferences={{
-          theme: 'dark',
+          theme: 'light',
           scroll: true,
+          publisherStyles: false,
         }}
         ref={readiumRef}
       />
