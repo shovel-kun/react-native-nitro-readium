@@ -25,6 +25,7 @@
 #include "JFunc_void_DragEvent.hpp"
 #include "JFunc_void_double_double_Locator.hpp"
 #include "JFunc_void.hpp"
+#include "JFunc_void_EpubPreferences.hpp"
 #include "JFunc_void_std__string.hpp"
 #include "views/JHybridNitroReadiumStateUpdater.hpp"
 #include <NitroModules/JNISharedPtr.hpp>
@@ -49,6 +50,7 @@ int initialize(JavaVM* vm) {
     margelo::nitro::nitroreadium::JFunc_void_DragEvent_cxx::registerNatives();
     margelo::nitro::nitroreadium::JFunc_void_double_double_Locator_cxx::registerNatives();
     margelo::nitro::nitroreadium::JFunc_void_cxx::registerNatives();
+    margelo::nitro::nitroreadium::JFunc_void_EpubPreferences_cxx::registerNatives();
     margelo::nitro::nitroreadium::JFunc_void_std__string_cxx::registerNatives();
     margelo::nitro::nitroreadium::views::JHybridNitroReadiumStateUpdater::registerNatives();
 

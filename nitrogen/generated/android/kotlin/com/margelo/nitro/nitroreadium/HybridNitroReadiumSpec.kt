@@ -172,6 +172,20 @@ abstract class HybridNitroReadiumSpec: HybridView() {
       onPageLoaded = value?.let { it }
     }
   
+  abstract var onPreferencesChanged: ((preferences: EpubPreferences) -> Unit)?
+  
+  private var onPreferencesChanged_cxx: Func_void_EpubPreferences?
+    @Keep
+    @DoNotStrip
+    get() {
+      return onPreferencesChanged?.let { Func_void_EpubPreferences_java(it) }
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onPreferencesChanged = value?.let { it }
+    }
+  
   abstract var onMessage: ((message: String) -> Unit)?
   
   private var onMessage_cxx: Func_void_std__string?
@@ -202,6 +216,10 @@ abstract class HybridNitroReadiumSpec: HybridView() {
   @DoNotStrip
   @Keep
   abstract fun clearSelection(): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun getSettings(): EpubPreferences
 
   private external fun initHybrid(): HybridData
 

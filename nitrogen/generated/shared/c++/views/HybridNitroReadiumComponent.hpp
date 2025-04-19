@@ -51,6 +51,9 @@
 #include <functional>
 #include <optional>
 #include <functional>
+#include "EpubPreferences.hpp"
+#include <optional>
+#include <functional>
 #include <string>
 #include <optional>
 #include <functional>
@@ -91,6 +94,7 @@ namespace margelo::nitro::nitroreadium::views {
     CachedProp<std::optional<std::function<void(const DragEvent& /* event */)>>> onDrag;
     CachedProp<std::optional<std::function<void(double /* page */, double /* totalPages */, const Locator& /* locator */)>>> onPageChanged;
     CachedProp<std::optional<std::function<void()>>> onPageLoaded;
+    CachedProp<std::optional<std::function<void(const EpubPreferences& /* preferences */)>>> onPreferencesChanged;
     CachedProp<std::optional<std::function<void(const std::string& /* message */)>>> onMessage;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridNitroReadiumSpec>& /* ref */)>>> hybridRef;
 

@@ -697,6 +697,37 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     return std::optional<std::function<void()>>(value);
   }
   
+  // pragma MARK: std::function<void(const EpubPreferences& /* preferences */)>
+  /**
+   * Specialized version of `std::function<void(const EpubPreferences&)>`.
+   */
+  using Func_void_EpubPreferences = std::function<void(const EpubPreferences& /* preferences */)>;
+  /**
+   * Wrapper class for a `std::function<void(const EpubPreferences& / * preferences * /)>`, this can be used from Swift.
+   */
+  class Func_void_EpubPreferences_Wrapper final {
+  public:
+    explicit Func_void_EpubPreferences_Wrapper(std::function<void(const EpubPreferences& /* preferences */)>&& func): _function(std::make_shared<std::function<void(const EpubPreferences& /* preferences */)>>(std::move(func))) {}
+    inline void call(EpubPreferences preferences) const {
+      _function->operator()(preferences);
+    }
+  private:
+    std::shared_ptr<std::function<void(const EpubPreferences& /* preferences */)>> _function;
+  };
+  Func_void_EpubPreferences create_Func_void_EpubPreferences(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_EpubPreferences_Wrapper wrap_Func_void_EpubPreferences(Func_void_EpubPreferences value) {
+    return Func_void_EpubPreferences_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(const EpubPreferences& /* preferences */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(const EpubPreferences& / * preferences * /)>>`.
+   */
+  using std__optional_std__function_void_const_EpubPreferences_____preferences______ = std::optional<std::function<void(const EpubPreferences& /* preferences */)>>;
+  inline std::optional<std::function<void(const EpubPreferences& /* preferences */)>> create_std__optional_std__function_void_const_EpubPreferences_____preferences______(const std::function<void(const EpubPreferences& /* preferences */)>& value) {
+    return std::optional<std::function<void(const EpubPreferences& /* preferences */)>>(value);
+  }
+  
   // pragma MARK: std::optional<std::function<void(const std::string& /* message */)>>
   /**
    * Specialized version of `std::optional<std::function<void(const std::string& / * message * /)>>`.
@@ -768,6 +799,15 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
   }
   inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
     return Result<void>::withError(error);
+  }
+  
+  // pragma MARK: Result<EpubPreferences>
+  using Result_EpubPreferences_ = Result<EpubPreferences>;
+  inline Result_EpubPreferences_ create_Result_EpubPreferences_(const EpubPreferences& value) {
+    return Result<EpubPreferences>::withValue(value);
+  }
+  inline Result_EpubPreferences_ create_Result_EpubPreferences_(const std::exception_ptr& error) {
+    return Result<EpubPreferences>::withError(error);
   }
 
 } // namespace margelo::nitro::nitroreadium::bridge::swift

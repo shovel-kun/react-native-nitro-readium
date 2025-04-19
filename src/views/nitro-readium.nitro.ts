@@ -30,6 +30,7 @@ export interface NitroReadiumProps extends HybridViewProps {
   onDrag?: (event: DragEvent) => void
   onPageChanged?: (page: number, totalPages: number, locator: Locator) => void
   onPageLoaded?: () => void
+  onPreferencesChanged?: (preferences: EpubPreferences) => void
   /*
    * To post a message from Readium WebView to React Native, call:
    *
@@ -43,6 +44,7 @@ export interface NitroReadiumMethods extends HybridViewMethods {
   injectJavascript(script: string): void
   go(locator: Locator): void
   clearSelection(): void
+  getSettings(): EpubPreferences
 }
 
 export type NitroReadium = HybridView<

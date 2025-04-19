@@ -103,6 +103,7 @@ namespace margelo::nitro::nitroreadium { enum class DragEventType; }
 #include "JDragEventType.hpp"
 #include "JFunc_void_double_double_Locator.hpp"
 #include "JFunc_void.hpp"
+#include "JFunc_void_EpubPreferences.hpp"
 #include "JFunc_void_std__string.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/JPromise.hpp>
@@ -322,6 +323,24 @@ namespace margelo::nitro::nitroreadium {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void::javaobject> /* onPageLoaded */)>("setOnPageLoaded_cxx");
     method(_javaPart, onPageLoaded.has_value() ? JFunc_void_cxx::fromCpp(onPageLoaded.value()) : nullptr);
   }
+  std::optional<std::function<void(const EpubPreferences& /* preferences */)>> JHybridNitroReadiumSpec::getOnPreferencesChanged() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_EpubPreferences::javaobject>()>("getOnPreferencesChanged_cxx");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void(const EpubPreferences& /* preferences */)> {
+      if (__result->isInstanceOf(JFunc_void_EpubPreferences_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_EpubPreferences_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        return [__result](EpubPreferences preferences) -> void {
+          return __result->invoke(preferences);
+        };
+      }
+    }()) : std::nullopt;
+  }
+  void JHybridNitroReadiumSpec::setOnPreferencesChanged(const std::optional<std::function<void(const EpubPreferences& /* preferences */)>>& onPreferencesChanged) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_EpubPreferences::javaobject> /* onPreferencesChanged */)>("setOnPreferencesChanged_cxx");
+    method(_javaPart, onPreferencesChanged.has_value() ? JFunc_void_EpubPreferences_cxx::fromCpp(onPreferencesChanged.value()) : nullptr);
+  }
   std::optional<std::function<void(const std::string& /* message */)>> JHybridNitroReadiumSpec::getOnMessage() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__string::javaobject>()>("getOnMessage_cxx");
     auto __result = method(_javaPart);
@@ -369,6 +388,11 @@ namespace margelo::nitro::nitroreadium {
   void JHybridNitroReadiumSpec::clearSelection() {
     static const auto method = javaClassStatic()->getMethod<void()>("clearSelection");
     method(_javaPart);
+  }
+  EpubPreferences JHybridNitroReadiumSpec::getSettings() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JEpubPreferences>()>("getSettings");
+    auto __result = method(_javaPart);
+    return __result->toCpp();
   }
 
 } // namespace margelo::nitro::nitroreadium

@@ -97,6 +97,8 @@ namespace margelo::nitro::nitroreadium {
       virtual void setOnPageChanged(const std::optional<std::function<void(double /* page */, double /* totalPages */, const Locator& /* locator */)>>& onPageChanged) = 0;
       virtual std::optional<std::function<void()>> getOnPageLoaded() = 0;
       virtual void setOnPageLoaded(const std::optional<std::function<void()>>& onPageLoaded) = 0;
+      virtual std::optional<std::function<void(const EpubPreferences& /* preferences */)>> getOnPreferencesChanged() = 0;
+      virtual void setOnPreferencesChanged(const std::optional<std::function<void(const EpubPreferences& /* preferences */)>>& onPreferencesChanged) = 0;
       virtual std::optional<std::function<void(const std::string& /* message */)>> getOnMessage() = 0;
       virtual void setOnMessage(const std::optional<std::function<void(const std::string& /* message */)>>& onMessage) = 0;
 
@@ -106,6 +108,7 @@ namespace margelo::nitro::nitroreadium {
       virtual void injectJavascript(const std::string& script) = 0;
       virtual void go(const Locator& locator) = 0;
       virtual void clearSelection() = 0;
+      virtual EpubPreferences getSettings() = 0;
 
     protected:
       // Hybrid Setup

@@ -452,6 +452,37 @@ public class HybridNitroReadiumSpec_cxx {
     }
   }
   
+  public final var onPreferencesChanged: bridge.std__optional_std__function_void_const_EpubPreferences_____preferences______ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_std__function_void_const_EpubPreferences_____preferences______ in
+        if let __unwrappedValue = self.__implementation.onPreferencesChanged {
+          return bridge.create_std__optional_std__function_void_const_EpubPreferences_____preferences______({ () -> bridge.Func_void_EpubPreferences in
+            let __closureWrapper = Func_void_EpubPreferences(__unwrappedValue)
+            return bridge.create_Func_void_EpubPreferences(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onPreferencesChanged = { () -> ((_ preferences: EpubPreferences) -> Void)? in
+        if let __unwrapped = newValue.value {
+          return { () -> (EpubPreferences) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_EpubPreferences(__unwrapped)
+            return { (__preferences: EpubPreferences) -> Void in
+              __wrappedFunction.call(__preferences)
+            }
+          }()
+        } else {
+          return nil
+        }
+      }()
+    }
+  }
+  
   public final var onMessage: bridge.std__optional_std__function_void_const_std__string_____message______ {
     @inline(__always)
     get {
@@ -539,6 +570,18 @@ public class HybridNitroReadiumSpec_cxx {
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
       return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func getSettings() -> bridge.Result_EpubPreferences_ {
+    do {
+      let __result = try self.__implementation.getSettings()
+      let __resultCpp = __result
+      return bridge.create_Result_EpubPreferences_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_EpubPreferences_(__exceptionPtr)
     }
   }
   

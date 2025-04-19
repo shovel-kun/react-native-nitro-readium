@@ -1,6 +1,7 @@
 package com.nitroreadium
 
 import org.readium.r2.navigator.epub.EpubPreferences
+import org.readium.r2.navigator.epub.EpubSettings
 import org.readium.r2.navigator.preferences.Color
 import org.readium.r2.navigator.preferences.ColumnCount
 import org.readium.r2.navigator.preferences.FontFamily
@@ -13,6 +14,11 @@ import org.readium.r2.shared.ExperimentalReadiumApi
 import org.readium.r2.shared.util.Language
 import com.margelo.nitro.nitroreadium.ColumnCount as NitroColumnCount
 import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
+import com.margelo.nitro.nitroreadium.ImageFilter as NitroImageFilter
+import com.margelo.nitro.nitroreadium.ReadingProgression as NitroReadingProgression
+import com.margelo.nitro.nitroreadium.Spread as NitroSpread
+import com.margelo.nitro.nitroreadium.TextAlign as NitroTextAlign
+import com.margelo.nitro.nitroreadium.Theme as NitroTheme
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalReadiumApi::class)
 fun NitroEpubPreferences.toEpubPreferences(): EpubPreferences {
@@ -49,3 +55,41 @@ fun NitroEpubPreferences.toEpubPreferences(): EpubPreferences {
         wordSpacing = wordSpacing,
     )
 }
+
+@OptIn(ExperimentalReadiumApi::class)
+fun EpubSettings.toNitroEpubPreferences(): NitroEpubPreferences {
+    return NitroEpubPreferences(
+        backgroundColor = this.backgroundColor?.int?.toHex(),
+        columnCount = when (this.columnCount) {
+            ColumnCount.AUTO -> NitroColumnCount.AUTO
+            ColumnCount.ONE -> NitroColumnCount._1
+            ColumnCount.TWO -> NitroColumnCount._2
+            else -> null
+        },
+        fontFamily = this.fontFamily?.name,
+        fontSize = this.fontSize,
+        fontWeight = this.fontWeight,
+        hyphens = this.hyphens,
+        imageFilter = this.imageFilter?.let { NitroImageFilter.valueOf(it.name) },
+        language = this.language?.code,
+        letterSpacing = this.letterSpacing,
+        ligatures = this.ligatures,
+        lineHeight = this.lineHeight,
+        pageMargins = this.pageMargins,
+        paragraphIndent = this.paragraphIndent,
+        paragraphSpacing = this.paragraphSpacing,
+        publisherStyles = this.publisherStyles,
+        readingProgression = this.readingProgression?.let { NitroReadingProgression.valueOf(it.name) },
+        scroll = this.scroll,
+        spread = this.spread?.let { NitroSpread.valueOf(it.name) },
+        textAlign = this.textAlign?.let { NitroTextAlign.valueOf(it.name) },
+        textColor = this.textColor?.int?.toHex(),
+        textNormalization = this.textNormalization,
+        theme = this.theme?.let { NitroTheme.valueOf(it.name) },
+        typeScale = this.typeScale,
+        verticalText = this.verticalText,
+        wordSpacing = this.wordSpacing
+    )
+}
+
+private fun Int.toHex(): String = String.format("#%08X", this)

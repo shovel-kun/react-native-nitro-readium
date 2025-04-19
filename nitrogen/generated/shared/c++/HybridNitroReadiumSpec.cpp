@@ -40,12 +40,15 @@ namespace margelo::nitro::nitroreadium {
       prototype.registerHybridSetter("onPageChanged", &HybridNitroReadiumSpec::setOnPageChanged);
       prototype.registerHybridGetter("onPageLoaded", &HybridNitroReadiumSpec::getOnPageLoaded);
       prototype.registerHybridSetter("onPageLoaded", &HybridNitroReadiumSpec::setOnPageLoaded);
+      prototype.registerHybridGetter("onPreferencesChanged", &HybridNitroReadiumSpec::getOnPreferencesChanged);
+      prototype.registerHybridSetter("onPreferencesChanged", &HybridNitroReadiumSpec::setOnPreferencesChanged);
       prototype.registerHybridGetter("onMessage", &HybridNitroReadiumSpec::getOnMessage);
       prototype.registerHybridSetter("onMessage", &HybridNitroReadiumSpec::setOnMessage);
       prototype.registerHybridMethod("evaluateJavascript", &HybridNitroReadiumSpec::evaluateJavascript);
       prototype.registerHybridMethod("injectJavascript", &HybridNitroReadiumSpec::injectJavascript);
       prototype.registerHybridMethod("go", &HybridNitroReadiumSpec::go);
       prototype.registerHybridMethod("clearSelection", &HybridNitroReadiumSpec::clearSelection);
+      prototype.registerHybridMethod("getSettings", &HybridNitroReadiumSpec::getSettings);
     });
   }
 

@@ -73,6 +73,8 @@ namespace margelo::nitro::nitroreadium {
     void setOnPageChanged(const std::optional<std::function<void(double /* page */, double /* totalPages */, const Locator& /* locator */)>>& onPageChanged) override;
     std::optional<std::function<void()>> getOnPageLoaded() override;
     void setOnPageLoaded(const std::optional<std::function<void()>>& onPageLoaded) override;
+    std::optional<std::function<void(const EpubPreferences& /* preferences */)>> getOnPreferencesChanged() override;
+    void setOnPreferencesChanged(const std::optional<std::function<void(const EpubPreferences& /* preferences */)>>& onPreferencesChanged) override;
     std::optional<std::function<void(const std::string& /* message */)>> getOnMessage() override;
     void setOnMessage(const std::optional<std::function<void(const std::string& /* message */)>>& onMessage) override;
 
@@ -82,6 +84,7 @@ namespace margelo::nitro::nitroreadium {
     void injectJavascript(const std::string& script) override;
     void go(const Locator& locator) override;
     void clearSelection() override;
+    EpubPreferences getSettings() override;
 
   private:
     friend HybridBase;

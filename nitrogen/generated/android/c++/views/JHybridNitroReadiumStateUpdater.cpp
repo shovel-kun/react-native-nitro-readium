@@ -80,6 +80,10 @@ void JHybridNitroReadiumStateUpdater::updateViewProps(jni::alias_ref<jni::JClass
     view->setOnPageLoaded(props.onPageLoaded.value);
     // TODO: Set isDirty = false
   }
+  if (props.onPreferencesChanged.isDirty) {
+    view->setOnPreferencesChanged(props.onPreferencesChanged.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onMessage.isDirty) {
     view->setOnMessage(props.onMessage.value);
     // TODO: Set isDirty = false

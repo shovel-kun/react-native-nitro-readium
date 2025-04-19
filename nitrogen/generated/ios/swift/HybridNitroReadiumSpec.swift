@@ -24,6 +24,7 @@ public protocol HybridNitroReadiumSpec_protocol: HybridObject, HybridView {
   var onDrag: ((_ event: DragEvent) -> Void)? { get set }
   var onPageChanged: ((_ page: Double, _ totalPages: Double, _ locator: Locator) -> Void)? { get set }
   var onPageLoaded: (() -> Void)? { get set }
+  var onPreferencesChanged: ((_ preferences: EpubPreferences) -> Void)? { get set }
   var onMessage: ((_ message: String) -> Void)? { get set }
 
   // Methods
@@ -31,6 +32,7 @@ public protocol HybridNitroReadiumSpec_protocol: HybridObject, HybridView {
   func injectJavascript(script: String) throws -> Void
   func go(locator: Locator) throws -> Void
   func clearSelection() throws -> Void
+  func getSettings() throws -> EpubPreferences
 }
 
 /// See ``HybridNitroReadiumSpec``

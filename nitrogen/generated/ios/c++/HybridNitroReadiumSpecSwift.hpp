@@ -208,6 +208,13 @@ namespace margelo::nitro::nitroreadium {
     inline void setOnPageLoaded(const std::optional<std::function<void()>>& onPageLoaded) noexcept override {
       _swiftPart.setOnPageLoaded(onPageLoaded);
     }
+    inline std::optional<std::function<void(const EpubPreferences& /* preferences */)>> getOnPreferencesChanged() noexcept override {
+      auto __result = _swiftPart.getOnPreferencesChanged();
+      return __result;
+    }
+    inline void setOnPreferencesChanged(const std::optional<std::function<void(const EpubPreferences& /* preferences */)>>& onPreferencesChanged) noexcept override {
+      _swiftPart.setOnPreferencesChanged(onPreferencesChanged);
+    }
     inline std::optional<std::function<void(const std::string& /* message */)>> getOnMessage() noexcept override {
       auto __result = _swiftPart.getOnMessage();
       return __result;
@@ -243,6 +250,14 @@ namespace margelo::nitro::nitroreadium {
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
+    }
+    inline EpubPreferences getSettings() override {
+      auto __result = _swiftPart.getSettings();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:

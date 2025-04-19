@@ -136,6 +136,11 @@ using namespace margelo::nitro::nitroreadium::views;
     swiftPart.setOnPageLoaded(newViewProps.onPageLoaded.value);
     newViewProps.onPageLoaded.isDirty = false;
   }
+  // onPreferencesChanged: optional
+  if (newViewProps.onPreferencesChanged.isDirty) {
+    swiftPart.setOnPreferencesChanged(newViewProps.onPreferencesChanged.value);
+    newViewProps.onPreferencesChanged.isDirty = false;
+  }
   // onMessage: optional
   if (newViewProps.onMessage.isDirty) {
     swiftPart.setOnMessage(newViewProps.onMessage.value);

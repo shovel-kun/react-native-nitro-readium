@@ -37,6 +37,7 @@ import com.margelo.nitro.nitroreadium.Point as NitroPoint
 import com.margelo.nitro.nitroreadium.Rect as NitroRect
 import com.margelo.nitro.nitroreadium.Selection as NitroSelection
 import com.margelo.nitro.nitroreadium.TapEvent as NitroTapEvent
+import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
 
 @SuppressLint("ViewConstructor", "ResourceType")
 class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
@@ -64,8 +65,8 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     @OptIn(ExperimentalReadiumApi::class)
     var preferences: EpubPreferences = EpubPreferences(
         fontFamily = FontFamily("Literata"),
-        lineHeight = 1.4,
-        paragraphSpacing = 0.5,
+        //lineHeight = 1.4,
+        //paragraphSpacing = 0.5,
     )
         set(value) {
             field = value
@@ -76,10 +77,11 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     var onSelection: (NitroSelection?) -> Unit = {}
     var onLocatorChanged: (NitroLocator) -> Unit = {}
     var onTap: ((NitroTapEvent) -> Unit)? = null
-    var onDrag: (NitroDragEvent) -> Unit = {}
+    var onDrag: ((NitroDragEvent) -> Unit)? = null
     var onDecorationActivated: (NitroDecorationActivatedEvent) -> Unit = {}
     var onPageChanged: ((page: Double, totalPages: Double, locator: NitroLocator) -> Unit)? = null
     var onPageLoaded: (() -> Unit)? = null
+    var onPreferencesChanged: ((NitroEpubPreferences) -> Unit)? = null
     var onMessage: ((String) -> Unit)? = null
     val onBookmarksActivate: (Map<String, Any>) -> Unit = {}
 
@@ -145,23 +147,25 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
                 onSelection = this@EpubView.onSelection
                 onTap = this@EpubView.onTap
                 onDrag = this@EpubView.onDrag
+                onPreferencesChanged = this@EpubView.onPreferencesChanged
+                onDecorationActivated = this@EpubView.onDecorationActivated
             }
 
             decorateHighlights()
-            navigator?.addDecorationListener("user-annotations", this@EpubView)
+            //            navigator?.addDecorationListener("user-annotations", this@EpubView)
         }
     }
 
-    //    fun destroyNavigator() {
-    //        val navigator = this.navigator ?: return
-    //        val fragmentTag = resources.getString(R.string.epub_fragment_tag)
-    //        val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
-    //        activity?.supportFragmentManager?.commitNow {
-    //            setReorderingAllowed(true)
-    //            remove(navigator)
-    //        }
-    //        removeView(navigator.view)
-    //    }
+    fun destroyNavigator() {
+        val navigator = this.navigator ?: return
+        //val fragmentTag = resources.getString(R.string.epub_fragment_tag)
+        val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
+        activity?.supportFragmentManager?.commitNow {
+            setReorderingAllowed(true)
+            remove(navigator)
+        }
+        removeView(navigator.view)
+    }
 
     fun go(locator: Locator) {
         navigator?.go(locator, true)
@@ -169,6 +173,36 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
 
     fun updatePreferences() {
         navigator?.submitPreferences(preferences)
+    }
+
+    fun getPreferences(): NitroEpubPreferences {
+        return navigator?.settings?.value?.toNitroEpubPreferences() ?: NitroEpubPreferences(
+            backgroundColor = null,
+            columnCount = null,
+            fontFamily = null,
+            fontSize = null,
+            fontWeight = null,
+            hyphens = null,
+            imageFilter = null,
+            language = null,
+            letterSpacing = null,
+            ligatures = null,
+            lineHeight = null,
+            pageMargins = null,
+            paragraphIndent = null,
+            paragraphSpacing = null,
+            publisherStyles = null,
+            readingProgression = null,
+            scroll = null,
+            spread = null,
+            textAlign = null,
+            textColor = null,
+            textNormalization = null,
+            theme = null,
+            typeScale = null,
+            verticalText = null,
+            wordSpacing = null
+        )
     }
 
     override fun onDecorationActivated(event: DecorableNavigator.OnActivatedEvent): Boolean {

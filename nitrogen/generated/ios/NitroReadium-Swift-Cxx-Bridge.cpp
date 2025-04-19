@@ -135,6 +135,14 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(const EpubPreferences& /* preferences */)>
+  Func_void_EpubPreferences create_Func_void_EpubPreferences(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = NitroReadium::Func_void_EpubPreferences::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const EpubPreferences& preferences) mutable -> void {
+      swiftClosure.call(preferences);
+    };
+  }
+  
   // pragma MARK: std::function<void(const std::optional<std::string>& /* result */)>
   Func_void_std__optional_std__string_ create_Func_void_std__optional_std__string_(void* _Nonnull swiftClosureWrapper) {
     auto swiftClosure = NitroReadium::Func_void_std__optional_std__string_::fromUnsafe(swiftClosureWrapper);

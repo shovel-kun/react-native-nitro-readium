@@ -155,6 +155,16 @@ namespace margelo::nitro::nitroreadium::views {
         throw std::runtime_error(std::string("NitroReadium.onPageLoaded: ") + exc.what());
       }
     }()),
+    onPreferencesChanged([&]() -> CachedProp<std::optional<std::function<void(const EpubPreferences& /* preferences */)>>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onPreferencesChanged", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onPreferencesChanged;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::optional<std::function<void(const EpubPreferences& /* preferences */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, "f"), sourceProps.onPreferencesChanged);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroReadium.onPreferencesChanged: ") + exc.what());
+      }
+    }()),
     onMessage([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* message */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onMessage", nullptr, nullptr);
@@ -191,6 +201,7 @@ namespace margelo::nitro::nitroreadium::views {
     onDrag(other.onDrag),
     onPageChanged(other.onPageChanged),
     onPageLoaded(other.onPageLoaded),
+    onPreferencesChanged(other.onPreferencesChanged),
     onMessage(other.onMessage),
     hybridRef(other.hybridRef) { }
 
@@ -209,6 +220,7 @@ namespace margelo::nitro::nitroreadium::views {
       case hashString("onDrag"): return true;
       case hashString("onPageChanged"): return true;
       case hashString("onPageLoaded"): return true;
+      case hashString("onPreferencesChanged"): return true;
       case hashString("onMessage"): return true;
       case hashString("hybridRef"): return true;
       default: return false;

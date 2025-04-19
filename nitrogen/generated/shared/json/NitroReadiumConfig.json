@@ -17,6 +17,7 @@
     "onDrag": true,
     "onPageChanged": true,
     "onPageLoaded": true,
+    "onPreferencesChanged": true,
     "onMessage": true,
     "hybridRef": true
   }

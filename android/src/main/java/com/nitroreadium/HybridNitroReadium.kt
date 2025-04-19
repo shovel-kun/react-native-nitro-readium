@@ -9,6 +9,7 @@ import com.margelo.nitro.core.Promise
 import com.margelo.nitro.nitroreadium.Decoration
 import com.margelo.nitro.nitroreadium.DecorationActivatedEvent
 import com.margelo.nitro.nitroreadium.DragEvent
+import com.margelo.nitro.nitroreadium.EpubPreferences
 import com.margelo.nitro.nitroreadium.Locator
 import com.margelo.nitro.nitroreadium.NitroFileSource
 import com.margelo.nitro.nitroreadium.Selection
@@ -100,20 +101,20 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
 
     override var onTap: ((TapEvent) -> Unit)? = null
         set(value) {
-            //            Log.d("HybridNitroReadium", "onTap of value: ${value}")
+            // Log.d("HybridNitroReadium", "onTap of value: ${value}")
             if (value == null || field == value) return
-            //            Log.d("HybridNitroReadium", "Invoking: ${value.invoke(TapEvent(5.0, 5.0))}")
-            //            Log.d("HybridNitroReadium", "End of invoke")
+            // Log.d("HybridNitroReadium", "Invoking: ${value.invoke(TapEvent(5.0, 5.0))}")
+            // Log.d("HybridNitroReadium", "End of invoke")
             field = value
             view.onTap = value
-            //            Log.d("HybridNitroReadium", "onTap of view: ${view.onTap}")
+            // Log.d("HybridNitroReadium", "onTap of view: ${view.onTap}")
         }
 
-    override var onDrag: ((DragEvent) -> Unit)? = {}
+    override var onDrag: ((DragEvent) -> Unit)? = null
         set(value) {
             if (value == null || field == value) return
             field = value
-            view.onDrag = { this.onDrag?.invoke(it) }
+            view.onDrag = value
         }
 
     override var onDecorationActivated: ((DecorationActivatedEvent) -> Unit)? = {}
@@ -144,6 +145,13 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
             view.onPageLoaded = { this.onPageLoaded?.invoke() }
         }
 
+    override var onPreferencesChanged: ((preferences: EpubPreferences) -> Unit)? = null
+        set(value) {
+            if (value == null || field == value) return
+            field = value
+            view.onPreferencesChanged = value
+        }
+
     override var onMessage: ((String) -> Unit)? = null
         set(value) {
             if (value == null || field == value) return
@@ -169,5 +177,9 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
 
     override fun clearSelection() {
         view.clearSelection()
+    }
+
+    override fun getSettings(): NitroEpubPreferences {
+        return view.getPreferences()
     }
 }

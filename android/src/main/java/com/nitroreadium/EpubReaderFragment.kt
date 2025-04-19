@@ -27,6 +27,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.facebook.react.uimanager.PixelUtil.dpToPx
 import com.facebook.react.uimanager.PixelUtil.pxToDp
 import com.margelo.nitro.nitroreadium.Rect
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -58,6 +60,8 @@ import com.margelo.nitro.nitroreadium.Point as NitroPoint
 import com.margelo.nitro.nitroreadium.TapEvent as NitroTapEvent
 import com.margelo.nitro.nitroreadium.DragEvent as NitroDragEvent
 import com.margelo.nitro.nitroreadium.DragEventType as NitroDragEventType
+import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
+import com.margelo.nitro.nitroreadium.DecorationActivatedEvent as NitroDecorationActivatedEvent
 
 @OptIn(ExperimentalReadiumApi::class)
 class EpubReaderFragment(
@@ -68,8 +72,10 @@ class EpubReaderFragment(
 ) : VisualReaderFragment() {
 
     override lateinit var navigator: EpubNavigatorFragment
+    //    val preferences: StateFlow<EpubPreferences>? = null
 
-    private lateinit var menuSearch: MenuItem
+    private lateinit
+    var menuSearch: MenuItem
     lateinit var menuSearchView: SearchView
 
     private var isSearchViewIconified = true
@@ -77,97 +83,92 @@ class EpubReaderFragment(
     var onLocatorChanged: ((NitroLocator) -> Unit) = {}
     var onSelection: ((NitroSelection?) -> Unit) = {}
     var onTap: ((NitroTapEvent) -> Unit)? = null
-    var onDrag: ((NitroDragEvent) -> Unit) = {}
+    var onDrag: ((NitroDragEvent) -> Unit)? = null
+    var onDecorationActivated: ((NitroDecorationActivatedEvent) -> Unit)? = null
+    var onPreferencesChanged: ((NitroEpubPreferences) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (savedInstanceState != null) {
-            isSearchViewIconified = savedInstanceState.getBoolean(IS_SEARCH_VIEW_ICONIFIED)
-        }
+        // if (savedInstanceState != null) {
+        //     isSearchViewIconified = savedInstanceState.getBoolean(IS_SEARCH_VIEW_ICONIFIED)
+        // }
 
-        childFragmentManager.fragmentFactory = EpubNavigatorFactory(
+        val epubNavigatorFactory = EpubNavigatorFactory(
             publication,
             EpubNavigatorFactory.Configuration(
                 defaults = EpubDefaults(
                     publisherStyles = true
                 ),
-            ),
-        ).createFragmentFactory(
-            initialLocator = locator,
-            initialPreferences = listener.preferences,
-            listener = listener,
-            paginationListener = listener,
-            messageListener = listener,
-//            paginationListener = object : EpubNavigatorFragment.PaginationListener {
-//                override fun onPageChanged(pageIndex: Int, totalPages: Int, locator: Locator) {
-//                    Log.i("onPageChanged", "$pageIndex, $totalPages, $locator")
-//
-//                    super.onPageChanged(pageIndex, totalPages, locator)
-//                }
-//
-//                override fun onPageLoaded() {
-//                    Log.i("onPageLoaded", "Yeah!")
-//
-//                    super.onPageLoaded()
-//                }
-//            },
-            configuration = EpubNavigatorFragment.Configuration {
-                selectionActionModeCallback = customSelectionActionModeCallback
-
-
-                decorationTemplates[DecorationStyleAnnotationMark::class] = annotationMarkTemplate()
-                decorationTemplates[DecorationStylePageNumber::class] = pageNumberTemplate()
-            },
+            )
         )
 
-//        val readerData = model.readerInitData as? EpubReaderInitData ?: run {
-//            // We provide a dummy fragment factory  if the ReaderActivity is restored after the
-//            // app process was killed because the ReaderRepository is empty. In that case, finish
-//            // the activity as soon as possible and go back to the previous one.
-//            childFragmentManager.fragmentFactory = EpubNavigatorFragment.createDummyFactory()
-//            super.onCreate(savedInstanceState)
-//            requireActivity().finish()
-//            return
-//        }
+        childFragmentManager.fragmentFactory = epubNavigatorFactory
+            .createFragmentFactory(
+                initialLocator = locator,
+                initialPreferences = listener.preferences,
+                listener = listener,
+                paginationListener = listener,
+                messageListener = listener,
+                configuration = EpubNavigatorFragment.Configuration {
+                    selectionActionModeCallback = customSelectionActionModeCallback
 
-//        childFragmentManager.fragmentFactory =
-//            readerData.navigatorFactory.createFragmentFactory(
-////                initialLocator = readerData.initialLocation,
-////                initialPreferences = readerData.preferencesManager.preferences.value,
-////                listener = model,
-//                configuration = EpubNavigatorFragment.Configuration {
-//                    // To customize the text selection menu.
-////                    selectionActionModeCallback = customSelectionActionModeCallback
-//
-//                    // App assets which will be accessible from the EPUB resources.
-//                    // You can use simple glob patterns, such as "images/.*" to allow several
-//                    // assets in one go.
-//                    servedAssets = listOf(
-//                        // For the custom font Literata.
-//                        "fonts/.*",
-//                        // Icon for the annotation side mark, see [annotationMarkTemplate].
-//                        "annotation-icon.svg"
-//                    )
-//
-//                    // Register the HTML templates for our custom decoration styles.
-////                    decorationTemplates[DecorationStyleAnnotationMark::class] = annotationMarkTemplate()
-////                    decorationTemplates[DecorationStylePageNumber::class] = pageNumberTemplate()
-//
-//                    // Declare a custom font family for reflowable EPUBs.
-////                    addFontFamilyDeclaration(FontFamily.LITERATA) {
-////                        addFontFace {
-////                            addSource("fonts/Literata-VariableFont_opsz,wght.ttf")
-////                            setFontStyle(FontStyle.NORMAL)
-////                            // Literata is a variable font family, so we can provide a font weight range.
-////                            setFontWeight(200..900)
-////                        }
-////                        addFontFace {
-////                            addSource("fonts/Literata-Italic-VariableFont_opsz,wght.ttf")
-////                            setFontStyle(FontStyle.ITALIC)
-////                            setFontWeight(200..900)
-////                        }
-////                    }
-//                }
-//            )
+                    // Register the HTML templates for our custom decoration styles.
+                    decorationTemplates[DecorationStyleAnnotationMark::class] =
+                        annotationMarkTemplate()
+                    decorationTemplates[DecorationStylePageNumber::class] = pageNumberTemplate()
+                },
+            )
+
+        //        val editor = epubNavigatorFactory.createPreferencesEditor(listener.preferences)
+
+        //        val readerData = model.readerInitData as? EpubReaderInitData ?: run {
+        //            // We provide a dummy fragment factory  if the ReaderActivity is restored after the
+        //            // app process was killed because the ReaderRepository is empty. In that case, finish
+        //            // the activity as soon as possible and go back to the previous one.
+        //            childFragmentManager.fragmentFactory = EpubNavigatorFragment.createDummyFactory()
+        //            super.onCreate(savedInstanceState)
+        //            requireActivity().finish()
+        //            return
+        //        }
+
+        //        childFragmentManager.fragmentFactory =
+        //            readerData.navigatorFactory.createFragmentFactory(
+        ////                initialLocator = readerData.initialLocation,
+        ////                initialPreferences = readerData.preferencesManager.preferences.value,
+        ////                listener = model,
+        //                configuration = EpubNavigatorFragment.Configuration {
+        //                    // To customize the text selection menu.
+        ////                    selectionActionModeCallback = customSelectionActionModeCallback
+        //
+        //                    // App assets which will be accessible from the EPUB resources.
+        //                    // You can use simple glob patterns, such as "images/.*" to allow several
+        //                    // assets in one go.
+        //                    servedAssets = listOf(
+        //                        // For the custom font Literata.
+        //                        "fonts/.*",
+        //                        // Icon for the annotation side mark, see [annotationMarkTemplate].
+        //                        "annotation-icon.svg"
+        //                    )
+        //
+        //                    // Register the HTML templates for our custom decoration styles.
+        ////                    decorationTemplates[DecorationStyleAnnotationMark::class] = annotationMarkTemplate()
+        ////                    decorationTemplates[DecorationStylePageNumber::class] = pageNumberTemplate()
+        //
+        //                    // Declare a custom font family for reflowable EPUBs.
+        ////                    addFontFamilyDeclaration(FontFamily.LITERATA) {
+        ////                        addFontFace {
+        ////                            addSource("fonts/Literata-VariableFont_opsz,wght.ttf")
+        ////                            setFontStyle(FontStyle.NORMAL)
+        ////                            // Literata is a variable font family, so we can provide a font weight range.
+        ////                            setFontWeight(200..900)
+        ////                        }
+        ////                        addFontFace {
+        ////                            addSource("fonts/Literata-Italic-VariableFont_opsz,wght.ttf")
+        ////                            setFontStyle(FontStyle.ITALIC)
+        ////                            setFontWeight(200..900)
+        ////                        }
+        ////                    }
+        //                }
+        //            )
 
         super.onCreate(savedInstanceState)
     }
@@ -189,7 +190,8 @@ class EpubReaderFragment(
                 )
             }
         }
-        navigator = childFragmentManager.findFragmentByTag(NAVIGATOR_FRAGMENT_TAG) as EpubNavigatorFragment
+        navigator =
+            childFragmentManager.findFragmentByTag(NAVIGATOR_FRAGMENT_TAG) as EpubNavigatorFragment
 
         return view
     }
@@ -204,7 +206,7 @@ class EpubReaderFragment(
         (navigator as VisualNavigator).apply {
             addInputListener(object : InputListener {
                 override fun onTap(event: TapEvent): Boolean {
-                    Log.d("EpubReaderFragment", "onTap ${onTap}")
+                    // Log.d("EpubReaderFragment", "onTap ${onTap}")
                     onTap?.invoke(
                         NitroTapEvent(
                             event.point.x.pxToDp().toDouble(),
@@ -215,7 +217,7 @@ class EpubReaderFragment(
                 }
 
                 override fun onDrag(event: DragEvent): Boolean {
-                    onDrag.invoke(
+                    onDrag?.invoke(
                         NitroDragEvent(
                             when (event.type) {
                                 DragEvent.Type.Start -> NitroDragEventType.START
@@ -246,54 +248,54 @@ class EpubReaderFragment(
 
         setupObservers()
 
-//        @Suppress("Unchecked_cast")
-//        (model.settings as UserPreferencesViewModel<EpubSettings, EpubPreferences>)
-//            .bind(navigator, viewLifecycleOwner)
+        //        @Suppress("Unchecked_cast")
+        //        (model.settings as UserPreferencesViewModel<EpubSettings, EpubPreferences>)
+        //            .bind(navigator, viewLifecycleOwner)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                 Display page number labels if the book contains a `page-list` navigation document.
+                // Display page number labels if the book contains a `page-list` navigation document.
                 (navigator as? DecorableNavigator)?.applyPageNumberDecorations()
             }
         }
 
-//        val menuHost: MenuHost = requireActivity()
-//
-//        menuHost.addMenuProvider(
-//            object : MenuProvider {
-//                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-//                    menuSearch = menu.findItem(R.id.search).apply {
-//                        isVisible = true
-//                        menuSearchView = actionView as SearchView
-//                    }
-//
-//                    connectSearch()
-//                    if (!isSearchViewIconified) menuSearch.expandActionView()
-//                }
-//
-//                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                    when (menuItem.itemId) {
-//                        R.id.search -> {
-//                            return true
-//                        }
-//                        android.R.id.home -> {
-//                            menuSearch.collapseActionView()
-//                            return true
-//                        }
-//                    }
-//                    return false
-//                }
-//            },
-//            viewLifecycleOwner
-//        )
+        //        val menuHost: MenuHost = requireActivity()
+        //
+        //        menuHost.addMenuProvider(
+        //            object : MenuProvider {
+        //                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        //                    menuSearch = menu.findItem(R.id.search).apply {
+        //                        isVisible = true
+        //                        menuSearchView = actionView as SearchView
+        //                    }
+        //
+        //                    connectSearch()
+        //                    if (!isSearchViewIconified) menuSearch.expandActionView()
+        //                }
+        //
+        //                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        //                    when (menuItem.itemId) {
+        //                        R.id.search -> {
+        //                            return true
+        //                        }
+        //                        android.R.id.home -> {
+        //                            menuSearch.collapseActionView()
+        //                            return true
+        //                        }
+        //                    }
+        //                    return false
+        //                }
+        //            },
+        //            viewLifecycleOwner
+        //        )
     }
 
-//    /**
-//     * Will display margin labels next to page numbers in an EPUB publication with a `page-list`
-//     * navigation document.
-//     *
-//     * See http://kb.daisy.org/publishing/docs/navigation/pagelist.html
-//     */
+    //    /**
+    //     * Will display margin labels next to page numbers in an EPUB publication with a `page-list`
+    //     * navigation document.
+    //     *
+    //     * See http://kb.daisy.org/publishing/docs/navigation/pagelist.html
+    //     */
     private suspend fun DecorableNavigator.applyPageNumberDecorations() {
         val decorations = publication.pageList
             .mapIndexedNotNull { index, link ->
@@ -315,66 +317,66 @@ class EpubReaderFragment(
         outState.putBoolean(IS_SEARCH_VIEW_ICONIFIED, isSearchViewIconified)
     }
 
-//    private fun connectSearch() {
-//        menuSearch.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-//
-//            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-//                if (isSearchViewIconified) { // It is not a state restoration.
-//                    showSearchFragment()
-//                }
-//
-//                isSearchViewIconified = false
-//                return true
-//            }
-//
-//            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-//                isSearchViewIconified = true
-//                childFragmentManager.popBackStack()
-//                menuSearchView.clearFocus()
-//
-//                return true
-//            }
-//        })
+    //    private fun connectSearch() {
+    //        menuSearch.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+    //
+    //            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+    //                if (isSearchViewIconified) { // It is not a state restoration.
+    //                    showSearchFragment()
+    //                }
+    //
+    //                isSearchViewIconified = false
+    //                return true
+    //            }
+    //
+    //            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+    //                isSearchViewIconified = true
+    //                childFragmentManager.popBackStack()
+    //                menuSearchView.clearFocus()
+    //
+    //                return true
+    //            }
+    //        })
 
-//        menuSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//
-//            override fun onQueryTextSubmit(query: String): Boolean {
-//                model.search(query)
-//                menuSearchView.clearFocus()
-//
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(s: String): Boolean {
-//                return false
-//            }
-//        })
+    //        menuSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    //
+    //            override fun onQueryTextSubmit(query: String): Boolean {
+    //                model.search(query)
+    //                menuSearchView.clearFocus()
+    //
+    //                return false
+    //            }
+    //
+    //            override fun onQueryTextChange(s: String): Boolean {
+    //                return false
+    //            }
+    //        })
 
-//        menuSearchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn).setOnClickListener {
-//            menuSearchView.requestFocus()
-//            model.cancelSearch()
-//            menuSearchView.setQuery("", false)
-//
-//            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(
-//                this.view,
-//                0
-//            )
-//        }
-//    }
+    //        menuSearchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn).setOnClickListener {
+    //            menuSearchView.requestFocus()
+    //            model.cancelSearch()
+    //            menuSearchView.setQuery("", false)
+    //
+    //            (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(
+    //                this.view,
+    //                0
+    //            )
+    //        }
+    //    }
 
-//    private fun showSearchFragment() {
-//        childFragmentManager.commit {
-//            childFragmentManager.findFragmentByTag(SEARCH_FRAGMENT_TAG)?.let { remove(it) }
-//            add(
-//                R.id.fragment_reader_container,
-//                SearchFragment::class.java,
-//                Bundle(),
-//                SEARCH_FRAGMENT_TAG
-//            )
-//            hide(navigator)
-//            addToBackStack(SEARCH_FRAGMENT_TAG)
-//        }
-//    }
+    //    private fun showSearchFragment() {
+    //        childFragmentManager.commit {
+    //            childFragmentManager.findFragmentByTag(SEARCH_FRAGMENT_TAG)?.let { remove(it) }
+    //            add(
+    //                R.id.fragment_reader_container,
+    //                SearchFragment::class.java,
+    //                Bundle(),
+    //                SEARCH_FRAGMENT_TAG
+    //            )
+    //            hide(navigator)
+    //            addToBackStack(SEARCH_FRAGMENT_TAG)
+    //        }
+    //    }
 
 
     private fun setupObservers() {
@@ -387,8 +389,21 @@ class EpubReaderFragment(
             }
         }
 
-//        (navigator as? DecorableNavigator)
-//            ?.addDecorationListener("highlights", decorationListener)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                navigator.settings
+                    .collect {
+                        onPreferencesChanged?.invoke(it.toNitroEpubPreferences())
+                    }
+            }
+        }
+        //            .also {
+        //                // If the above hasn't emitted yet, force an initial emission
+        //                onPreferencesChanged?.invoke(navigator.settings.value.toNitroEpubPreferences())
+        //            }
+
+        (navigator as? DecorableNavigator)
+            ?.addDecorationListener("user-annotations", listener)
     }
 
     val customSelectionActionModeCallback: ActionMode.Callback by lazy { SelectionActionModeCallback() }
@@ -416,7 +431,7 @@ class EpubReaderFragment(
         }
 
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            Log.i("EpubReaderFragment", "onActionItemClicked ${mode} ${item}")
+            Log.i("EpubReaderFragment", "onActionItemClicked $mode $item")
             return false
         }
 

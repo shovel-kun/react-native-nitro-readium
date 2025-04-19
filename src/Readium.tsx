@@ -49,6 +49,7 @@ const Readium = forwardRef<NitroReadiumMethods, ReadiumProps>(
       onSelection,
       onDrag,
       onDecorationActivated,
+      onPreferencesChanged,
       onMessage,
       ...rest
     },
@@ -87,12 +88,21 @@ const Readium = forwardRef<NitroReadiumMethods, ReadiumProps>(
       nativeRef.current?.clearSelection()
     }, [nativeRef])
 
+    const getSettings = useCallback(() => {
+      if (nativeRef.current === null) {
+        throw new Error('Readium component not mounted')
+      }
+
+      return nativeRef.current?.getSettings()
+    }, [nativeRef])
+
     useImperativeHandle(ref, () => {
       return {
         evaluateJavascript,
         injectJavascript,
         go,
         clearSelection,
+        getSettings,
       }
     }, [])
 
@@ -116,6 +126,7 @@ const Readium = forwardRef<NitroReadiumMethods, ReadiumProps>(
         onSelection={{ f: onSelection }}
         onDrag={{ f: onDrag }}
         onDecorationActivated={{ f: onDecorationActivated }}
+        onPreferencesChanged={{ f: onPreferencesChanged }}
         onMessage={{ f: onMessage }}
         hybridRef={{
           f: (ref) => {
