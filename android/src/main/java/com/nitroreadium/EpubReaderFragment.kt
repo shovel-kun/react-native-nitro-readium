@@ -24,7 +24,6 @@ import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.facebook.react.uimanager.PixelUtil.dpToPx
 import com.facebook.react.uimanager.PixelUtil.pxToDp
 import com.margelo.nitro.nitroreadium.Rect
 import kotlinx.coroutines.flow.StateFlow
@@ -85,7 +84,16 @@ class EpubReaderFragment(
     var onTap: ((NitroTapEvent) -> Unit)? = null
     var onDrag: ((NitroDragEvent) -> Unit)? = null
     var onDecorationActivated: ((NitroDecorationActivatedEvent) -> Unit)? = null
-    var onPreferencesChanged: ((NitroEpubPreferences) -> Unit)? = null
+    private var _onPreferencesChanged: ((NitroEpubPreferences) -> Unit)? = null
+
+    // Immediately send current value when callback is set
+    var onPreferencesChanged: ((NitroEpubPreferences) -> Unit)?
+        get() = _onPreferencesChanged
+        set(value) {
+            _onPreferencesChanged = value
+            // When callback is set, immediately send current value
+            value?.invoke(navigator.settings.value.toNitroEpubPreferences())
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // if (savedInstanceState != null) {
@@ -290,12 +298,12 @@ class EpubReaderFragment(
         //        )
     }
 
-    //    /**
-    //     * Will display margin labels next to page numbers in an EPUB publication with a `page-list`
-    //     * navigation document.
-    //     *
-    //     * See http://kb.daisy.org/publishing/docs/navigation/pagelist.html
-    //     */
+    /**
+     * Will display margin labels next to page numbers in an EPUB publication with a `page-list`
+     * navigation document.
+     *
+     * See http://kb.daisy.org/publishing/docs/navigation/pagelist.html
+     */
     private suspend fun DecorableNavigator.applyPageNumberDecorations() {
         val decorations = publication.pageList
             .mapIndexedNotNull { index, link ->
@@ -391,16 +399,11 @@ class EpubReaderFragment(
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                navigator.settings
-                    .collect {
-                        onPreferencesChanged?.invoke(it.toNitroEpubPreferences())
-                    }
+                navigator.settings.collect {
+                    onPreferencesChanged?.invoke(it.toNitroEpubPreferences())
+                }
             }
         }
-        //            .also {
-        //                // If the above hasn't emitted yet, force an initial emission
-        //                onPreferencesChanged?.invoke(navigator.settings.value.toNitroEpubPreferences())
-        //            }
 
         (navigator as? DecorableNavigator)
             ?.addDecorationListener("user-annotations", listener)
