@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.1](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.0...v0.6.1) (2025-04-19)
+
+### 🐛 Bug Fixes
+
+* immediately call preferences on set ([b20836b](https://github.com/shovel-kun/react-native-nitro-readium/commit/b20836bfebc3fb8956d8bdf596d1fb0dde19bb6a))
+
 ## [0.6.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.5.0...v0.6.0) (2025-04-19)
 
 ### ✨ Features
