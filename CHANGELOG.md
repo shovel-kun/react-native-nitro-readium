@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.5.0...v0.6.0) (2025-04-19)
+
+### ✨ Features
+
+* preferences ([907c402](https://github.com/shovel-kun/react-native-nitro-readium/commit/907c4024d3ec691c4d6a83b202fae6185e229205))
+* preferences ([bbad63f](https://github.com/shovel-kun/react-native-nitro-readium/commit/bbad63f39b4a6cc894a678247d683785deda9938))
+
 ## [0.5.0](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.4.0...v0.5.0) (2025-04-13)
 
 ### ✨ Features
