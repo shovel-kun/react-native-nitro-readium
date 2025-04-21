@@ -1,25 +1,25 @@
 buildscript {
-  repositories {
-    google()
-    mavenCentral()
-  }
+    repositories {
+        google()
+        mavenCentral()
+    }
 
-  dependencies {
-    classpath "com.android.tools.build:gradle:8.9.1"
-  }
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.9.1"
+    }
 
-  // Track here:
-  // https://github.com/readium/kotlin-toolkit/releases
-  ext.readium_version = '0be50ca892'
+    // Track here:
+    // https://github.com/readium/kotlin-toolkit/releases
+    ext.readium_version = '3dba50f7f2'
 }
 
 def reactNativeArchitectures() {
-  def value = rootProject.getProperties().get("reactNativeArchitectures")
-  return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+    def value = rootProject.getProperties().get("reactNativeArchitectures")
+    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
 }
 
 def isNewArchitectureEnabled() {
-  return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+    return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
 }
 
 apply plugin: "com.android.library"
@@ -28,136 +28,136 @@ apply plugin: 'kotlin-parcelize'
 apply from: '../nitrogen/generated/android/NitroReadium+autolinking.gradle'
 
 if (isNewArchitectureEnabled()) {
-  apply plugin: "com.facebook.react"
+    apply plugin: "com.facebook.react"
 }
 
 def getExtOrDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroReadium_" + name]
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroReadium_" + name]
 }
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroReadium_" + name]).toInteger()
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroReadium_" + name]).toInteger()
 }
 
 android {
-  namespace "com.nitroreadium"
+    namespace "com.nitroreadium"
 
-  ndkVersion getExtOrDefault("ndkVersion")
-  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+    ndkVersion getExtOrDefault("ndkVersion")
+    compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
 
-  defaultConfig {
-    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
-    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
-    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+    defaultConfig {
+        minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+        targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-frtti -fexceptions -Wall -Wextra -fstack-protector-all"
+                arguments "-DANDROID_STL=c++_shared"
+                abiFilters(*reactNativeArchitectures())
+
+                buildTypes {
+                    debug {
+                        cppFlags "-O1 -g"
+                    }
+                    release {
+                        cppFlags "-O2"
+                    }
+                }
+            }
+        }
+    }
 
     externalNativeBuild {
-      cmake {
-        cppFlags "-frtti -fexceptions -Wall -Wextra -fstack-protector-all"
-        arguments "-DANDROID_STL=c++_shared"
-        abiFilters (*reactNativeArchitectures())
-
-        buildTypes {
-          debug {
-            cppFlags "-O1 -g"
-          }
-          release {
-            cppFlags "-O2"
-          }
+        cmake {
+            path "CMakeLists.txt"
         }
-      }
     }
-  }
 
-  externalNativeBuild {
-    cmake {
-      path "CMakeLists.txt"
-    }
-  }
-
-  packagingOptions {
-    excludes = [
-        "META-INF",
-        "META-INF/**",
-        "**/libc++_shared.so",
-        "**/libfbjni.so",
-        "**/libjsi.so",
-        "**/libfolly_json.so",
-        "**/libfolly_runtime.so",
-        "**/libglog.so",
-        "**/libhermes.so",
-        "**/libhermes-executor-debug.so",
-        "**/libhermes_executor.so",
-        "**/libreactnative.so",
-        "**/libreactnativejni.so",
-        "**/libturbomodulejsijni.so",
-        "**/libreact_nativemodule_core.so",
-        "**/libjscexecutor.so"
-    ]
-  }
-
-  buildFeatures {
-    buildConfig true
-    prefab true
-    viewBinding true
-  }
-
-  buildTypes {
-    release {
-      minifyEnabled false
-    }
-  }
-
-  lintOptions {
-    disable "GradleCompatible"
-  }
-
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
-  sourceSets {
-    main {
-      if (isNewArchitectureEnabled()) {
-        java.srcDirs += [
-          // React Codegen files
-          "${project.buildDir}/generated/source/codegen/java"
+    packagingOptions {
+        excludes = [
+                "META-INF",
+                "META-INF/**",
+                "**/libc++_shared.so",
+                "**/libfbjni.so",
+                "**/libjsi.so",
+                "**/libfolly_json.so",
+                "**/libfolly_runtime.so",
+                "**/libglog.so",
+                "**/libhermes.so",
+                "**/libhermes-executor-debug.so",
+                "**/libhermes_executor.so",
+                "**/libreactnative.so",
+                "**/libreactnativejni.so",
+                "**/libturbomodulejsijni.so",
+                "**/libreact_nativemodule_core.so",
+                "**/libjscexecutor.so"
         ]
-      }
     }
-  }
+
+    buildFeatures {
+        buildConfig true
+        prefab true
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    lintOptions {
+        disable "GradleCompatible"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += [
+                        // React Codegen files
+                        "${project.buildDir}/generated/source/codegen/java"
+                ]
+            }
+        }
+    }
 }
 
 
 repositories {
-  mavenCentral()
-  google()
+    mavenCentral()
+    google()
 }
 
 
 dependencies {
-  // For < 0.71, this will be from the local maven repo
-  // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
-  //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native:+"
+    // For < 0.71, this will be from the local maven repo
+    // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
+    //noinspection GradleDynamicVersion
+    implementation "com.facebook.react:react-native:+"
 
-  implementation "com.github.shovel-kun.kotlin-toolkit:readium-shared:$readium_version"
-  implementation "com.github.shovel-kun.kotlin-toolkit:readium-streamer:$readium_version"
-  implementation "com.github.shovel-kun.kotlin-toolkit:readium-navigator:$readium_version"
-  implementation "com.github.shovel-kun.kotlin-toolkit:readium-opds:$readium_version"
-  implementation "com.github.shovel-kun.kotlin-toolkit:readium-lcp:$readium_version"
-  implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1'
-  implementation 'androidx.fragment:fragment-ktx:1.8.6'
-  implementation 'androidx.compose.ui:ui-android:1.7.8'
+    implementation "com.github.shovel-kun.kotlin-toolkit:readium-shared:$readium_version"
+    implementation "com.github.shovel-kun.kotlin-toolkit:readium-streamer:$readium_version"
+    implementation "com.github.shovel-kun.kotlin-toolkit:readium-navigator:$readium_version"
+    implementation "com.github.shovel-kun.kotlin-toolkit:readium-opds:$readium_version"
+    implementation "com.github.shovel-kun.kotlin-toolkit:readium-lcp:$readium_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1'
+    implementation 'androidx.fragment:fragment-ktx:1.8.6'
+    implementation 'androidx.compose.ui:ui-android:1.7.8'
 
-  // Add a dependency on NitroModules
-  implementation project(":react-native-nitro-modules")
+    // Add a dependency on NitroModules
+    implementation project(":react-native-nitro-modules")
 }
 
 if (isNewArchitectureEnabled()) {
-  react {
-    jsRootDir = file("../src/")
-    libraryName = "NitroReadium"
-    codegenJavaPackageName = "com.nitroreadium"
-  }
+    react {
+        jsRootDir = file("../src/")
+        libraryName = "NitroReadium"
+        codegenJavaPackageName = "com.nitroreadium"
+    }
 }

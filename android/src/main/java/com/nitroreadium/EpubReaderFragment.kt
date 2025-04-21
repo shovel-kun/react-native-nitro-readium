@@ -85,8 +85,6 @@ class EpubReaderFragment(
     var onDrag: ((NitroDragEvent) -> Unit)? = null
     var onDecorationActivated: ((NitroDecorationActivatedEvent) -> Unit)? = null
     private var _onPreferencesChanged: ((NitroEpubPreferences) -> Unit)? = null
-
-    // Immediately send current value when callback is set
     var onPreferencesChanged: ((NitroEpubPreferences) -> Unit)?
         get() = _onPreferencesChanged
         set(value) {
