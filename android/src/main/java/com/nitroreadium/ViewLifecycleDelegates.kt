@@ -16,14 +16,14 @@ import kotlin.reflect.KProperty
 /**
  * Repository for values automatically set to null every time the [Fragment]'s view is destroyed.
  *
- * This is especially useful for binding properties to avoid memory leaks when Fragments are on
- * the back stack without any view attached.
+ * This is especially useful for binding properties to avoid memory leaks when Fragments are on the
+ * back stack without any view attached.
  */
 class LifecycleDelegates(private val fragment: Fragment) : DefaultLifecycleObserver {
 
     /**
-     * This delegate is very similar to [Delegates.notNull].
-     * We still need it to be able to reset the value to null.
+     * This delegate is very similar to [Delegates.notNull]. We still need it to be able to reset
+     * the value to null.
      */
     private class ViewLifecycleAwareVar<T : Any> : ReadWriteProperty<Fragment, T> {
         var nullableValue: T? = null
@@ -38,27 +38,29 @@ class LifecycleDelegates(private val fragment: Fragment) : DefaultLifecycleObser
         }
     }
 
-    private val viewLifecycleValues: MutableList<ViewLifecycleAwareVar<*>> =
-        mutableListOf()
+    private val viewLifecycleValues: MutableList<ViewLifecycleAwareVar<*>> = mutableListOf()
 
     override fun onCreate(owner: LifecycleOwner) {
         fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
-            viewLifecycleOwner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
-                override fun onDestroy(owner: LifecycleOwner) {
-                    onViewDestroy()
-                }
-            })
+            viewLifecycleOwner
+                ?.lifecycle
+                ?.addObserver(
+                    object : DefaultLifecycleObserver {
+                        override fun onDestroy(owner: LifecycleOwner) {
+                            onViewDestroy()
+                        }
+                    }
+                )
         }
     }
 
     private fun onViewDestroy() {
-        viewLifecycleValues.forEach { delegate ->
-            delegate.nullableValue = null
-        }
+        viewLifecycleValues.forEach { delegate -> delegate.nullableValue = null }
     }
 
     /**
-     * Make a value that will be automatically set to null every time the [Fragment]'s view is destroyed.
+     * Make a value that will be automatically set to null every time the [Fragment]'s view is
+     * destroyed.
      */
     fun <T : Any> viewLifecycleAware(): ReadWriteProperty<Fragment, T> {
         val delegate = ViewLifecycleAwareVar<T>()
@@ -67,8 +69,5 @@ class LifecycleDelegates(private val fragment: Fragment) : DefaultLifecycleObser
     }
 }
 
-/**
- * Make a single value automatically set to null every time the [Fragment]'s view is destroyed.
- */
-fun <T : Any> Fragment.viewLifecycle() =
-    LifecycleDelegates(this).viewLifecycleAware<T>()
+/** Make a single value automatically set to null every time the [Fragment]'s view is destroyed. */
+fun <T : Any> Fragment.viewLifecycle() = LifecycleDelegates(this).viewLifecycleAware<T>()

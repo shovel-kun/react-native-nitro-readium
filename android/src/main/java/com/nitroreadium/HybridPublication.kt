@@ -1,28 +1,28 @@
 package com.nitroreadium
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
+import com.margelo.nitro.NitroModules
 import com.margelo.nitro.core.Promise
 import com.margelo.nitro.nitroreadium.HybridPublicationSpec
-import org.readium.r2.shared.publication.Publication
-import org.readium.r2.shared.publication.opds.images
-import org.readium.r2.shared.publication.services.cover
-import org.readium.r2.shared.toJSON
-import com.margelo.nitro.NitroModules
-import org.readium.r2.shared.ExperimentalReadiumApi
-import org.readium.r2.shared.publication.services.content.Content
-import org.readium.r2.shared.publication.services.content.content
+import com.margelo.nitro.nitroreadium.Locator as NitroLocator
 import java.io.File
 import java.io.FileOutputStream
-import android.graphics.BitmapFactory
 import org.json.JSONObject
+import org.readium.r2.shared.ExperimentalReadiumApi
 import org.readium.r2.shared.publication.Link
+import org.readium.r2.shared.publication.Publication
+import org.readium.r2.shared.publication.opds.images
+import org.readium.r2.shared.publication.services.content.Content
+import org.readium.r2.shared.publication.services.content.content
+import org.readium.r2.shared.publication.services.cover
 import org.readium.r2.shared.publication.services.locate
 import org.readium.r2.shared.publication.services.locateProgression
+import org.readium.r2.shared.toJSON
 import org.readium.r2.shared.util.getOrElse
 import org.readium.r2.shared.util.resource.Resource
-import com.margelo.nitro.nitroreadium.Locator as NitroLocator
 
 @Suppress("unused")
 @Keep
@@ -43,9 +43,7 @@ class HybridPublication(val publication: Publication) : HybridPublicationSpec() 
 
     override fun locate(locator: NitroLocator): Promise<NitroLocator?> {
         return Promise.async {
-            locator.toLocator()?.let {
-                publication.locate(it)?.toNitroLocator()
-            }
+            locator.toLocator()?.let { publication.locate(it)?.toNitroLocator() }
         }
     }
 
@@ -98,23 +96,28 @@ class HybridPublication(val publication: Publication) : HybridPublicationSpec() 
     @OptIn(ExperimentalReadiumApi::class)
     private suspend fun getCoverBitmap(): Bitmap? {
         // Try the explicit cover first
-        publication.cover()?.let { return it }
+        publication.cover()?.let {
+            return it
+        }
 
         // Fall back to the first content image
-        val firstImageLink = publication.content()
-            ?.elements()
-            ?.filterIsInstance<Content.ImageElement>()
-            ?.firstOrNull()
-            ?.embeddedLink ?: return null
+        val firstImageLink =
+            publication
+                .content()
+                ?.elements()
+                ?.filterIsInstance<Content.ImageElement>()
+                ?.firstOrNull()
+                ?.embeddedLink ?: return null
 
-        val resource = publication.get(firstImageLink)
-            ?: throw Exception("Resource for cover image not found")
+        val resource =
+            publication.get(firstImageLink) ?: throw Exception("Resource for cover image not found")
 
         return resource.readAsBitmap()
     }
 
     /**
      * Reads the resource content and decodes it into a Bitmap.
+     *
      * @throws Exception if there's an error reading or decoding the data
      */
     private suspend fun Resource.readAsBitmap(): Bitmap {
@@ -134,6 +137,7 @@ class HybridPublication(val publication: Publication) : HybridPublicationSpec() 
 }
 
 // val baos = ByteArrayOutputStream()
-// publication.cover()?.compress(Bitmap.CompressFormat.JPEG, 100, baos) ?: throw Exception("No cover found")
+// publication.cover()?.compress(Bitmap.CompressFormat.JPEG, 100, baos) ?: throw Exception("No cover
+// found")
 // val b = baos.toByteArray()
 // Base64.encodeToString(b, Base64.DEFAULT)

@@ -11,6 +11,17 @@ import androidx.lifecycle.lifecycleScope
 import com.facebook.react.uimanager.BackgroundStyleApplicator
 import com.facebook.react.uimanager.PixelUtil.pxToDp
 import com.facebook.react.uimanager.ThemedReactContext
+import com.margelo.nitro.nitroreadium.Decoration as NitroDecoration
+import com.margelo.nitro.nitroreadium.DecorationActivatedEvent as NitroDecorationActivatedEvent
+import com.margelo.nitro.nitroreadium.DecorationStyle as NitroDecorationStyle
+import com.margelo.nitro.nitroreadium.DecorationType as NitroDecorationType
+import com.margelo.nitro.nitroreadium.DragEvent as NitroDragEvent
+import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
+import com.margelo.nitro.nitroreadium.Locator as NitroLocator
+import com.margelo.nitro.nitroreadium.Point as NitroPoint
+import com.margelo.nitro.nitroreadium.Rect as NitroRect
+import com.margelo.nitro.nitroreadium.Selection as NitroSelection
+import com.margelo.nitro.nitroreadium.TapEvent as NitroTapEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,22 +38,14 @@ import org.readium.r2.shared.publication.Locator
 import org.readium.r2.shared.publication.services.positions
 import org.readium.r2.shared.util.AbsoluteUrl
 import org.readium.r2.shared.util.getOrElse
-import com.margelo.nitro.nitroreadium.Decoration as NitroDecoration
-import com.margelo.nitro.nitroreadium.DecorationActivatedEvent as NitroDecorationActivatedEvent
-import com.margelo.nitro.nitroreadium.DecorationStyle as NitroDecorationStyle
-import com.margelo.nitro.nitroreadium.DecorationType as NitroDecorationType
-import com.margelo.nitro.nitroreadium.DragEvent as NitroDragEvent
-import com.margelo.nitro.nitroreadium.Locator as NitroLocator
-import com.margelo.nitro.nitroreadium.Point as NitroPoint
-import com.margelo.nitro.nitroreadium.Rect as NitroRect
-import com.margelo.nitro.nitroreadium.Selection as NitroSelection
-import com.margelo.nitro.nitroreadium.TapEvent as NitroTapEvent
-import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
 
 @SuppressLint("ViewConstructor", "ResourceType")
-class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
-    EpubNavigatorFragment.Listener, DecorableNavigator.Listener,
-    EpubNavigatorFragment.PaginationListener, EpubNavigatorFragment.MessageListener {
+class EpubView(private val context: ThemedReactContext) :
+    FrameLayout(context),
+    EpubNavigatorFragment.Listener,
+    DecorableNavigator.Listener,
+    EpubNavigatorFragment.PaginationListener,
+    EpubNavigatorFragment.MessageListener {
 
     //    private var initialLocator: Locator? = null
     //    private var absoluteUrl: AbsoluteUrl? = null
@@ -57,17 +60,19 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
         set(value) {
             field = "(function() {\n$value\nreturn true;\n})();"
         }
+
     var injectedJavascriptOnPageLoad: String? = null
         set(value) {
             field = "(function() {\n$value\nreturn true;\n})();"
         }
 
     @OptIn(ExperimentalReadiumApi::class)
-    var preferences: EpubPreferences = EpubPreferences(
-        fontFamily = FontFamily("Literata"),
-        //lineHeight = 1.4,
-        //paragraphSpacing = 0.5,
-    )
+    var preferences: EpubPreferences =
+        EpubPreferences(
+            fontFamily = FontFamily("Literata")
+            // lineHeight = 1.4,
+            // paragraphSpacing = 0.5,
+        )
         set(value) {
             field = value
             updatePreferences()
@@ -85,47 +90,46 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     var onMessage: ((String) -> Unit)? = null
     val onBookmarksActivate: (Map<String, Any>) -> Unit = {}
 
-    suspend fun initializeNavigator(
-        absoluteUrl: AbsoluteUrl,
-        locatorOrLink: String?
-    ) {
+    suspend fun initializeNavigator(absoluteUrl: AbsoluteUrl, locatorOrLink: String?) {
         withContext(Dispatchers.Main) {
             Log.d(
                 "HybridNitroReadium",
-                "absoluteUrl: $absoluteUrl, initialLocatorOrLinkString: $locatorOrLink"
+                "absoluteUrl: $absoluteUrl, initialLocatorOrLinkString: $locatorOrLink",
             )
 
-            val publication = bookService?.openPublication(absoluteUrl)
-                ?.getOrElse { return@withContext } ?: return@withContext
+            val publication =
+                bookService?.openPublication(absoluteUrl)?.getOrElse {
+                    return@withContext
+                } ?: return@withContext
 
             val fragmentTag = resources.getString(R.string.epub_fragment_tag)
             val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
 
             // TODO: May not be entirely accurate, need a better way to check
-            val locator: Locator = when {
-                locatorOrLink == null -> publication.positions().first()
-                else -> {
-                    val locatorOrLinkJson = JSONObject(locatorOrLink)
-                    if (locatorOrLinkJson.has("location")) {
-                        Locator.fromJSON(locatorOrLinkJson) ?: throw Exception("Invalid locator")
-                    } else {
-                        val link = Link.fromJSON(locatorOrLinkJson)
-                            ?: throw Exception("Invalid link: Link could not be parsed")
-                        publication.locatorFromLink(link)
-                            ?: throw Exception("Invalid locator: Could not get locator for link")
+            val locator: Locator =
+                when {
+                    locatorOrLink == null -> publication.positions().first()
+                    else -> {
+                        val locatorOrLinkJson = JSONObject(locatorOrLink)
+                        if (locatorOrLinkJson.has("location")) {
+                            Locator.fromJSON(locatorOrLinkJson)
+                                ?: throw Exception("Invalid locator")
+                        } else {
+                            val link =
+                                Link.fromJSON(locatorOrLinkJson)
+                                    ?: throw Exception("Invalid link: Link could not be parsed")
+                            publication.locatorFromLink(link)
+                                ?: throw Exception(
+                                    "Invalid locator: Could not get locator for link"
+                                )
+                        }
                     }
                 }
-            }
 
             // Log.i("HybridNitroReadium", "Activity: $activity")
 
             val listener = this@EpubView
-            val epubFragment = EpubReaderFragment(
-                locator,
-                publication,
-                customFonts,
-                listener
-            )
+            val epubFragment = EpubReaderFragment(locator, publication, customFonts, listener)
 
             //  Log.i("HybridNitroReadium", "EpubFragment {$epubFragment} created")
 
@@ -158,7 +162,7 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
 
     fun destroyNavigator() {
         val navigator = this.navigator ?: return
-        //val fragmentTag = resources.getString(R.string.epub_fragment_tag)
+        // val fragmentTag = resources.getString(R.string.epub_fragment_tag)
         val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
         activity?.supportFragmentManager?.commitNow {
             setReorderingAllowed(true)
@@ -176,77 +180,84 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     }
 
     fun getPreferences(): NitroEpubPreferences {
-        return navigator?.settings?.value?.toNitroEpubPreferences() ?: NitroEpubPreferences(
-            backgroundColor = null,
-            columnCount = null,
-            fontFamily = null,
-            fontSize = null,
-            fontWeight = null,
-            hyphens = null,
-            imageFilter = null,
-            language = null,
-            letterSpacing = null,
-            ligatures = null,
-            lineHeight = null,
-            pageMargins = null,
-            paragraphIndent = null,
-            paragraphSpacing = null,
-            publisherStyles = null,
-            readingProgression = null,
-            scroll = null,
-            spread = null,
-            textAlign = null,
-            textColor = null,
-            textNormalization = null,
-            theme = null,
-            typeScale = null,
-            verticalText = null,
-            wordSpacing = null
-        )
+        return navigator?.settings?.value?.toNitroEpubPreferences()
+            ?: NitroEpubPreferences(
+                backgroundColor = null,
+                columnCount = null,
+                fontFamily = null,
+                fontSize = null,
+                fontWeight = null,
+                hyphens = null,
+                imageFilter = null,
+                language = null,
+                letterSpacing = null,
+                ligatures = null,
+                lineHeight = null,
+                pageMargins = null,
+                paragraphIndent = null,
+                paragraphSpacing = null,
+                publisherStyles = null,
+                readingProgression = null,
+                scroll = null,
+                spread = null,
+                textAlign = null,
+                textColor = null,
+                textNormalization = null,
+                theme = null,
+                typeScale = null,
+                verticalText = null,
+                wordSpacing = null,
+            )
     }
 
     override fun onDecorationActivated(event: DecorableNavigator.OnActivatedEvent): Boolean {
         event.point?.let {
-            onTap?.invoke(
-                NitroTapEvent(
-                    it.x.pxToDp().toDouble(),
-                    it.y.pxToDp().toDouble()
-                )
-            )
+            onTap?.invoke(NitroTapEvent(it.x.pxToDp().toDouble(), it.y.pxToDp().toDouble()))
         }
         onDecorationActivated(
             NitroDecorationActivatedEvent(
-                decoration = NitroDecoration(
-                    id = event.decoration.id,
-                    locator = event.decoration.locator.toNitroLocator(),
-                    style = NitroDecorationStyle(
-                        type = when (event.decoration.style) {
-                            is Decoration.Style.Highlight -> NitroDecorationType.HIGHLIGHT
-                            is Decoration.Style.Underline -> NitroDecorationType.UNDERLINE
-                            else -> NitroDecorationType.HIGHLIGHT
-                        },
-                        tint = when (event.decoration.style) {
-                            is Decoration.Style.Highlight -> (event.decoration.style as Decoration.Style.Highlight).tint.toString()
-                            is Decoration.Style.Underline -> (event.decoration.style as Decoration.Style.Underline).tint.toString()
-                            else -> "0x000000"
-                        }
-                    )
-                ),
+                decoration =
+                    NitroDecoration(
+                        id = event.decoration.id,
+                        locator = event.decoration.locator.toNitroLocator(),
+                        style =
+                            NitroDecorationStyle(
+                                type =
+                                    when (event.decoration.style) {
+                                        is Decoration.Style.Highlight ->
+                                            NitroDecorationType.HIGHLIGHT
+                                        is Decoration.Style.Underline ->
+                                            NitroDecorationType.UNDERLINE
+                                        else -> NitroDecorationType.HIGHLIGHT
+                                    },
+                                tint =
+                                    when (event.decoration.style) {
+                                        is Decoration.Style.Highlight ->
+                                            (event.decoration.style as Decoration.Style.Highlight)
+                                                .tint
+                                                .toString()
+                                        is Decoration.Style.Underline ->
+                                            (event.decoration.style as Decoration.Style.Underline)
+                                                .tint
+                                                .toString()
+                                        else -> "0x000000"
+                                    },
+                            ),
+                    ),
                 group = event.group,
-                rect = event.rect?.let {
-                    NitroRect(
-                        it.left.pxToDp().toDouble(),
-                        it.top.pxToDp().toDouble(),
-                        it.right.pxToDp().toDouble(),
-                        it.bottom.pxToDp().toDouble()
-                    )
-                },
-                point = event.point?.let {
-                    NitroPoint(
-                        it.x.pxToDp().toDouble(),
-                        it.y.pxToDp().toDouble()
-                    )
-                }
+                rect =
+                    event.rect?.let {
+                        NitroRect(
+                            it.left.pxToDp().toDouble(),
+                            it.top.pxToDp().toDouble(),
+                            it.right.pxToDp().toDouble(),
+                            it.bottom.pxToDp().toDouble(),
+                        )
+                    },
+                point =
+                    event.point?.let {
+                        NitroPoint(it.x.pxToDp().toDouble(), it.y.pxToDp().toDouble())
+                    },
             )
         )
         return true
@@ -254,14 +265,15 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
 
     @OptIn(ExperimentalStdlibApi::class)
     fun decorateHighlights() {
-        val decorations = highlights.map {
-            val style = Decoration.Style.Highlight(it.style.tint.hexToInt())
-            return@map Decoration(
-                id = it.id,
-                locator = it.locator.toLocator() ?: throw Exception("Invalid locator"),
-                style = style
-            )
-        }
+        val decorations =
+            highlights.map {
+                val style = Decoration.Style.Highlight(it.style.tint.hexToInt())
+                return@map Decoration(
+                    id = it.id,
+                    locator = it.locator.toLocator() ?: throw Exception("Invalid locator"),
+                    style = style,
+                )
+            }
 
         val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
         activity?.lifecycleScope?.launch {
@@ -273,7 +285,9 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
         val result = navigator?.evaluateJavascript(script)
 
         return result
-            ?: throw Exception("Failed to evaluate. Either webview has not been initialized yet, or the resource is not reflowable")
+            ?: throw Exception(
+                "Failed to evaluate. Either webview has not been initialized yet, or the resource is not reflowable"
+            )
     }
 
     fun injectJavascript(script: String) {
@@ -281,16 +295,14 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
             val result = navigator?.evaluateJavascript(script.trimIndent())
 
             result
-                ?: throw Exception("Failed to inject. Either webview has not been initialized yet, or the resource is not reflowable")
+                ?: throw Exception(
+                    "Failed to inject. Either webview has not been initialized yet, or the resource is not reflowable"
+                )
         }
     }
 
     override fun onPageChanged(pageIndex: Int, totalPages: Int, locator: Locator) {
-        onPageChanged?.invoke(
-            pageIndex.toDouble(),
-            totalPages.toDouble(),
-            locator.toNitroLocator()
-        )
+        onPageChanged?.invoke(pageIndex.toDouble(), totalPages.toDouble(), locator.toNitroLocator())
     }
 
     override fun onPageLoaded() {
@@ -324,7 +336,7 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
     fun measureAndLayout() {
         measure(
             MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+            MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY),
         )
         layout(left, top, right, bottom)
     }
@@ -336,7 +348,8 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
 
     fun clipToPaddingBox(canvas: Canvas) {
         // When the border radius is set, we need to clip the content to the padding box.
-        // This is because the border radius is applied to the background drawable, not the view itself.
+        // This is because the border radius is applied to the background drawable, not the view
+        // itself.
         // It is the same behavior as in React Native.
         if (!clipToPadding) {
             return

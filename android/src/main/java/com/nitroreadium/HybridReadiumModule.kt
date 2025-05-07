@@ -14,7 +14,7 @@ import org.readium.r2.shared.util.getOrElse
 @Suppress("unused")
 @Keep
 @DoNotStrip
-class HybridReadiumModule: HybridReadiumModuleSpec() {
+class HybridReadiumModule : HybridReadiumModuleSpec() {
 
     val bookService = BookService.getInstance(NitroModules.applicationContext as Context)
 
@@ -24,9 +24,14 @@ class HybridReadiumModule: HybridReadiumModuleSpec() {
 
     override fun openPublication(absoluteUrl: String): Promise<HybridPublicationSpec> {
         return try {
-            val cleanAbsoluteUrl = AbsoluteUrl(absoluteUrl) ?: return Promise.rejected(Exception("Invalid absoluteUrl: $absoluteUrl"))
+            val cleanAbsoluteUrl =
+                AbsoluteUrl(absoluteUrl)
+                    ?: return Promise.rejected(Exception("Invalid absoluteUrl: $absoluteUrl"))
             Promise.async {
-                val publication = bookService.openPublication(cleanAbsoluteUrl).getOrElse { throw Exception("Cannot open publication: $it") }
+                val publication =
+                    bookService.openPublication(cleanAbsoluteUrl).getOrElse {
+                        throw Exception("Cannot open publication: $it")
+                    }
                 HybridPublication(publication)
             }
         } catch (e: Exception) {

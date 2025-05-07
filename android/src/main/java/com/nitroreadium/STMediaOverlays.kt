@@ -1,18 +1,14 @@
 package com.nitroreadium
 
-import org.readium.r2.shared.Clip
-import org.readium.r2.shared.InternalReadiumApi
-import org.readium.r2.shared.MediaOverlayNode
-import org.readium.r2.shared.publication.Locator
 import java.io.Serializable
-import java.net.URI
+import org.readium.r2.shared.publication.Locator
 
 data class TextFragment(val href: String, val fragment: String) : Serializable {
     var locator: Locator? = null
 }
 
-//@OptIn(InternalReadiumApi::class)
-//class STMediaOverlays(private val nodes: List<MediaOverlayNode> = listOf()) {
+// @OptIn(InternalReadiumApi::class)
+// class STMediaOverlays(private val nodes: List<MediaOverlayNode> = listOf()) {
 //    fun clip(ref: String): Clip? {
 //        val fragmentNode = findNode(ref, this.nodes)
 //        return fragmentNode?.clip
@@ -89,4 +85,4 @@ data class TextFragment(val href: String, val fragment: String) : Serializable {
 //
 //        return null
 //    }
-//}
+// }

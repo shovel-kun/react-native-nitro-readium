@@ -4,27 +4,25 @@ import android.util.Log
 import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
 import com.facebook.react.uimanager.ThemedReactContext
-import com.margelo.nitro.nitroreadium.HybridNitroReadiumSpec
 import com.margelo.nitro.core.Promise
 import com.margelo.nitro.nitroreadium.Decoration
 import com.margelo.nitro.nitroreadium.DecorationActivatedEvent
 import com.margelo.nitro.nitroreadium.DragEvent
+import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
 import com.margelo.nitro.nitroreadium.EpubPreferences
+import com.margelo.nitro.nitroreadium.HybridNitroReadiumSpec
 import com.margelo.nitro.nitroreadium.Locator
 import com.margelo.nitro.nitroreadium.NitroFileSource
 import com.margelo.nitro.nitroreadium.Selection
 import com.margelo.nitro.nitroreadium.TapEvent
 import org.readium.r2.shared.util.AbsoluteUrl
-import com.margelo.nitro.nitroreadium.EpubPreferences as NitroEpubPreferences
 
 @Keep
 @DoNotStrip
 class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec() {
 
     // View
-    override val view = EpubView(context).apply {
-        bookService = BookService.getInstance(context)
-    }
+    override val view = EpubView(context).apply { bookService = BookService.getInstance(context) }
 
     // Props
     @Suppress("PropertyName")
@@ -37,9 +35,7 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
             if (_source.uri.isEmpty()) return
             val absoluteUrl = AbsoluteUrl(value.uri) ?: throw Exception("Invalid URI")
 
-            Promise.async {
-                view.initializeNavigator(absoluteUrl, value.initialLocation)
-            }
+            Promise.async { view.initializeNavigator(absoluteUrl, value.initialLocation) }
         }
 
     override var locator: Locator? = null
@@ -130,11 +126,7 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
             if (value == null || field == value) return
             field = value
             view.onPageChanged = { page, totalPages, locator ->
-                this.onPageChanged?.invoke(
-                    page,
-                    totalPages,
-                    locator
-                )
+                this.onPageChanged?.invoke(page, totalPages, locator)
             }
         }
 
@@ -159,12 +151,9 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
             view.onMessage = { this.onMessage?.invoke(it) }
         }
 
-
     // Methods
     override fun evaluateJavascript(script: String): Promise<String?> {
-        return Promise.async {
-            view.evaluateJavascript(script)
-        }
+        return Promise.async { view.evaluateJavascript(script) }
     }
 
     override fun injectJavascript(script: String) {

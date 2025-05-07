@@ -1,66 +1,66 @@
-///*
+/// *
 // * Copyright 2021 Readium Foundation. All rights reserved.
 // * Use of this source code is governed by the BSD-style license
 // * available in the top-level LICENSE file of the project.
 // */
 //
-//@file:OptIn(ExperimentalReadiumApi::class)
+// @file:OptIn(ExperimentalReadiumApi::class)
 //
-//package com.nitroreadium
+// package com.nitroreadium
 //
-//import android.graphics.Color
-//import androidx.annotation.ColorInt
-//import androidx.lifecycle.ViewModel
-//import androidx.lifecycle.viewModelScope
-//import androidx.paging.InvalidatingPagingSourceFactory
-//import androidx.paging.Pager
-//import androidx.paging.PagingConfig
-//import androidx.paging.PagingData
-//import androidx.paging.cachedIn
-//import kotlinx.coroutines.channels.Channel
-//import kotlinx.coroutines.flow.Flow
-//import kotlinx.coroutines.flow.MutableStateFlow
-//import kotlinx.coroutines.flow.StateFlow
-//import kotlinx.coroutines.flow.combine
-//import kotlinx.coroutines.flow.map
-//import kotlinx.coroutines.launch
-//import org.readium.r2.navigator.Decoration
-//import org.readium.r2.navigator.HyperlinkNavigator
-//import org.readium.r2.navigator.epub.EpubNavigatorFragment
-//import org.readium.r2.navigator.image.ImageNavigatorFragment
-//import org.readium.r2.navigator.pdf.PdfNavigatorFragment
-//import org.readium.r2.shared.ExperimentalReadiumApi
-//import org.readium.r2.shared.publication.Link
-//import org.readium.r2.shared.publication.Locator
-//import org.readium.r2.shared.publication.LocatorCollection
-//import org.readium.r2.shared.publication.Publication
-//import org.readium.r2.shared.publication.services.search.SearchIterator
-//import org.readium.r2.shared.publication.services.search.SearchTry
-//import org.readium.r2.shared.publication.services.search.search
-//import org.readium.r2.shared.util.AbsoluteUrl
-//import org.readium.r2.shared.util.Try
-//import org.readium.r2.shared.util.Url
-//import org.readium.r2.shared.util.data.ReadError
-//import org.readium.r2.testapp.Application
-//import org.readium.r2.testapp.R
-//import org.readium.r2.testapp.data.BookRepository
-//import org.readium.r2.testapp.data.model.Highlight
-//import org.readium.r2.testapp.domain.toUserError
-//import org.readium.r2.testapp.reader.preferences.UserPreferencesViewModel
-//import org.readium.r2.testapp.reader.tts.TtsViewModel
-//import org.readium.r2.testapp.search.SearchPagingSource
-//import org.readium.r2.testapp.utils.EventChannel
-//import org.readium.r2.testapp.utils.UserError
-//import org.readium.r2.testapp.utils.createViewModelFactory
-//import org.readium.r2.testapp.utils.extensions.toHtml
-//import timber.log.Timber
+// import android.graphics.Color
+// import androidx.annotation.ColorInt
+// import androidx.lifecycle.ViewModel
+// import androidx.lifecycle.viewModelScope
+// import androidx.paging.InvalidatingPagingSourceFactory
+// import androidx.paging.Pager
+// import androidx.paging.PagingConfig
+// import androidx.paging.PagingData
+// import androidx.paging.cachedIn
+// import kotlinx.coroutines.channels.Channel
+// import kotlinx.coroutines.flow.Flow
+// import kotlinx.coroutines.flow.MutableStateFlow
+// import kotlinx.coroutines.flow.StateFlow
+// import kotlinx.coroutines.flow.combine
+// import kotlinx.coroutines.flow.map
+// import kotlinx.coroutines.launch
+// import org.readium.r2.navigator.Decoration
+// import org.readium.r2.navigator.HyperlinkNavigator
+// import org.readium.r2.navigator.epub.EpubNavigatorFragment
+// import org.readium.r2.navigator.image.ImageNavigatorFragment
+// import org.readium.r2.navigator.pdf.PdfNavigatorFragment
+// import org.readium.r2.shared.ExperimentalReadiumApi
+// import org.readium.r2.shared.publication.Link
+// import org.readium.r2.shared.publication.Locator
+// import org.readium.r2.shared.publication.LocatorCollection
+// import org.readium.r2.shared.publication.Publication
+// import org.readium.r2.shared.publication.services.search.SearchIterator
+// import org.readium.r2.shared.publication.services.search.SearchTry
+// import org.readium.r2.shared.publication.services.search.search
+// import org.readium.r2.shared.util.AbsoluteUrl
+// import org.readium.r2.shared.util.Try
+// import org.readium.r2.shared.util.Url
+// import org.readium.r2.shared.util.data.ReadError
+// import org.readium.r2.testapp.Application
+// import org.readium.r2.testapp.R
+// import org.readium.r2.testapp.data.BookRepository
+// import org.readium.r2.testapp.data.model.Highlight
+// import org.readium.r2.testapp.domain.toUserError
+// import org.readium.r2.testapp.reader.preferences.UserPreferencesViewModel
+// import org.readium.r2.testapp.reader.tts.TtsViewModel
+// import org.readium.r2.testapp.search.SearchPagingSource
+// import org.readium.r2.testapp.utils.EventChannel
+// import org.readium.r2.testapp.utils.UserError
+// import org.readium.r2.testapp.utils.createViewModelFactory
+// import org.readium.r2.testapp.utils.extensions.toHtml
+// import timber.log.Timber
 //
-//@OptIn(ExperimentalReadiumApi::class)
-//class ReaderViewModel(
+// @OptIn(ExperimentalReadiumApi::class)
+// class ReaderViewModel(
 //    private val bookId: Long,
 //    private val readerRepository: ReaderRepository,
 //    private val bookRepository: BookRepository,
-//) : ViewModel(),
+// ) : ViewModel(),
 //    EpubNavigatorFragment.Listener,
 //    ImageNavigatorFragment.Listener,
 //    PdfNavigatorFragment.Listener {
@@ -69,7 +69,8 @@
 //        try {
 //            checkNotNull(readerRepository[bookId])
 //        } catch (e: Exception) {
-//            // Fallbacks on a dummy Publication to avoid crashing the app until the Activity finishes.
+//            // Fallbacks on a dummy Publication to avoid crashing the app until the Activity
+// finishes.
 //            DummyReaderInitData(bookId)
 //        }
 //
@@ -207,7 +208,8 @@
 //        bookRepository.updateHighlightAnnotation(id, annotation)
 //    }
 //
-//    fun updateHighlightStyle(id: Long, style: Highlight.Style, @ColorInt tint: Int) = viewModelScope.launch {
+//    fun updateHighlightStyle(id: Long, style: Highlight.Style, @ColorInt tint: Int) =
+// viewModelScope.launch {
 //        bookRepository.updateHighlightStyle(id, style, tint)
 //    }
 //
@@ -350,4 +352,4 @@
 //                )
 //            }
 //    }
-//}
+// }
