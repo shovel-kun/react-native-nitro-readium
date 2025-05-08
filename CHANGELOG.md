@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.5](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.4...v0.6.5) (2025-05-08)
+
+### 🐛 Bug Fixes
+
+* **ios:** make it run ([58149eb](https://github.com/shovel-kun/react-native-nitro-readium/commit/58149eb0dec1df861ef63bc9e8a6627859f9a436))
+
 ## [0.6.4](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.3...v0.6.4) (2025-05-05)
 
 ## [0.6.3](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.2...v0.6.3) (2025-05-04)
