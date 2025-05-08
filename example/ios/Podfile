@@ -1,3 +1,6 @@
+source 'https://github.com/readium/podspecs'
+source 'https://cdn.cocoapods.org/'
+
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -16,7 +19,13 @@ end
 
 target 'NitroReadiumExample' do
   config = use_native_modules!
-
+  
+  pod 'ReadiumShared', '~> 3.2.0'
+  pod 'ReadiumStreamer', '~> 3.2.0'
+  pod 'ReadiumNavigator', '~> 3.2.0'
+  pod 'ReadiumOPDS', '~> 3.2.0'
+  pod 'Minizip', modular_headers: true
+  
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

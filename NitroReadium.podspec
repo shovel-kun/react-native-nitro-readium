@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => min_ios_version_supported, :visionos => 1.0 }
-  s.source       = { :git => "https://github.com/ebisuzawakurumi/react-native-nitro-readium.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/shovel-kun/react-native-nitro-readium.git", :tag => "#{s.version}" }
 
   s.source_files = [
     # Implementation (Swift)
@@ -32,5 +32,11 @@ Pod::Spec.new do |s|
 
   s.dependency 'React-jsi'
   s.dependency 'React-callinvoker'
+  # Readium
+  s.dependency 'ReadiumShared'
+  s.dependency 'ReadiumStreamer'
+  s.dependency 'ReadiumNavigator'
+  s.dependency 'ReadiumOPDS'
+  
   install_modules_dependencies(s)
 end
