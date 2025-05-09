@@ -12,14 +12,6 @@ type Spread = 'auto' | 'never' | 'always'
 
 type ReadingProgression = 'ltr' | 'rtl'
 
-// type ReadingProgression = "ltr" | "rtl";
-
-// enum Theme {
-//   LIGHT = 'light',
-//   DARK = 'dark',
-//   SEPIA = 'sepia',
-// }
-
 export interface EpubPreferences {
   /**
    * Default page background color.

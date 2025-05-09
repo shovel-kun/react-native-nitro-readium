@@ -36,8 +36,16 @@ async function parsePublication(
     locatorFromLink: (link: Link) =>
       rawPublication.locatorFromLink(JSON.stringify(link)),
     locate: (locator: Locator) => rawPublication.locate(locator),
-    locateProgression: (progression: number) =>
-      rawPublication.locateProgression(progression),
+    /**
+     * Locates the target at the given progression relative to the whole publication.
+     *
+     * @param progression The progression to locate to, must be between 0 and 1.
+     */
+    locateProgression: (progression: number) => {
+      if (progression <= 0 || progression >= 1)
+        throw new Error('progression must be between 0 and 1 inclusive')
+      return rawPublication.locateProgression(progression)
+    },
   }
 }
 
