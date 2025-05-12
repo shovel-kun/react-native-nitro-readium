@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.6](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.5...v0.6.6) (2025-05-12)
+
+### 🐛 Bug Fixes
+
+* progression guard ([1ad331c](https://github.com/shovel-kun/react-native-nitro-readium/commit/1ad331c5bebd65aa54573f92ae4314ca031a787c))
+
 ## [0.6.5](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.4...v0.6.5) (2025-05-08)
 
 ### 🐛 Bug Fixes

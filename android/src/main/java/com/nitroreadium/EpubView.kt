@@ -106,7 +106,7 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
                 locatorOrLink == null -> publication.positions().first()
                 else -> {
                     val locatorOrLinkJson = JSONObject(locatorOrLink)
-                    if (locatorOrLinkJson.has("location")) {
+                    if (locatorOrLinkJson.has("locations")) {
                         Locator.fromJSON(locatorOrLinkJson) ?: throw Exception("Invalid locator")
                     } else {
                         val link = Link.fromJSON(locatorOrLinkJson)
