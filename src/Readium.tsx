@@ -65,14 +65,22 @@ const Readium = forwardRef<NitroReadiumMethods, ReadiumProps>(
           throw new Error('Readium component not mounted')
         }
 
-        return nativeRef.current?.evaluateJavascript(script)
+        try {
+          return nativeRef.current?.evaluateJavascript(script)
+        } catch (error) {
+          throw new Error(`Failed to evaluate javascript: ${error}`)
+        }
       },
       [nativeRef]
     )
 
     const injectJavascript = useCallback(
       (script: string) => {
-        nativeRef.current?.injectJavascript(script)
+        try {
+          nativeRef.current?.injectJavascript(script)
+        } catch (error) {
+          throw new Error(`Failed to inject javascript: ${error}`)
+        }
       },
       [nativeRef]
     )

@@ -42,8 +42,10 @@ async function parsePublication(
      * @param progression The progression to locate to, must be between 0 and 1.
      */
     locateProgression: (progression: number) => {
-      if (progression <= 0 || progression >= 1)
-        throw new Error('progression must be between 0 and 1 inclusive')
+      if (progression < 0 || progression > 1)
+        throw new Error(
+          `progression must be between 0 and 1 inclusive: got ${progression}`
+        )
       return rawPublication.locateProgression(progression)
     },
   }
