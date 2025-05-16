@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.9](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.8...v0.6.9) (2025-05-16)
+
+### 🐛 Bug Fixes
+
+* set separate tags in ios plugin ([e946401](https://github.com/shovel-kun/react-native-nitro-readium/commit/e946401c45ab73e97fb5c85f51e77895a3bc9ccf))
+
 ## [0.6.8](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.7...v0.6.8) (2025-05-16)
 
 ### 🐛 Bug Fixes
