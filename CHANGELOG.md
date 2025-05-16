@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.8](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.7...v0.6.8) (2025-05-16)
+
+### 🐛 Bug Fixes
+
+* add expo plugin ([dd66012](https://github.com/shovel-kun/react-native-nitro-readium/commit/dd66012777acd7e6817fc82e0013384923ef0282))
+
 ## [0.6.7](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.6...v0.6.7) (2025-05-12)
 
 ### 🐛 Bug Fixes
