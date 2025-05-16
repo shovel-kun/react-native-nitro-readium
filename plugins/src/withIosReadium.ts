@@ -10,13 +10,11 @@ export const withCocoaPodsImport: ConfigPlugin = (c) => {
     async (config) => {
       const file = path.join(config.modRequest.platformProjectRoot, 'Podfile')
 
-      const contents = await promises.readFile(file, 'utf8')
+      let contents = await promises.readFile(file, 'utf8')
+      contents = addCocoaPodsSource(contents)
+      contents = addCocoaPodsImport(contents)
 
-      await promises.writeFile(
-        file,
-        addCocoaPodsImport(addCocoaPodsSource(contents)),
-        'utf-8'
-      )
+      await promises.writeFile(file, contents, 'utf-8')
       return config
     },
   ])
@@ -26,7 +24,7 @@ const MOD_TAG = 'react-native-nitro-readium'
 
 function addCocoaPodsImport(src: string): string {
   return mergeContents({
-    tag: MOD_TAG,
+    tag: `${MOD_TAG}-import`,
     src,
     newSrc: `
   pod 'ReadiumShared', '~> 3.2.0'
@@ -36,7 +34,6 @@ function addCocoaPodsImport(src: string): string {
   pod 'Minizip', modular_headers: true
 `,
     anchor: /use_native_modules/,
-    // We can't go after the use_native_modules block because it might have parameters, causing it to be multi-line (see react-native template).
     offset: 0,
     comment: '#',
   }).contents
@@ -44,11 +41,11 @@ function addCocoaPodsImport(src: string): string {
 
 function addCocoaPodsSource(src: string): string {
   return mergeContents({
-    tag: MOD_TAG,
+    tag: `${MOD_TAG}-source`,
     src,
     newSrc: `
 source 'https://github.com/readium/podspecs'
-source 'https://cdn.cocoapods.org/'
+source 'https://cdn.cocoapods.org'
 `,
     anchor: /^/,
     offset: 0,
