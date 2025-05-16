@@ -8,6 +8,7 @@
   "source": "src/index",
   "scripts": {
     "build": "rm -rf lib && bun typecheck && bob build",
+    "build-plugins": "tsc -p plugins/tsconfig.json",
     "typecheck": "tsc --noEmit",
     "clean": "git clean -dfX",
     "release": "release-it",
@@ -31,6 +32,7 @@
     "ios/**/*.mm",
     "ios/**/*.cpp",
     "ios/**/*.swift",
+    "plugins",
     "app.plugin.js",
     "*.podspec",
     "README.md"
@@ -55,6 +57,7 @@
     "@types/react": "~19.0.10",
     "eslint": "^9.26.0",
     "eslint-plugin-react": "^7.37.5",
+    "expo-module-scripts": "^4.1.7",
     "globals": "^16.0.0",
     "nitro-codegen": "^0.25.2",
     "react": "19.0.0",
