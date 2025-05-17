@@ -8,6 +8,8 @@ class HybridNitroReadium : HybridNitroReadiumSpec {
     var view: UIView = UIView()
 
     // Props
+    var nitroSource: NitroFileSource = NitroFileSource("hi", nil)
+    
     var locator: Locator?
     
     var preferences: EpubPreferences?

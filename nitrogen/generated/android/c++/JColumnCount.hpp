@@ -42,16 +42,16 @@ namespace margelo::nitro::nitroreadium {
     static jni::alias_ref<JColumnCount> fromCpp(ColumnCount value) {
       static const auto clazz = javaClassStatic();
       static const auto fieldAUTO = clazz->getStaticField<JColumnCount>("AUTO");
-      static const auto field_1 = clazz->getStaticField<JColumnCount>("_1");
-      static const auto field_2 = clazz->getStaticField<JColumnCount>("_2");
+      static const auto fieldONE = clazz->getStaticField<JColumnCount>("ONE");
+      static const auto fieldTWO = clazz->getStaticField<JColumnCount>("TWO");
       
       switch (value) {
         case ColumnCount::AUTO:
           return clazz->getStaticFieldValue(fieldAUTO);
-        case ColumnCount::_1:
-          return clazz->getStaticFieldValue(field_1);
-        case ColumnCount::_2:
-          return clazz->getStaticFieldValue(field_2);
+        case ColumnCount::ONE:
+          return clazz->getStaticFieldValue(fieldONE);
+        case ColumnCount::TWO:
+          return clazz->getStaticFieldValue(fieldTWO);
         default:
           std::string stringValue = std::to_string(static_cast<int>(value));
           throw std::invalid_argument("Invalid enum value (" + stringValue + "!");

@@ -19,10 +19,10 @@ public extension ColumnCount {
     switch string {
       case "auto":
         self = .auto
-      case "1":
-        self = .1
-      case "2":
-        self = .2
+      case "one":
+        self = .one
+      case "two":
+        self = .two
       default:
         return nil
     }
@@ -35,10 +35,10 @@ public extension ColumnCount {
     switch self {
       case .auto:
         return "auto"
-      case .1:
-        return "1"
-      case .2:
-        return "2"
+      case .one:
+        return "one"
+      case .two:
+        return "two"
     }
   }
 }

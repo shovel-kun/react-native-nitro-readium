@@ -11,6 +11,7 @@
 namespace margelo::nitro::nitroreadium { class HybridPublicationSpec; }
 
 #include <NitroModules/Promise.hpp>
+#include <optional>
 #include <memory>
 #include "HybridPublicationSpec.hpp"
 #include <NitroModules/JPromise.hpp>
@@ -44,14 +45,14 @@ namespace margelo::nitro::nitroreadium {
     auto __result = method(_javaPart, a, b);
     return __result;
   }
-  std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> JHybridReadiumModuleSpec::openPublication(const std::string& absoluteUrl) {
+  std::shared_ptr<Promise<std::optional<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>> JHybridReadiumModuleSpec::openPublication(const std::string& absoluteUrl) {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* absoluteUrl */)>("openPublication");
     auto __result = method(_javaPart, jni::make_jstring(absoluteUrl));
     return [&]() {
-      auto __promise = Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>::create();
+      auto __promise = Promise<std::optional<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
         auto __result = jni::static_ref_cast<JHybridPublicationSpec::javaobject>(__boxedResult);
-        __promise->resolve(JNISharedPtr::make_shared_from_jni<JHybridPublicationSpec>(jni::make_global(__result)));
+        __promise->resolve(__result != nullptr ? std::make_optional(JNISharedPtr::make_shared_from_jni<JHybridPublicationSpec>(jni::make_global(__result))) : std::nullopt);
       });
       __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
         jni::JniException __jniError(__throwable);

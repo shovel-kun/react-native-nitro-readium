@@ -16,6 +16,7 @@ namespace NitroReadium { class HybridReadiumModuleSpec_cxx; }
 namespace margelo::nitro::nitroreadium { class HybridPublicationSpec; }
 
 #include <NitroModules/Promise.hpp>
+#include <optional>
 #include <memory>
 #include "HybridPublicationSpec.hpp"
 #include <string>
@@ -67,7 +68,7 @@ namespace margelo::nitro::nitroreadium {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::shared_ptr<Promise<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>> openPublication(const std::string& absoluteUrl) override {
+    inline std::shared_ptr<Promise<std::optional<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>>> openPublication(const std::string& absoluteUrl) override {
       auto __result = _swiftPart.openPublication(absoluteUrl);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());

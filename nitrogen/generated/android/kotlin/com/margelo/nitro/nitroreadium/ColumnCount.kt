@@ -17,8 +17,8 @@ import com.facebook.proguard.annotations.DoNotStrip
 @Keep
 enum class ColumnCount {
   AUTO,
-  _1,
-  _2;
+  ONE,
+  TWO;
 
   @DoNotStrip
   @Keep

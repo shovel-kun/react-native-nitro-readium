@@ -53,5 +53,6 @@ async function parsePublication(
 
 export async function openPublication(absoluteUrl: string) {
   const rawPublication = await ReadiumModule.openPublication(absoluteUrl)
+  if (!rawPublication) return null
   return parsePublication(rawPublication)
 }

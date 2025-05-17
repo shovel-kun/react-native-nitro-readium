@@ -4,5 +4,5 @@ import type { Publication } from './publication.nitro'
 export interface ReadiumModule
   extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   add(a: number, b: number): number
-  openPublication(absoluteUrl: string): Promise<Publication>
+  openPublication(absoluteUrl: string): Promise<Publication | null>
 }

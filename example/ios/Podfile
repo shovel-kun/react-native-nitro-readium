@@ -40,5 +40,13 @@ target 'NitroReadiumExample' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+    
+    installer.pods_project.targets.each do |target|
+      if ['ReadiumShared', 'ReadiumStreamer', 'ReadiumNavigator', 'ReadiumOPDS'].include?(target.name)
+        target.build_configurations.each do |config|
+          config.build_settings['SWIFT_VERSION'] = '5.10'
+        end
+      end
+    end
   end
 end

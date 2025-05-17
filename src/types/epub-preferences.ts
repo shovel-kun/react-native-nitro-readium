@@ -2,7 +2,7 @@ type Theme = 'light' | 'dark' | 'sepia'
 
 type TextAlign = 'center' | 'justify' | 'start' | 'end' | 'left' | 'right'
 
-type ColumnCount = 'auto' | '1' | '2'
+type ColumnCount = 'auto' | 'one' | 'two'
 
 type ImageFilter = 'darken' | 'invert'
 

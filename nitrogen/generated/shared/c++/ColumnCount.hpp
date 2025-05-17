@@ -30,8 +30,8 @@ namespace margelo::nitro::nitroreadium {
    */
   enum class ColumnCount {
     AUTO      SWIFT_NAME(auto) = 0,
-    _1      SWIFT_NAME(1) = 1,
-    _2      SWIFT_NAME(2) = 2,
+    ONE      SWIFT_NAME(one) = 1,
+    TWO      SWIFT_NAME(two) = 2,
   } CLOSED_ENUM;
 
 } // namespace margelo::nitro::nitroreadium
@@ -47,8 +47,8 @@ namespace margelo::nitro {
       std::string unionValue = JSIConverter<std::string>::fromJSI(runtime, arg);
       switch (hashString(unionValue.c_str(), unionValue.size())) {
         case hashString("auto"): return ColumnCount::AUTO;
-        case hashString("1"): return ColumnCount::_1;
-        case hashString("2"): return ColumnCount::_2;
+        case hashString("one"): return ColumnCount::ONE;
+        case hashString("two"): return ColumnCount::TWO;
         default: [[unlikely]]
           throw std::invalid_argument("Cannot convert \"" + unionValue + "\" to enum ColumnCount - invalid value!");
       }
@@ -56,8 +56,8 @@ namespace margelo::nitro {
     static inline jsi::Value toJSI(jsi::Runtime& runtime, ColumnCount arg) {
       switch (arg) {
         case ColumnCount::AUTO: return JSIConverter<std::string>::toJSI(runtime, "auto");
-        case ColumnCount::_1: return JSIConverter<std::string>::toJSI(runtime, "1");
-        case ColumnCount::_2: return JSIConverter<std::string>::toJSI(runtime, "2");
+        case ColumnCount::ONE: return JSIConverter<std::string>::toJSI(runtime, "one");
+        case ColumnCount::TWO: return JSIConverter<std::string>::toJSI(runtime, "two");
         default: [[unlikely]]
           throw std::invalid_argument("Cannot convert ColumnCount to JS - invalid value: "
                                     + std::to_string(static_cast<int>(arg)) + "!");
@@ -70,8 +70,8 @@ namespace margelo::nitro {
       std::string unionValue = JSIConverter<std::string>::fromJSI(runtime, value);
       switch (hashString(unionValue.c_str(), unionValue.size())) {
         case hashString("auto"):
-        case hashString("1"):
-        case hashString("2"):
+        case hashString("one"):
+        case hashString("two"):
           return true;
         default:
           return false;

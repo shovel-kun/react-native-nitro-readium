@@ -55,10 +55,10 @@ namespace margelo::nitro::nitroreadium::bridge::swift {
     return swiftPart.toUnsafe();
   }
   
-  // pragma MARK: std::function<void(const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& /* result */)>
-  Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_ create_Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_(void* _Nonnull swiftClosureWrapper) {
-    auto swiftClosure = NitroReadium::Func_void_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec_::fromUnsafe(swiftClosureWrapper);
-    return [swiftClosure = std::move(swiftClosure)](const std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>& result) mutable -> void {
+  // pragma MARK: std::function<void(const std::optional<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>& /* result */)>
+  Func_void_std__optional_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec__ create_Func_void_std__optional_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec__(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = NitroReadium::Func_void_std__optional_std__shared_ptr_margelo__nitro__nitroreadium__HybridPublicationSpec__::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::optional<std::shared_ptr<margelo::nitro::nitroreadium::HybridPublicationSpec>>& result) mutable -> void {
       swiftClosure.call(result);
     };
   }

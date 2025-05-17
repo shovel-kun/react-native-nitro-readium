@@ -104,15 +104,19 @@ const Readium = forwardRef<NitroReadiumMethods, ReadiumProps>(
       return nativeRef.current?.getSettings()
     }, [nativeRef])
 
-    useImperativeHandle(ref, () => {
-      return {
-        evaluateJavascript,
-        injectJavascript,
-        go,
-        clearSelection,
-        getSettings,
-      }
-    }, [])
+    useImperativeHandle(
+      ref,
+      () => {
+        return {
+          evaluateJavascript,
+          injectJavascript,
+          go,
+          clearSelection,
+          getSettings,
+        }
+      },
+      []
+    )
 
     const nitroSource = useMemo(() => {
       return {

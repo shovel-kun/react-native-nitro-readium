@@ -46,7 +46,7 @@ abstract class HybridReadiumModuleSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun openPublication(absoluteUrl: String): Promise<HybridPublicationSpec>
+  abstract fun openPublication(absoluteUrl: String): Promise<HybridPublicationSpec?>
 
   private external fun initHybrid(): HybridData
 
