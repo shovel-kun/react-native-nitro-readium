@@ -1,6 +1,6 @@
 {
   "name": "react-native-nitro-readium",
-  "version": "0.6.8",
+  "version": "0.6.10",
   "description": "Nitro module package",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -8,7 +8,7 @@
   "source": "src/index",
   "scripts": {
     "build": "rm -rf lib && bun typecheck && bob build",
-    "build-plugins": "tsc -p plugins/tsconfig.json",
+    "build:plugins": "tsc -p plugins/tsconfig.json",
     "typecheck": "tsc --noEmit",
     "clean": "git clean -dfX",
     "release": "release-it",
@@ -134,7 +134,7 @@
     },
     "hooks": {
       "before:init": "bun typecheck",
-      "after:bump": "bun run build"
+      "after:bump": "bun run build && bun run build:plugins"
     },
     "plugins": {
       "@release-it/bumper": {},
