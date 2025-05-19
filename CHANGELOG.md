@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.12](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.11...v0.6.12) (2025-05-19)
+
+### 🐛 Bug Fixes
+
+* **android:** _1 -> ONE ([19ead33](https://github.com/shovel-kun/react-native-nitro-readium/commit/19ead33607fc045231becfa06fc0edf7d139f1ef))
+
 ## [0.6.11](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.10...v0.6.11) (2025-05-19)
 
 ### 🐛 Bug Fixes
