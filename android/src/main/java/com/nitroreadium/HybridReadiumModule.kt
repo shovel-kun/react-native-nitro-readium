@@ -22,7 +22,7 @@ class HybridReadiumModule: HybridReadiumModuleSpec() {
         return a + b
     }
 
-    override fun openPublication(absoluteUrl: String): Promise<HybridPublicationSpec> {
+    override fun openPublication(absoluteUrl: String): Promise<HybridPublicationSpec?> {
         return try {
             val cleanAbsoluteUrl = AbsoluteUrl(absoluteUrl) ?: return Promise.rejected(Exception("Invalid absoluteUrl: $absoluteUrl"))
             Promise.async {
