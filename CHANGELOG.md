@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.11](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.10...v0.6.11) (2025-05-19)
+
+### 🐛 Bug Fixes
+
+* **android:** align openPublication def ([06dec13](https://github.com/shovel-kun/react-native-nitro-readium/commit/06dec137bbe4370327bd4c15bd593a7cc0f98be8))
+
 ## [0.6.10](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.9...v0.6.10) (2025-05-16)
 
 ## [0.6.9](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.8...v0.6.9) (2025-05-16)
