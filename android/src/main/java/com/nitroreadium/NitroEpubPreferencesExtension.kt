@@ -26,8 +26,8 @@ fun NitroEpubPreferences.toEpubPreferences(): EpubPreferences {
         backgroundColor = backgroundColor?.let { Color(it.hexToInt()) },
         columnCount = when (columnCount) {
             NitroColumnCount.AUTO -> ColumnCount.AUTO
-            NitroColumnCount._1 -> ColumnCount.ONE
-            NitroColumnCount._2 -> ColumnCount.TWO
+            NitroColumnCount.ONE -> ColumnCount.ONE
+            NitroColumnCount.TWO -> ColumnCount.TWO
             else -> null
         },
         fontFamily = fontFamily?.let { FontFamily(it) },
@@ -62,8 +62,8 @@ fun EpubSettings.toNitroEpubPreferences(): NitroEpubPreferences {
         backgroundColor = this.backgroundColor?.int?.toHex(),
         columnCount = when (this.columnCount) {
             ColumnCount.AUTO -> NitroColumnCount.AUTO
-            ColumnCount.ONE -> NitroColumnCount._1
-            ColumnCount.TWO -> NitroColumnCount._2
+            ColumnCount.ONE -> NitroColumnCount.ONE
+            ColumnCount.TWO -> NitroColumnCount.TWO
             else -> null
         },
         fontFamily = this.fontFamily?.name,
