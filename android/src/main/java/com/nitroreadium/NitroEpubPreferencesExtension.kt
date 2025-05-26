@@ -64,7 +64,6 @@ fun EpubSettings.toNitroEpubPreferences(): NitroEpubPreferences {
             ColumnCount.AUTO -> NitroColumnCount.AUTO
             ColumnCount.ONE -> NitroColumnCount.ONE
             ColumnCount.TWO -> NitroColumnCount.TWO
-            else -> null
         },
         fontFamily = this.fontFamily?.name,
         fontSize = this.fontSize,
@@ -79,13 +78,13 @@ fun EpubSettings.toNitroEpubPreferences(): NitroEpubPreferences {
         paragraphIndent = this.paragraphIndent,
         paragraphSpacing = this.paragraphSpacing,
         publisherStyles = this.publisherStyles,
-        readingProgression = this.readingProgression?.let { NitroReadingProgression.valueOf(it.name) },
+        readingProgression = this.readingProgression.let { NitroReadingProgression.valueOf(it.name) },
         scroll = this.scroll,
-        spread = this.spread?.let { NitroSpread.valueOf(it.name) },
+        spread = this.spread.let { NitroSpread.valueOf(it.name) },
         textAlign = this.textAlign?.let { NitroTextAlign.valueOf(it.name) },
         textColor = this.textColor?.int?.toHex(),
         textNormalization = this.textNormalization,
-        theme = this.theme?.let { NitroTheme.valueOf(it.name) },
+        theme = this.theme.let { NitroTheme.valueOf(it.name) },
         typeScale = this.typeScale,
         verticalText = this.verticalText,
         wordSpacing = this.wordSpacing

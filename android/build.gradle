@@ -10,7 +10,7 @@ buildscript {
 
     // Track here:
     // https://github.com/readium/kotlin-toolkit/releases
-    ext.readium_version = '3c8a36075d'
+    ext.readium_version = 'b7e98781af'
 }
 
 def reactNativeArchitectures() {
