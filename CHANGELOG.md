@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.13](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.12...v0.6.13) (2025-05-26)
+
+### 🐛 Bug Fixes
+
+* update progression for vertical epubs ([10dafac](https://github.com/shovel-kun/react-native-nitro-readium/commit/10dafac480ac7ea8d82b4e5356f76905fc3ef1e3))
+
 ## [0.6.12](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.11...v0.6.12) (2025-05-19)
 
 ### 🐛 Bug Fixes
