@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.16](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.15...v0.6.16) (2025-06-12)
+
+### 🐛 Bug Fixes
+
+* remove StateWrapperImpl ([2cd922f](https://github.com/shovel-kun/react-native-nitro-readium/commit/2cd922ffa51c213ea50b08fee0c98f3aa3bb459e))
+
 ## [0.6.15](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.14...v0.6.15) (2025-06-12)
 
 ## [0.6.14](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.13...v0.6.14) (2025-05-30)
