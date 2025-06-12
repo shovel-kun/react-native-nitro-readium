@@ -7,7 +7,7 @@
 
 package com.margelo.nitro.nitroreadium.views
 
-import com.facebook.react.fabric.StateWrapperImpl
+import com.facebook.react.uimanager.StateWrapper
 import com.margelo.nitro.nitroreadium.*
 
 internal class HybridNitroReadiumStateUpdater {
@@ -18,6 +18,6 @@ internal class HybridNitroReadiumStateUpdater {
      */
     @Suppress("KotlinJniMissingFunction")
     @JvmStatic
-    external fun updateViewProps(view: HybridNitroReadiumSpec, state: StateWrapperImpl)
+    external fun updateViewProps(view: HybridNitroReadiumSpec, state: StateWrapper)
   }
 }

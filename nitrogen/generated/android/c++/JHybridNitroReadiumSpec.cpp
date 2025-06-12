@@ -205,8 +205,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_Locator_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](Locator locator) -> void {
-          return __result->invoke(locator);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](Locator locator) -> void {
+          return __resultRef->invoke(locator);
         };
       }
     }()) : std::nullopt;
@@ -223,8 +224,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_std__optional_Selection__cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](std::optional<Selection> selection) -> void {
-          return __result->invoke(selection);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](std::optional<Selection> selection) -> void {
+          return __resultRef->invoke(selection);
         };
       }
     }()) : std::nullopt;
@@ -241,8 +243,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_DecorationActivatedEvent_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](DecorationActivatedEvent event) -> void {
-          return __result->invoke(event);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](DecorationActivatedEvent event) -> void {
+          return __resultRef->invoke(event);
         };
       }
     }()) : std::nullopt;
@@ -259,8 +262,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_TapEvent_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](TapEvent event) -> void {
-          return __result->invoke(event);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](TapEvent event) -> void {
+          return __resultRef->invoke(event);
         };
       }
     }()) : std::nullopt;
@@ -277,8 +281,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_DragEvent_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](DragEvent event) -> void {
-          return __result->invoke(event);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](DragEvent event) -> void {
+          return __resultRef->invoke(event);
         };
       }
     }()) : std::nullopt;
@@ -295,8 +300,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_double_double_Locator_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](double page, double totalPages, Locator locator) -> void {
-          return __result->invoke(page,totalPages,locator);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](double page, double totalPages, Locator locator) -> void {
+          return __resultRef->invoke(page,totalPages,locator);
         };
       }
     }()) : std::nullopt;
@@ -313,8 +319,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result]() -> void {
-          return __result->invoke();
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef]() -> void {
+          return __resultRef->invoke();
         };
       }
     }()) : std::nullopt;
@@ -331,8 +338,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_EpubPreferences_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](EpubPreferences preferences) -> void {
-          return __result->invoke(preferences);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](EpubPreferences preferences) -> void {
+          return __resultRef->invoke(preferences);
         };
       }
     }()) : std::nullopt;
@@ -349,8 +357,9 @@ namespace margelo::nitro::nitroreadium {
         auto downcast = jni::static_ref_cast<JFunc_void_std__string_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
       } else {
-        return [__result](std::string message) -> void {
-          return __result->invoke(message);
+        auto __resultRef = jni::make_global(__result);
+        return [__resultRef](std::string message) -> void {
+          return __resultRef->invoke(message);
         };
       }
     }()) : std::nullopt;
