@@ -1,0 +1,12 @@
+diff --git a/lib/views/kotlin/KotlinHybridViewManager.js b/lib/views/kotlin/KotlinHybridViewManager.js
+index d6106bcc37da09dfff17140ad2794ef90fd22330..b2386f31ba473ec9e48adb82e99e7306ef1376a4 100644
+--- a/lib/views/kotlin/KotlinHybridViewManager.js
++++ b/lib/views/kotlin/KotlinHybridViewManager.js
+@@ -23,7 +23,6 @@ ${createFileMetadataString(`${manager}.kt`)}
+ package ${javaSubNamespace}
+ 
+ import android.view.View
+-import com.facebook.react.fabric.StateWrapperImpl
+ import com.facebook.react.uimanager.ReactStylesDiffMap
+ import com.facebook.react.uimanager.SimpleViewManager
+ import com.facebook.react.uimanager.StateWrapper

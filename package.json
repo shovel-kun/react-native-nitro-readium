@@ -171,5 +171,8 @@
   "trustedDependencies": [
     "nitro-codegen",
     "react-native-nitro-modules"
-  ]
+  ],
+  "patchedDependencies": {
+    "nitro-codegen@0.26.2": "patches/nitro-codegen@0.26.2.patch"
+  }
 }

@@ -8,7 +8,6 @@
 package com.margelo.nitro.nitroreadium.views
 
 import android.view.View
-import com.facebook.react.fabric.StateWrapperImpl
 import com.facebook.react.uimanager.ReactStylesDiffMap
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.StateWrapper
