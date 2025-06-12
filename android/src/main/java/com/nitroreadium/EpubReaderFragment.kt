@@ -115,7 +115,7 @@ class EpubReaderFragment(
                 paginationListener = listener,
                 messageListener = listener,
                 configuration = EpubNavigatorFragment.Configuration {
-                    selectionActionModeCallback = customSelectionActionModeCallback
+                    // selectionActionModeCallback = customSelectionActionModeCallback
 
                     // Register the HTML templates for our custom decoration styles.
                     decorationTemplates[DecorationStyleAnnotationMark::class] =
