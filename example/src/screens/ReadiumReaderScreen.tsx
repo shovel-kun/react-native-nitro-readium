@@ -122,6 +122,7 @@ const ReadiumReaderScreen = ({route}: ReadiumViewerScreenProps) => {
 
   useEffect(() => {
     if (injectedJavascript) return;
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const injectedScript: string = require('../../script.raw.js');
     setInjectedJavascript(injectedScript);
   }, [injectedJavascript]);
