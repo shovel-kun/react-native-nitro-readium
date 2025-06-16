@@ -6,30 +6,16 @@
 
 package com.nitroreadium
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import androidx.annotation.ColorInt
-import androidx.appcompat.widget.SearchView
-import androidx.core.os.BundleCompat
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.fragment.app.FragmentResultListener
-import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.facebook.react.uimanager.PixelUtil.pxToDp
-import com.margelo.nitro.nitroreadium.Rect
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.readium.r2.navigator.DecorableNavigator
 import org.readium.r2.navigator.Decoration
@@ -37,18 +23,14 @@ import org.readium.r2.navigator.OverflowableNavigator
 import org.readium.r2.navigator.SelectableNavigator
 import org.readium.r2.navigator.VisualNavigator
 import org.readium.r2.navigator.epub.*
-import org.readium.r2.navigator.epub.css.FontStyle
 import org.readium.r2.navigator.html.HtmlDecorationTemplate
 import org.readium.r2.navigator.html.toCss
 import org.readium.r2.navigator.input.DragEvent
 import org.readium.r2.navigator.input.InputListener
 import org.readium.r2.navigator.input.TapEvent
-import org.readium.r2.navigator.preferences.FontFamily
 import org.readium.r2.navigator.util.BaseActionModeCallback
 import org.readium.r2.navigator.util.DirectionalNavigationAdapter
 import org.readium.r2.shared.ExperimentalReadiumApi
-import org.readium.r2.shared.extensions.toList
-import org.readium.r2.shared.extensions.toMap
 import org.readium.r2.shared.publication.Locator
 import org.readium.r2.shared.publication.Publication
 import org.readium.r2.shared.publication.epub.pageList
@@ -72,12 +54,7 @@ class EpubReaderFragment(
 
     override lateinit var navigator: EpubNavigatorFragment
     //    val preferences: StateFlow<EpubPreferences>? = null
-
-    private lateinit
-    var menuSearch: MenuItem
-    lateinit var menuSearchView: SearchView
-
-    private var isSearchViewIconified = true
+    var turnPageOnTap: Boolean = false
 
     var onLocatorChanged: ((NitroLocator) -> Unit) = {}
     var onSelection: ((NitroSelection?) -> Unit) = {}
@@ -245,7 +222,7 @@ class EpubReaderFragment(
             })
         }
 
-        if (true) {
+        if (turnPageOnTap) {
             (navigator as OverflowableNavigator).apply {
                 // This will automatically turn pages when tapping the screen edges or arrow keys.
                 addInputListener(DirectionalNavigationAdapter(this))
@@ -320,7 +297,6 @@ class EpubReaderFragment(
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(IS_SEARCH_VIEW_ICONIFIED, isSearchViewIconified)
     }
 
     //    private fun connectSearch() {
@@ -442,9 +418,7 @@ class EpubReaderFragment(
     }
 
     companion object {
-        private const val SEARCH_FRAGMENT_TAG = "search"
         private const val NAVIGATOR_FRAGMENT_TAG = "navigator"
-        private const val IS_SEARCH_VIEW_ICONIFIED = "isSearchViewIconified"
     }
 }
 

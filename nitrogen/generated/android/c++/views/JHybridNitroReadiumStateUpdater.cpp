@@ -61,6 +61,10 @@ void JHybridNitroReadiumStateUpdater::updateViewProps(jni::alias_ref<jni::JClass
     view->setInjectedJavascriptOnPageLoad(props.injectedJavascriptOnPageLoad.value);
     // TODO: Set isDirty = false
   }
+  if (props.turnPageOnTap.isDirty) {
+    view->setTurnPageOnTap(props.turnPageOnTap.value);
+    // TODO: Set isDirty = false
+  }
   if (props.onLocatorChanged.isDirty) {
     view->setOnLocatorChanged(props.onLocatorChanged.value);
     // TODO: Set isDirty = false

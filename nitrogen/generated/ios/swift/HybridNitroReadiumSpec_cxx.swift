@@ -229,6 +229,23 @@ public class HybridNitroReadiumSpec_cxx {
     }
   }
   
+  public final var turnPageOnTap: bridge.std__optional_bool_ {
+    @inline(__always)
+    get {
+      return { () -> bridge.std__optional_bool_ in
+        if let __unwrappedValue = self.__implementation.turnPageOnTap {
+          return bridge.create_std__optional_bool_(__unwrappedValue)
+        } else {
+          return .init()
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.turnPageOnTap = newValue.value
+    }
+  }
+  
   public final var onLocatorChanged: bridge.std__optional_std__function_void_const_Locator_____locator______ {
     @inline(__always)
     get {

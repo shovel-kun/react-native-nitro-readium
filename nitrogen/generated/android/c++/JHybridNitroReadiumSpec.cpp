@@ -197,6 +197,15 @@ namespace margelo::nitro::nitroreadium {
     static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* injectedJavascriptOnPageLoad */)>("setInjectedJavascriptOnPageLoad");
     method(_javaPart, injectedJavascriptOnPageLoad.has_value() ? jni::make_jstring(injectedJavascriptOnPageLoad.value()) : nullptr);
   }
+  std::optional<bool> JHybridNitroReadiumSpec::getTurnPageOnTap() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<jni::JBoolean>()>("getTurnPageOnTap");
+    auto __result = method(_javaPart);
+    return __result != nullptr ? std::make_optional(static_cast<bool>(__result->value())) : std::nullopt;
+  }
+  void JHybridNitroReadiumSpec::setTurnPageOnTap(std::optional<bool> turnPageOnTap) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<jni::JBoolean> /* turnPageOnTap */)>("setTurnPageOnTap");
+    method(_javaPart, turnPageOnTap.has_value() ? jni::JBoolean::valueOf(turnPageOnTap.value()) : nullptr);
+  }
   std::optional<std::function<void(const Locator& /* locator */)>> JHybridNitroReadiumSpec::getOnLocatorChanged() {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JFunc_void_Locator::javaobject>()>("getOnLocatorChanged_cxx");
     auto __result = method(_javaPart);

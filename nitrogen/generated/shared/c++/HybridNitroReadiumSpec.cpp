@@ -26,6 +26,8 @@ namespace margelo::nitro::nitroreadium {
       prototype.registerHybridSetter("injectedJavascriptOnResourcesLoad", &HybridNitroReadiumSpec::setInjectedJavascriptOnResourcesLoad);
       prototype.registerHybridGetter("injectedJavascriptOnPageLoad", &HybridNitroReadiumSpec::getInjectedJavascriptOnPageLoad);
       prototype.registerHybridSetter("injectedJavascriptOnPageLoad", &HybridNitroReadiumSpec::setInjectedJavascriptOnPageLoad);
+      prototype.registerHybridGetter("turnPageOnTap", &HybridNitroReadiumSpec::getTurnPageOnTap);
+      prototype.registerHybridSetter("turnPageOnTap", &HybridNitroReadiumSpec::setTurnPageOnTap);
       prototype.registerHybridGetter("onLocatorChanged", &HybridNitroReadiumSpec::getOnLocatorChanged);
       prototype.registerHybridSetter("onLocatorChanged", &HybridNitroReadiumSpec::setOnLocatorChanged);
       prototype.registerHybridGetter("onSelection", &HybridNitroReadiumSpec::getOnSelection);

@@ -159,6 +159,13 @@ namespace margelo::nitro::nitroreadium {
     inline void setInjectedJavascriptOnPageLoad(const std::optional<std::string>& injectedJavascriptOnPageLoad) noexcept override {
       _swiftPart.setInjectedJavascriptOnPageLoad(injectedJavascriptOnPageLoad);
     }
+    inline std::optional<bool> getTurnPageOnTap() noexcept override {
+      auto __result = _swiftPart.getTurnPageOnTap();
+      return __result;
+    }
+    inline void setTurnPageOnTap(std::optional<bool> turnPageOnTap) noexcept override {
+      _swiftPart.setTurnPageOnTap(turnPageOnTap);
+    }
     inline std::optional<std::function<void(const Locator& /* locator */)>> getOnLocatorChanged() noexcept override {
       auto __result = _swiftPart.getOnLocatorChanged();
       return __result;

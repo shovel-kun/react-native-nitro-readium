@@ -101,6 +101,11 @@ using namespace margelo::nitro::nitroreadium::views;
     swiftPart.setInjectedJavascriptOnPageLoad(newViewProps.injectedJavascriptOnPageLoad.value);
     newViewProps.injectedJavascriptOnPageLoad.isDirty = false;
   }
+  // turnPageOnTap: optional
+  if (newViewProps.turnPageOnTap.isDirty) {
+    swiftPart.setTurnPageOnTap(newViewProps.turnPageOnTap.value);
+    newViewProps.turnPageOnTap.isDirty = false;
+  }
   // onLocatorChanged: optional
   if (newViewProps.onLocatorChanged.isDirty) {
     swiftPart.setOnLocatorChanged(newViewProps.onLocatorChanged.value);

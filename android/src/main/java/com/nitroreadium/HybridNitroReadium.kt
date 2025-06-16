@@ -55,6 +55,13 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
             view.go(locatorToGoTo)
         }
 
+    override var turnPageOnTap: Boolean? = false
+        set(value) {
+            if (value == null || value == field) return
+            field = value
+            view.turnPageOnTap = value
+        }
+
     override var preferences: NitroEpubPreferences? = null
         set(value) {
             if (value == null || field == value) return

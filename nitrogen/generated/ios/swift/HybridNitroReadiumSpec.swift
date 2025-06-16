@@ -17,6 +17,7 @@ public protocol HybridNitroReadiumSpec_protocol: HybridObject, HybridView {
   var decorations: [Decoration]? { get set }
   var injectedJavascriptOnResourcesLoad: String? { get set }
   var injectedJavascriptOnPageLoad: String? { get set }
+  var turnPageOnTap: Bool? { get set }
   var onLocatorChanged: ((_ locator: Locator) -> Void)? { get set }
   var onSelection: ((_ selection: Selection?) -> Void)? { get set }
   var onDecorationActivated: ((_ event: DecorationActivatedEvent) -> Void)? { get set }

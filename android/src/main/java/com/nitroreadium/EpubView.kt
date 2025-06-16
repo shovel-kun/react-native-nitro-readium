@@ -73,6 +73,8 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
             updatePreferences()
         }
 
+    var turnPageOnTap: Boolean = false
+
     // Callbacks
     var onSelection: (NitroSelection?) -> Unit = {}
     var onLocatorChanged: (NitroLocator) -> Unit = {}
@@ -158,7 +160,6 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
 
     fun destroyNavigator() {
         val navigator = this.navigator ?: return
-        //val fragmentTag = resources.getString(R.string.epub_fragment_tag)
         val activity: FragmentActivity? = context.currentActivity as FragmentActivity?
         activity?.supportFragmentManager?.commitNow {
             setReorderingAllowed(true)

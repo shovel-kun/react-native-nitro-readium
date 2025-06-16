@@ -74,6 +74,12 @@ abstract class HybridNitroReadiumSpec: HybridView() {
   @set:Keep
   abstract var injectedJavascriptOnPageLoad: String?
   
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var turnPageOnTap: Boolean?
+  
   abstract var onLocatorChanged: ((locator: Locator) -> Unit)?
   
   private var onLocatorChanged_cxx: Func_void_Locator?

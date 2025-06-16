@@ -23,6 +23,7 @@ export interface NitroReadiumProps extends HybridViewProps {
   injectedJavascriptOnResourcesLoad?: string
   // runs on the webview that is the current page
   injectedJavascriptOnPageLoad?: string
+  turnPageOnTap?: boolean
   onLocatorChanged?: (locator: Locator) => void
   onSelection?: (selection: Selection | null) => void
   onDecorationActivated?: (event: DecorationActivatedEvent) => void

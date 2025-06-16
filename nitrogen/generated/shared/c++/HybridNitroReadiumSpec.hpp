@@ -83,6 +83,8 @@ namespace margelo::nitro::nitroreadium {
       virtual void setInjectedJavascriptOnResourcesLoad(const std::optional<std::string>& injectedJavascriptOnResourcesLoad) = 0;
       virtual std::optional<std::string> getInjectedJavascriptOnPageLoad() = 0;
       virtual void setInjectedJavascriptOnPageLoad(const std::optional<std::string>& injectedJavascriptOnPageLoad) = 0;
+      virtual std::optional<bool> getTurnPageOnTap() = 0;
+      virtual void setTurnPageOnTap(std::optional<bool> turnPageOnTap) = 0;
       virtual std::optional<std::function<void(const Locator& /* locator */)>> getOnLocatorChanged() = 0;
       virtual void setOnLocatorChanged(const std::optional<std::function<void(const Locator& /* locator */)>>& onLocatorChanged) = 0;
       virtual std::optional<std::function<void(const std::optional<Selection>& /* selection */)>> getOnSelection() = 0;

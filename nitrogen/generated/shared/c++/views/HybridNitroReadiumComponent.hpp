@@ -29,6 +29,7 @@
 #include <optional>
 #include <string>
 #include <optional>
+#include <optional>
 #include <functional>
 #include "Locator.hpp"
 #include <optional>
@@ -87,6 +88,7 @@ namespace margelo::nitro::nitroreadium::views {
     CachedProp<std::optional<std::vector<Decoration>>> decorations;
     CachedProp<std::optional<std::string>> injectedJavascriptOnResourcesLoad;
     CachedProp<std::optional<std::string>> injectedJavascriptOnPageLoad;
+    CachedProp<std::optional<bool>> turnPageOnTap;
     CachedProp<std::optional<std::function<void(const Locator& /* locator */)>>> onLocatorChanged;
     CachedProp<std::optional<std::function<void(const std::optional<Selection>& /* selection */)>>> onSelection;
     CachedProp<std::optional<std::function<void(const DecorationActivatedEvent& /* event */)>>> onDecorationActivated;

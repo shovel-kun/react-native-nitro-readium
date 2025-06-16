@@ -10,6 +10,7 @@
     "decorations": true,
     "injectedJavascriptOnResourcesLoad": true,
     "injectedJavascriptOnPageLoad": true,
+    "turnPageOnTap": true,
     "onLocatorChanged": true,
     "onSelection": true,
     "onDecorationActivated": true,
