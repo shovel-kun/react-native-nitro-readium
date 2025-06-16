@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.17](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.16...v0.6.17) (2025-06-16)
+
+### 🐛 Bug Fixes
+
+* add turnPageOnTap ([5f56724](https://github.com/shovel-kun/react-native-nitro-readium/commit/5f56724ee9e81311993eeb98d097969b15aa2152))
+* turnPageOnTap works ([6248b03](https://github.com/shovel-kun/react-native-nitro-readium/commit/6248b03a291006153b9f599515dbd4e4a05d4769))
+
 ## [0.6.16](https://github.com/shovel-kun/react-native-nitro-readium/compare/v0.6.15...v0.6.16) (2025-06-12)
 
 ### 🐛 Bug Fixes
