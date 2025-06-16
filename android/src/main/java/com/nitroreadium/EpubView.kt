@@ -126,7 +126,8 @@ class EpubView(private val context: ThemedReactContext) : FrameLayout(context),
                 locator,
                 publication,
                 customFonts,
-                listener
+                listener,
+                turnPageOnTap
             )
 
             //  Log.i("HybridNitroReadium", "EpubFragment {$epubFragment} created")

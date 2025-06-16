@@ -135,6 +135,8 @@ const ReadiumReaderScreen = ({route}: ReadiumViewerScreenProps) => {
           uri: absolutePath,
           initialLocation: locator,
         }}
+        // view must be recreated to apply changes
+        turnPageOnTap
         //locator={locator}
         onLocatorChanged={onLocatorChanged}
         decorations={decorations}
@@ -151,7 +153,7 @@ const ReadiumReaderScreen = ({route}: ReadiumViewerScreenProps) => {
         onLayout={onLayout}
         preferences={{
           theme: 'light',
-          scroll: true,
+          scroll: false,
           publisherStyles: false,
         }}
         ref={readiumRef}

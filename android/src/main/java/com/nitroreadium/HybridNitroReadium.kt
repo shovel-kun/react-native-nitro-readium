@@ -57,7 +57,7 @@ class HybridNitroReadium(context: ThemedReactContext) : HybridNitroReadiumSpec()
 
     override var turnPageOnTap: Boolean? = false
         set(value) {
-            if (value == null || value == field) return
+            if (value == null || field == value) return
             field = value
             view.turnPageOnTap = value
         }

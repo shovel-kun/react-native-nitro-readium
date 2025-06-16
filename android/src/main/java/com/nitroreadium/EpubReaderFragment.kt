@@ -49,12 +49,12 @@ class EpubReaderFragment(
     private var locator: Locator,
     private val publication: Publication,
     private val customFonts: List<CustomFont>,
-    private val listener: EpubView
+    private val listener: EpubView,
+    private var turnPageOnTap: Boolean = false
 ) : VisualReaderFragment() {
 
     override lateinit var navigator: EpubNavigatorFragment
     //    val preferences: StateFlow<EpubPreferences>? = null
-    var turnPageOnTap: Boolean = false
 
     var onLocatorChanged: ((NitroLocator) -> Unit) = {}
     var onSelection: ((NitroSelection?) -> Unit) = {}
@@ -222,6 +222,7 @@ class EpubReaderFragment(
             })
         }
 
+        Log.d("Hi", "turnPageOnTap: $turnPageOnTap")
         if (turnPageOnTap) {
             (navigator as OverflowableNavigator).apply {
                 // This will automatically turn pages when tapping the screen edges or arrow keys.
