@@ -60,7 +60,7 @@
     "expo-module-scripts": "^4.1.7",
     "globals": "^16.2.0",
     "nitro-codegen": "^0.26.2",
-    "react": "19.0.0",
+    "react": "19.1.1",
     "react-native": "0.78.0",
     "react-native-builder-bob": "^0.40.12",
     "react-native-nitro-modules": "^0.26.2",
